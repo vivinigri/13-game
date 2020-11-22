@@ -4,12 +4,14 @@ export type RootStackParamList = {
   TabTwo: undefined;
   NotFound: undefined;
   StartScreen: undefined;
+  ScoreBoardScreen: undefined;
 };
 
 export type ScreensNavigationList = {
   TabOne: undefined;
   NotFound: undefined;
   StartScreen: undefined;
+  ScoreBoardScreen: undefined;
 };
 
 export type BottomTabParamList = {

@@ -13,6 +13,7 @@ import { RootStackParamList } from "../types";
 // import LinkingConfiguration from './LinkingConfiguration';
 import TabOneScreen from "../screens/TabOneScreen";
 import StartScreen from "../screens/StartScreen";
+import ScoreBoardScreen from "../screens/ScoreBoardScreen";
 // import TabTwoScreen from '../screens/TabTwoScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -30,6 +31,7 @@ export default function Navigation({
       {/* <RootNavigator /> */}
       <Stack.Navigator>
         <Stack.Screen name="StartScreen" component={StartScreen} />
+        <Stack.Screen name="ScoreBoardScreen" component={ScoreBoardScreen} />
         <Stack.Screen
           name="TabOne"
           component={TabOneScreen}

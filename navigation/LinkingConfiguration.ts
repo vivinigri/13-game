@@ -14,6 +14,11 @@ export default {
           TabTwoScreen: "two"
         }
       },
+      ScoreBoardScreen: {
+        screens: {
+          ScoreBoardScreen: "ScoreBoardScreen"
+        }
+      },
 
       Root: {
         screens: {

@@ -1,18 +1,26 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import ButtonStartScreen from "./../components/ButtonStartScreen";
+import styled from "styled-components/native";
 
 const LINKS = [
-  { label: "Novo Placar", link: "TabOne" },
+  { label: "Novo Placar", link: "ScoreBoardScreen" },
   { label: "Nova Mesa", link: "TabOne" },
-  { label: "Entrar em Mesa", link: "TabOne" },
-  { label: "Estatísticas", link: "TabOne" }
+  { label: "Entrar em Mesa", link: "TabTwo" },
+  { label: "Estatísticas", link: "TabThree" }
 ];
+
+const MainView = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.BACKGROUND_COLOR};
+`;
 
 const StartScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.mainView}>
+      <MainView>
         <Text style={styles.title}>13</Text>
         <View style={styles.buttonsGroup}>
           <FlatList
@@ -23,7 +31,7 @@ const StartScreen = () => {
             )}
           />
         </View>
-      </View>
+      </MainView>
     </View>
   );
 };
