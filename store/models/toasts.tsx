@@ -1,25 +1,25 @@
-import { Toast } from '@types';
-import { generateRandomString } from '@core/helpers/generateRandomString';
+import { Toast } from "@types"
+import { generateRandomString } from "@core/helpers/generateRandomString"
 
-export type ToastsState = Array<Toast>;
-type ToastType = 'success' | 'error' | 'info' | 'warning';
+export type ToastsState = Array<Toast>
+type ToastType = "success" | "error" | "info" | "warning"
 
 export type ToastsModel = {
-  state: ToastsState;
+  state: ToastsState
   reducers: {
     show: (
       state: ToastsState,
       toast: {
-        content: string;
-        variant: ToastType;
-        tryAgain?: any;
-        label?: string;
+        content: string
+        variant: ToastType
+        tryAgain?: any
+        label?: string
       }
-    ) => ToastsState;
-    hide: (state: ToastsState, id: string) => ToastsState;
-    hideAll: (state: ToastsState) => ToastsState;
-  };
-};
+    ) => ToastsState
+    hide: (state: ToastsState, id: string) => ToastsState
+    hideAll: (state: ToastsState) => ToastsState
+  }
+}
 
 export const toasts: ToastsModel = {
   state: [],
@@ -27,13 +27,13 @@ export const toasts: ToastsModel = {
     show: (
       state: any,
       toast: {
-        content: string;
-        variant: string;
-        tryAgain?: any;
-        label?: string;
+        content: string
+        variant: string
+        tryAgain?: any
+        label?: string
       }
     ) => {
-      const { content, variant = 'error', tryAgain, label = '' } = toast;
+      const { content, variant = "error", tryAgain, label = "" } = toast
 
       return [
         ...state,
@@ -45,9 +45,9 @@ export const toasts: ToastsModel = {
           tryAgain,
           label,
         },
-      ];
+      ]
     },
-    hide: (state, id: string) => state.filter(t => t.id !== id),
+    hide: (state, id: string) => state.filter((t) => t.id !== id),
     hideAll: () => [],
   },
-};
+}

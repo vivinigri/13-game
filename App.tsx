@@ -6,11 +6,13 @@ import { theme } from "@core/theme"
 import store from "@store"
 
 import useCachedResources from "@hooks/useCachedResources"
+import useColorScheme from "@hooks/useColorScheme"
 import AppContainer from "@components/AppContainer"
-import RootNavigation from "@navigation/RootNavigation"
+import Navigation from "@navigation"
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
+  const colorScheme = useColorScheme()
 
   if (!isLoadingComplete) {
     return null
@@ -19,7 +21,7 @@ export default function App() {
       <StoreProvider store={store}>
         <PaperProvider theme={theme}>
           <AppContainer>
-            <RootNavigation />
+            <Navigation colorScheme={colorScheme} />
             <StatusBar />
           </AppContainer>
         </PaperProvider>

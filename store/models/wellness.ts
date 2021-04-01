@@ -1,13 +1,6 @@
-import {
-  GoalItem,
-  Activity,
-  Action,
-  WellnessProfile,
-  ActionsQuery,
-  WellnessBudget,
-} from '@types';
-import { Dispatch } from '..';
-import {
+import { Dispatch } from ".."
+// import { WellnessProfile } from "@types"
+/* import {
   getActivities,
   getProfile,
   createObjectives,
@@ -17,23 +10,23 @@ import {
   getActions,
   getGoalPlan,
   getBudgets,
-} from '@api/wellness-api';
+} from "@api/wellness-api"*/
 
 export type WellnessState = {
-  profile?: WellnessProfile;
-  goals: GoalItem[];
-  activities: Activity[];
-  completedActivities: Activity[];
-  actions: Action[][];
-  completedActions: Action[][];
-  budgets: WellnessBudget[];
-  error: string;
-};
+  // profile?: WellnessProfile
+  /* goals: GoalItem[]
+  activities: Activity[]
+  completedActivities: Activity[]
+  actions: Action[][]
+  completedActions: Action[][]
+  budgets: WellnessBudget[]
+  error: string */
+}
 
 export type WellnessModel = {
-  state: WellnessState;
+  state: {} ///WellnessState;
   reducers: {
-    loadActivities: (
+    /* loadActivities: (
       state: WellnessState,
       activities: Activity[],
       doneActivities: Activity[]
@@ -54,35 +47,39 @@ export type WellnessModel = {
       state: WellnessState,
       budgets: WellnessBudget[]
     ) => WellnessState;
-    setError: (state: WellnessState, error: string) => WellnessState;
-  };
+    setError: (state: WellnessState, error: string) => WellnessState; */
+  }
   effects: (
     dispatch: Dispatch
   ) => {
-    fetchActivities: (payload?: any, rootState?: any) => void;
+    /* fetchActivities: (payload?: any, rootState?: any) => void;
     fetchObjectives: (payload?: any, rootState?: any) => void;
     fetchActions: (payload: ActionsQuery, rootState?: any) => void;
     refreshActivities: (payload?: any, rootState?: any) => void;
     loadProfile: (payload?: any, rootState?: any) => void;
     sendObjectives: (payload?: any, rootState?: any) => void;
     fetchBudgets: (payload?: any, rootState?: any) => void;
-    updateGoal: (payload?: any, rootState?: any) => void;
-  };
-};
+    updateGoal: (payload?: any, rootState?: any) => void; */
+  }
+}
 
 export const wellness: WellnessModel = {
   state: {
-    profile: undefined,
+    profile: {
+      points: 200,
+      first_name: "Vivian",
+    },
+    /* profile: undefined,
     goals: [],
     activities: [],
     completedActivities: [],
     actions: [],
     completedActions: [],
     budgets: [],
-    error: '',
+    error: '', */
   },
   reducers: {
-    loadActivities: (
+    /* loadActivities: (
       state: WellnessState,
       activities: Activity[],
       completedActivities: Activity[]
@@ -136,10 +133,10 @@ export const wellness: WellnessModel = {
     setError: (state: WellnessState, error: string) => ({
       ...state,
       error,
-    }),
+    }), */
   },
   effects: (dispatch: Dispatch) => ({
-    async fetchActivities(payload?: any, rootState?: any) {
+    /* async fetchActivities(payload?: any, rootState?: any) {
       const { profile } = rootState;
       const { session_token } = profile;
 
@@ -262,6 +259,6 @@ export const wellness: WellnessModel = {
       } catch (error) {
         dispatch.wellness.setError(error.message);
       }
-    },
+    }, */
   }),
-};
+}

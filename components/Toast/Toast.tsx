@@ -1,42 +1,42 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from "react"
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Animated,
   Easing,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
+} from "react-native"
+// import { useTranslation } from "react-i18next"
 
-import { Toast as ToastType } from '@types';
-import { theme } from '@core/theme';
+import { Toast as ToastType } from "@types"
+import { theme } from "@core/theme"
 import {
   ToastSuccess,
   ToastError,
   ToastInfo,
   ToastWarning,
-} from '@assets/icons/toasts';
-import CloseIcon from '@assets/icons/close_icon';
-import Text from '@components/Text';
+} from "@assets/icons/toasts"
+import CloseIcon from "@assets/icons/close_icon"
+import Text from "@components/Text"
 
 type Props = ToastType & {
-  onClose: () => void;
-  label: string;
-};
+  onClose: () => void
+  label: string
+}
 
 const toastIcons = {
   success: <ToastSuccess />,
   error: <ToastError />,
   info: <ToastInfo />,
   warning: <ToastWarning />,
-};
+}
 
 const toastColor = {
   success: theme.colors.toastSuccess,
   error: theme.colors.toastError,
   info: theme.colors.toastInfo,
   warning: theme.colors.toastWarning,
-};
+}
 
 const Toast = ({
   onClose,
@@ -46,16 +46,16 @@ const Toast = ({
   tryAgain,
   label,
 }: Props) => {
-  const [opacityAnimation] = useState(new Animated.Value(0));
-  const [translateAnimation] = useState(new Animated.Value(-100));
+  const [opacityAnimation] = useState(new Animated.Value(0))
+  const [translateAnimation] = useState(new Animated.Value(-100))
 
-  const { t } = useTranslation();
+  // const { t } = useTranslation()
 
   useEffect(() => {
     if (duration && !tryAgain) {
-      setTimeout(onClose, duration);
+      setTimeout(onClose, duration)
     }
-  }, [duration, onClose, tryAgain]);
+  }, [duration, onClose, tryAgain])
 
   useEffect(() => {
     Animated.parallel([
@@ -71,8 +71,8 @@ const Toast = ({
         easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }),
-    ]).start();
-  }, [opacityAnimation, translateAnimation]);
+    ]).start()
+  }, [opacityAnimation, translateAnimation])
 
   return (
     <Animated.View
@@ -97,8 +97,8 @@ const Toast = ({
         <TouchableOpacity
           style={styles.tryAgainContainer}
           onPress={() => {
-            onClose();
-            tryAgain();
+            onClose()
+            tryAgain()
           }}
         >
           <Text
@@ -106,10 +106,10 @@ const Toast = ({
             family="bold"
             style={{
               color:
-                variant === 'info' ? theme.colors.cyan : theme.colors.surface,
+                variant === "info" ? theme.colors.cyan : theme.colors.surface,
             }}
           >
-            {label ? label : t('common.tryAgain')}
+            {label ? label : "Tente novamente"}
           </Text>
         </TouchableOpacity>
       )}
@@ -118,17 +118,17 @@ const Toast = ({
         <CloseIcon width={12} height={12} fill={theme.colors.surface} />
       </TouchableOpacity>
     </Animated.View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     margin: theme.spacings.insideContent,
     minWidth: 300,
-    width: '80%',
+    width: "80%",
     maxWidth: 340,
     borderRadius: 4,
     paddingHorizontal: 12,
@@ -150,6 +150,6 @@ const styles = StyleSheet.create({
   tryAgainContainer: {
     marginLeft: 16,
   },
-});
+})
 
-export default memo(Toast);
+export default memo(Toast)

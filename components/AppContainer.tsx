@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from "react"
-import { SafeAreaProvider } from "react-native-safe-area-context"
 import { View, StyleSheet } from "react-native"
 import * as Font from "expo-font"
 
@@ -28,16 +27,14 @@ const AppContainer = ({ children }: Props) => {
   }, [])
 
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        {fontLoaded && (
-          <>
-            {children}
-            <ToastWrapper />
-          </>
-        )}
-      </View>
-    </SafeAreaProvider>
+    <View style={styles.container}>
+      {fontLoaded && (
+        <>
+          {children}
+          <ToastWrapper />
+        </>
+      )}
+    </View>
   )
 }
 
