@@ -7,6 +7,27 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
+    "rootDirs": ["./"],
+    "paths": {
+      "@components": ["components"],
+      "@components/*": ["components/*"],
+      "@api": ["api"],
+      "@api/*": ["api/*"],
+      "@assets": ["assets"],
+      "@assets/*": ["assets/*"],
+      "@core": ["core"],
+      "@core/*": ["core/*"],
+      "@hooks": ["hooks"],
+      "@hooks/*": ["hooks/*"],
+      "@navigation": ["navigation"],
+      "@navigation/*": ["navigation/*"],
+      "@screens": ["screens"],
+      "@screens/*": ["screens/*"],
+      "@store": ["store"],
+      "@store/*": ["store/*"],
+      "@types": ["types.tsx"]
+    }
   }
 }
