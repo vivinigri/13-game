@@ -22,6 +22,7 @@ declare global {
       transparent: string
       white: string
       dark: string
+      cyan: string
     }
 
     interface ThemeFontSizes {
@@ -46,9 +47,17 @@ declare global {
       cursive: ThemeFont
     }
 
+    interface ThemeSpacings {
+      insideContent: number
+      padding: number
+      section: number
+      large: number
+    }
+
     interface Theme {
       fontSizes: ThemeFontSizes
       iconSize: ThemeIconSizes
+      spacings: ThemeSpacings
     }
   }
 }
@@ -69,7 +78,7 @@ export const theme = {
     textPrimary: "#f7768e",
     textSecondary: "#ff9e64",
     textTertiary: "#e0af68",
-    textDark: "#7681A9",
+    textDark: "#2ac3de",
 
     backdrop: "#00AEEF",
     error: "#f13a59",
@@ -87,7 +96,7 @@ export const theme = {
     sideMenu: "#003C6B",
     sideMenuFocus: "#1a4f7a",
     highlight: "#00AEEF",
-    cyan: "#00FFFF",
+    cyan: "#b4f9f8",
     silver: "#D6D6D6",
 
     //toasts
@@ -134,6 +143,7 @@ export const theme = {
   },
   spacings: {
     insideContent: PixelRatio.getFontScale() * 8,
+    padding: PixelRatio.getFontScale() * 12,
     section: PixelRatio.getFontScale() * 20,
     large: PixelRatio.getFontScale() * 40,
   },

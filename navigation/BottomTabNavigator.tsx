@@ -70,10 +70,10 @@ function TabOneNavigator() {
         name="StartScreen"
         component={StartScreen}
         options={{
-          title: "My home",
+          title: "",
           headerStyle: {
             backgroundColor: theme.colors.background,
-            borderBottomColor: theme.colors.background, //theme.colors.textLight,
+            borderBottomColor: theme.colors.background,
           },
           headerTintColor: theme.colors.white,
           headerTitleStyle: {

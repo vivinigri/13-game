@@ -1,18 +1,18 @@
 import * as React from "react"
-import { StyleSheet, TouchableOpacity } from "react-native"
-
+import { StyleSheet } from "react-native"
 import { View } from "../components/Themed"
 import Text from "@components/Text"
+import Button from "@components/Buttons/ActionButton"
 import Logo from "@assets/icons/logo"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { BottomTabParamList } from "@types"
+import { StackScreenProps } from "@react-navigation/stack"
+import { RootStackParamList } from "@types"
 
-type Props = BottomTabScreenProps<BottomTabParamList, "TabOne">
+type Props = StackScreenProps<RootStackParamList, "StartScreen">
 
 const menu = [
-  { label: "✨ Novo jogo", redirect: "TabTwo" },
+  { label: "✨ Novo jogo", redirect: "Root" },
   { label: "💡 Continuar", redirect: "TabTwo" },
   { label: "🪑 Mesas", redirect: "TabTwo" },
   { label: "👪 Jogadores", redirect: "TabTwo" },
@@ -32,10 +32,19 @@ export default function StartScreen({ navigation }: Props) {
         style={themedStyle.background}
       />
       <Logo color={theme.colors.textPrimary} />
-      <Text type="header" style={themedStyle.title}>
+      <Text
+        type="header"
+        align="center"
+        variant="white"
+        family="bold"
+        style={{
+          marginTop: 30,
+          marginBottom: 15,
+        }}
+      >
         Um jogo de estratégia!
       </Text>
-      <Text type="title" style={themedStyle.title}>
+      <Text type="title" align="center" variant="white">
         ❝do francês strategie, do grego strátegìa, do latim...❞
       </Text>
       <View
@@ -54,33 +63,7 @@ export default function StartScreen({ navigation }: Props) {
   )
 }
 
-type ButtonProps = {
-  label: string
-  navigate: () => void
-}
-
-const Button = ({ label, navigate }: ButtonProps) => {
-  const theme = useTheme()
-  const themedStyle = styles(theme)
-
-  return (
-    <View style={themedStyle.button}>
-      <TouchableOpacity onPress={navigate}>
-        <Text
-          type="subheading"
-          family="medium"
-          textTransform="uppercase"
-          align="center"
-          variant="white"
-        >
-          {label}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const styles = ({ colors }: ReactNativePaper.Theme) =>
+const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -96,27 +79,10 @@ const styles = ({ colors }: ReactNativePaper.Theme) =>
       height: "100%",
       zIndex: -1,
     },
-    title: {
-      fontWeight: "bold",
-      marginTop: 20,
-      color: colors.white,
-    },
     separator: {
-      marginVertical: 30,
+      marginVertical: spacings.padding * 2,
       height: 1,
       width: "80%",
       maxWidth: 600,
-    },
-    button: {
-      // backgroundColor: colors.textPrimary,
-      backgroundColor: colors.transparent,
-      width: "100%",
-      maxWidth: 300,
-      height: 46,
-      borderRadius: 40,
-      marginBottom: 20,
-      borderWidth: 2,
-      borderColor: colors.textPrimary,
-      justifyContent: "center",
     },
   })
