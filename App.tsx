@@ -12,7 +12,6 @@ import Navigation from "@navigation"
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
-  const colorScheme = useColorScheme()
 
   if (!isLoadingComplete) {
     return null
@@ -21,7 +20,7 @@ export default function App() {
       <StoreProvider store={store}>
         <PaperProvider theme={theme}>
           <AppContainer>
-            <Navigation colorScheme={colorScheme} />
+            <Navigation />
             <StatusBar />
           </AppContainer>
         </PaperProvider>

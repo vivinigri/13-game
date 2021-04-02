@@ -1,48 +1,49 @@
-import React, { memo } from 'react';
-import { StyleProp, Text as NativeText, TextStyle } from 'react-native';
+import React, { memo } from "react"
+import { StyleProp, Text as NativeText, TextStyle } from "react-native"
 
-import { useTheme } from 'react-native-paper';
+import { useTheme } from "react-native-paper"
 
 type Props = React.ComponentProps<typeof NativeText> & {
   type:
-    | 'giga'
-    | 'mainheading'
-    | 'header'
-    | 'subheading'
-    | 'title'
-    | 'paragraph'
-    | 'label'
-    | 'caption';
-  children: React.ReactNode;
-  family?: 'bold' | 'medium' | 'regular' | 'cursive';
+    | "giga"
+    | "mainheading"
+    | "header"
+    | "subheading"
+    | "title"
+    | "paragraph"
+    | "label"
+    | "caption"
+  children: React.ReactNode
+  family?: "bold" | "medium" | "regular" | "cursive"
   variant?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'light'
-    | 'dark'
-    | 'error'
-    | 'warning'
-    | 'disabled'
-    | 'default'
-    | 'highlight'
-    | 'green'
-    | 'atention';
-  align?: 'left' | 'center' | 'right';
-  textTransform?: 'none' | 'uppercase';
-  style?: StyleProp<TextStyle>;
-};
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "light"
+    | "dark"
+    | "error"
+    | "warning"
+    | "disabled"
+    | "default"
+    | "highlight"
+    | "green"
+    | "atention"
+    | "white"
+  align?: "left" | "center" | "right"
+  textTransform?: "none" | "uppercase"
+  style?: StyleProp<TextStyle>
+}
 
 const Text = ({
-  type = 'label',
-  family = 'regular',
-  align = 'left',
-  textTransform = 'none',
-  variant = 'default',
+  type = "label",
+  family = "regular",
+  align = "left",
+  textTransform = "none",
+  variant = "default",
   style,
   ...rest
 }: Props) => {
-  const { colors, fontSizes, fonts } = useTheme();
+  const { colors, fontSizes, fonts } = useTheme()
 
   const textColor = {
     primary: colors.primary,
@@ -57,7 +58,8 @@ const Text = ({
     highlight: colors.highlight,
     atention: colors.orange,
     green: colors.green,
-  };
+    white: colors.white,
+  }
 
   const textStyle: StyleProp<TextStyle> = {
     textAlign: align,
@@ -65,9 +67,9 @@ const Text = ({
     fontFamily: fonts[family].fontFamily,
     fontSize: fontSizes[type],
     textTransform,
-  };
+  }
 
-  return <NativeText {...rest} style={[textStyle, style]} />;
-};
+  return <NativeText {...rest} style={[textStyle, style]} />
+}
 
-export default memo(Text);
+export default memo(Text)

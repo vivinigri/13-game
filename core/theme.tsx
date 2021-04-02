@@ -20,6 +20,8 @@ declare global {
       green: string
       red: string
       transparent: string
+      white: string
+      dark: string
     }
 
     interface ThemeFontSizes {
@@ -55,9 +57,21 @@ export const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#07639D",
-    primaryLight: "#26B9F2",
-    border: "#00AEEF",
+    background: "#404088", //"#24283b",
+    dark: "#1A1A3E", //"#1F2335",
+    primary: "#26265C", //"#414868",
+    primaryLight: "#565f89",
+    white: "#fff",
+    border: "#3D59A1",
+
+    // textLight: "#a9b1d6",
+    textLight: "#C2C1D1", //"#d4dbf8",
+    textPrimary: "#f7768e",
+    textSecondary: "#ff9e64",
+    textTertiary: "#e0af68",
+    textDark: "#7681A9",
+
+    backdrop: "#00AEEF",
     error: "#f13a59",
     green: "#00D193",
     orange: "#FFA726",
@@ -66,29 +80,21 @@ export const theme = {
     lightOrange: "#FFE0B2",
     lightRed: "#ffcdd2",
     lightGreen: "#C1F4E5",
-    textPrimary: "#000000",
-    textSecondary: "#385f7f",
-    textTertiary: "#5b91b6",
-    textLight: "#ffffff",
-    textDark: "#000000",
     placeholder: "#7fa9c6",
     hover: "#F3F9FD",
     grey: "#A2C1D6",
     lightGrey: "#E8F0F6",
-    dark: "#000000",
     sideMenu: "#003C6B",
     sideMenuFocus: "#1a4f7a",
     highlight: "#00AEEF",
     cyan: "#00FFFF",
-    background: "#F3F9FD",
     silver: "#D6D6D6",
-    backdrop: "#07639DD0",
 
     //toasts
-    toastError: "#d64646",
-    toastSuccess: "#4bb678",
-    toastWarning: "#efa842",
-    toastInfo: "#5ca8f5",
+    toastError: "#f7768e",
+    toastSuccess: "#9ece6a",
+    toastWarning: "#e0af68",
+    toastInfo: "#2ac3de",
     transparent: "transparent",
   },
   fonts: {

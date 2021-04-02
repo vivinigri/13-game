@@ -11,9 +11,9 @@ import CloseIcon from "@assets/icons/close_icon"
 import { useNavigation, useFocusEffect } from "@react-navigation/native"
 
 const ProfileHeader = () => {
-  /* const wellness: WellnessState = useSelector(
+  const wellness: WellnessState = useSelector(
     (rootState: RootState) => rootState.wellness
-  ) */
+  )
 
   // const { t } = useTranslation()
   const theme = useTheme()
@@ -51,7 +51,7 @@ const ProfileHeader = () => {
               {wellness.profile ? wellness.profile.points : "0"}
             </Text>
             <Text type="caption" textTransform="uppercase">
-              {t("activities.points")}
+              Pontos
             </Text>
           </View>
           <View style={{ marginRight: 10, height: 40 }}>
@@ -70,6 +70,7 @@ const styles = ({ colors }: ReactNativePaper.Theme) =>
     header: {
       flexDirection: "row",
       justifyContent: "space-between",
+      width: "100%",
       paddingHorizontal: 17,
       paddingVertical: 5,
       backgroundColor: colors.textLight,
