@@ -1,77 +1,63 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Text from '@components/Text';
-import { useTheme, Divider } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
+import React from "react"
+import { View, StyleSheet, TouchableOpacity } from "react-native"
+import Text from "@components/Text"
+import { useTheme } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
 
-const TitleHeader = ({
-  title,
-  text = null,
-  isMain = true,
-  backgroundColor = 'white',
-  counter = null,
-  children,
-}: any) => {
-  const { t } = useTranslation();
+// TODO no children, na verdade ser so uma prop de tipos de icones diferentes com um switch
 
-  const theme = useTheme();
-  const themedStyle = styles(theme);
+const TitleHeader = ({ title = "", hasBackBtn = true, children }: any) => {
+  const theme = useTheme()
+  const themedStyle = styles(theme)
+  const navigation = useNavigation()
+  const goBack = () => navigation.goBack()
 
   return (
-    <View style={{ width: '100%' }}>
-      {isMain && <Divider />}
-      <View style={[themedStyle.header, { backgroundColor }]}>
-        {children && <View style={themedStyle.leftItem} />}
-        <View style={themedStyle.centerItem}>
-          <Text
-            type={isMain ? 'mainheading' : 'header'}
-            family="bold"
-            align="center"
-          >
-            {text ? text : t(`titles.${title}`)}
-          </Text>
-          {counter ? (
-            <Text
-              type="subheading"
-              family="bold"
-              variant="highlight"
-              style={{ paddingTop: 2, paddingLeft: 5 }}
-            >
-              {' '}
-              {counter}
-            </Text>
-          ) : null}
-        </View>
-        {children && <View style={themedStyle.rightItem}>{children}</View>}
+    <View style={themedStyle.header}>
+      <View style={themedStyle.viewW}>
+        {hasBackBtn && (
+          <TouchableOpacity onPress={goBack}>
+            <View style={themedStyle.backBtn}>
+              <Text type="mainheading" family="bold" variant="white">
+                {"<"}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
-      {isMain && <Divider />}
+      <View>
+        {title && (
+          <Text type="header" family="bold" variant="white" align="center">
+            {title}
+          </Text>
+        )}
+      </View>
+      <View style={themedStyle.viewW}>{children}</View>
     </View>
-  );
-};
+  )
+}
 
-export default TitleHeader;
+export default TitleHeader
 
-const styles = ({ colors }: ReactNativePaper.Theme) =>
+const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignContent: 'center',
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignContent: "center",
+      alignItems: "center",
+      height: spacings.headerSize,
       padding: 10,
+      backgroundColor: colors.dark,
+      marginBottom: spacings.padding,
     },
-    leftItem: {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      flex: 1,
+    backBtn: {
+      width: 40,
+      height: 40,
+      backgroundColor: colors.dark,
     },
-    centerItem: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      flex: 3,
+    viewW: {
+      width: 40,
     },
-    rightItem: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      flex: 1,
-    },
-  });
+  })

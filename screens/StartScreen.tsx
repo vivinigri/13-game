@@ -12,8 +12,8 @@ import { RootStackParamList } from "@types"
 type Props = StackScreenProps<RootStackParamList, "StartScreen">
 
 const menu = [
-  { label: "✨ Novo jogo", redirect: "Root" },
-  { label: "💡 Continuar", redirect: "TabTwo" },
+  { label: "✨ Novo jogo", redirect: "SelectTableScreen" },
+  { label: "💡 Continuar", redirect: "Root" },
   { label: "🪑 Mesas", redirect: "TabTwo" },
   { label: "👪 Jogadores", redirect: "TabTwo" },
   { label: "📊 Estatísticas", redirect: "TabTwo" },
@@ -28,7 +28,7 @@ export default function StartScreen({ navigation }: Props) {
   return (
     <View style={themedStyle.container}>
       <LinearGradient
-        colors={[theme.colors.background, theme.colors.dark]}
+        colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
       />
       <Logo color={theme.colors.textPrimary} />

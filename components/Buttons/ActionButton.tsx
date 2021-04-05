@@ -38,7 +38,7 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       width: "100%",
       maxWidth: 300,
       height: 46,
-      borderRadius: 40,
+      borderRadius: 46,
       marginBottom: spacings.padding * 2,
       borderWidth: 2,
       borderColor: colors.cyan,

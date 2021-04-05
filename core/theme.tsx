@@ -52,6 +52,8 @@ declare global {
       padding: number
       section: number
       large: number
+      footerSize: number
+      headerSize: number
     }
 
     interface Theme {
@@ -66,25 +68,25 @@ export const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: "#404088", //"#24283b",
-    dark: "#1A1A3E", //"#1F2335",
-    primary: "#26265C", //"#414868",
+    background: "#1E1E3F", //"#24283b",
+    dark: "#2D2B55",
+    primary: "#222244", //"#414868",
     primaryLight: "#565f89",
     white: "#fff",
     border: "#3D59A1",
 
     // textLight: "#a9b1d6",
-    textLight: "#C2C1D1", //"#d4dbf8",
+    textLight: "#A599E9", //"#d4dbf8",
     textPrimary: "#f7768e",
     textSecondary: "#ff9e64",
     textTertiary: "#e0af68",
     textDark: "#2ac3de",
 
-    backdrop: "#00AEEF",
+    backdrop: "#28284E",
     error: "#f13a59",
     green: "#00D193",
     orange: "#FFA726",
-    yellow: "#FBC02D",
+    yellow: "#FAD000",
     red: "#EB5757",
     lightOrange: "#FFE0B2",
     lightRed: "#ffcdd2",
@@ -146,5 +148,7 @@ export const theme = {
     padding: PixelRatio.getFontScale() * 12,
     section: PixelRatio.getFontScale() * 20,
     large: PixelRatio.getFontScale() * 40,
+    headerSize: PixelRatio.getFontScale() * 60,
+    footerSize: PixelRatio.getFontScale() * 70,
   },
 }

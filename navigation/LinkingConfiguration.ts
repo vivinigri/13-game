@@ -5,6 +5,7 @@ export default {
   config: {
     screens: {
       StartScreen: "start",
+      SelectTableScreen: "mesas",
       Root: {
         screens: {
           TabOne: {

@@ -5,8 +5,8 @@ import * as React from "react"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
-import StartScreen from "../screens/StartScreen"
-import TabTwoScreen from "../screens/TabTwoScreen"
+import StartScreen from "@screens/StartScreen"
+import TabTwoScreen from "@screens/TabTwoScreen"
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types"
 import { useTheme } from "react-native-paper"
 
@@ -22,7 +22,7 @@ export default function BottomTabNavigator() {
       tabBarOptions={{
         activeTintColor: theme.colors.white,
         inactiveTintColor: theme.colors.textLight,
-        activeBackgroundColor: theme.colors.primary,
+        activeBackgroundColor: theme.colors.background,
         inactiveBackgroundColor: theme.colors.primary,
       }}
     >
