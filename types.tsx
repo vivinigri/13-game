@@ -1,3 +1,5 @@
+// Naviagtion
+
 export type RootStackParamList = {
   Root: undefined
   NotFound: undefined
@@ -18,6 +20,8 @@ export type TabTwoParamList = {
   TabTwoScreen: undefined
 }
 
+// Toast
+
 export type Toast = {
   id: string
   variant: "success" | "error" | "info" | "warning"
@@ -27,18 +31,15 @@ export type Toast = {
   label?: string
 }
 
-export enum Naipes {
-  COPAS = 0,
-  OUROS = 1,
-  ESPADAS = 2,
-  PAUS = 3,
-}
+// Game -----------------------
+
+export type Naipes = "copas" | "ouros" | "espadas" | "paus"
 
 export type Table = {
   id: string
   name: string
   players: string[]
-  used: number
+  used?: number
 }
 
 export type Player = {
@@ -48,7 +49,16 @@ export type Player = {
 }
 
 export type Game = {
-  players: string[]
-  points: number[]
-  naipes: number[]
+  table: Table
+  rounds: number[]
+  placar: Placar[]
+  naipes: Naipes[]
+}
+
+export type Placar = {
+  player_id: string
+  acertou: number
+  errou: number
+  placar: number[]
+  final: number
 }

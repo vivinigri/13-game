@@ -6,7 +6,6 @@ import { theme } from "@core/theme"
 import store from "@store"
 
 import useCachedResources from "@hooks/useCachedResources"
-import useColorScheme from "@hooks/useColorScheme"
 import AppContainer from "@components/AppContainer"
 import Navigation from "@navigation"
 

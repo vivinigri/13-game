@@ -1,17 +1,15 @@
 import { Models } from "@rematch/core"
-import { profile, ProfileModel } from "./profile"
+import { current, CurrentModel } from "./current"
 import { toasts, ToastsModel } from "./toasts"
-import { wellness, WellnessModel } from "./wellness"
-
-// type would cause "Dispatch type depends on itself" error
+import { global, GlobalModel } from "./global"
 export interface RootModel extends Models<RootModel> {
-  profile: ProfileModel
+  current: CurrentModel
   toasts: ToastsModel
-  wellness: WellnessModel
+  global: GlobalModel
 }
 
 export const models: RootModel = {
-  profile,
+  current,
   toasts,
-  wellness,
+  global,
 }

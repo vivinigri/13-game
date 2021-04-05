@@ -88,7 +88,7 @@ const Toast = ({
       <View style={styles.iconContainer}>{toastIcons[variant]}</View>
 
       <View style={styles.contentContainer}>
-        <Text type="title" variant="light" family="medium">
+        <Text type="title" variant="white" family="medium">
           {content}
         </Text>
       </View>

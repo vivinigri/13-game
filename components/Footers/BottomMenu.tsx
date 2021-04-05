@@ -40,13 +40,13 @@ const BottomMenu = ({
             onConfirm()
           }}
         >
-          {/* , { opacity: disabled ? 0.3 : 1 } */}
-          <View style={[themedStyle.confirmBtn]}>
+          <View
+            style={[themedStyle.confirmBtn, { opacity: disabled ? 0.3 : 1 }]}
+          >
             <Text
               type="header"
               variant={disabled ? "light" : "white"}
               family="bold"
-              // textTransform="uppercase"
             >
               {`${confirmLabel ? confirmLabel : "Confirmar"}`}
             </Text>
@@ -76,17 +76,14 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       flexDirection: "row",
       alignItems: "center",
       height: spacings.footerSize,
-      padding: 15,
+      padding: spacings.padding,
       backgroundColor: colors.dark,
       position: "absolute",
       bottom: 0,
+      zIndex: 10,
     },
     confirmBtn: {
       backgroundColor: colors.dark,
-      borderRadius: 30,
-      paddingTop: Platform.OS === "ios" ? 7 : 10,
-      paddingBottom: 10,
-      paddingHorizontal: 20,
     },
   })
 
