@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native"
 import { View } from "../components/Themed"
 import Text from "@components/Text"
 import Button from "@components/Buttons/ActionButton"
+import Divider from "@components/Divider"
 import Logo from "@assets/icons/logo"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
@@ -31,7 +32,7 @@ export default function StartScreen({ navigation }: Props) {
         colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
       />
-      <Logo color={theme.colors.textPrimary} />
+      <Logo color={theme.colors.yellow} />
       <Text
         type="header"
         align="center"
@@ -47,11 +48,7 @@ export default function StartScreen({ navigation }: Props) {
       <Text type="title" align="center" variant="white">
         ❝do francês strategie, do grego strátegìa, do latim...❞
       </Text>
-      <View
-        style={themedStyle.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <Divider />
       {menu.map((el) => (
         <Button
           key={el.label}

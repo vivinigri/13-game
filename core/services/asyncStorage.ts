@@ -35,42 +35,52 @@ export async function removeData(key: string) {
 const mockedData: any = {
   globalPlayers: [
     {
-      id: 0,
+      id: "player-ex0ylnlrqv7",
       name: "Sarita",
       games: [],
     },
     {
-      id: 1,
+      id: "player-ycit8vrwah",
       name: "Vivian",
       games: [],
     },
     {
-      id: 2,
+      id: "player-mta2cl8bjbk",
       name: "Flávio",
       games: [],
     },
     {
-      id: 3,
+      id: "player-mm3tme9167i",
       name: "Debora",
       games: [],
     },
     {
-      id: 4,
+      id: "player-yrw1pr86rln",
       name: "Arnaldo",
       games: [],
     },
   ],
   globalTables: [
     {
-      id: 0,
+      id: "table-9rxmy6sfo4l",
       name: "Monday Desert",
-      players: [0, 1, 2, 3],
+      players: [
+        "player-ex0ylnlrqv7",
+        "player-ycit8vrwah",
+        "player-mta2cl8bjbk",
+        "player-mm3tme9167i",
+      ],
       used: 2,
     },
     {
-      id: 1,
-      name: "Sunday Noom",
-      players: [1, 2, 3, 4],
+      id: "table-5bmkwzhqeet",
+      name: "Sunday Noon",
+      players: [
+        "player-ycit8vrwah",
+        "player-mta2cl8bjbk",
+        "player-mm3tme9167i",
+        "player-ex0ylnlrqv7",
+      ],
       used: 1,
     },
   ],

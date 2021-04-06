@@ -6,6 +6,7 @@ import {
   removeData,
   getMockedData,
 } from "@core/services/asyncStorage"
+import { generateQuickGuid } from "@core/helpers/generateRandomString"
 
 export type GlobalState = {
   players: Player[]
@@ -26,6 +27,8 @@ export type GlobalModel = {
   ) => {
     getPlayers: (payload?: any, rootState?: any) => void
     getTables: (payload?: any, rootState?: any) => void
+    createNewPlayer: (payload: string, rootState?: any) => string
+    createNewTable: (payload: any, rootState?: any) => string
   }
 }
 
@@ -55,54 +58,9 @@ export const global: GlobalModel = {
         error,
       }
     },
-    /* loadActions: (
-      state: WellnessState,
-      actions: Action[][],
-      completedActions: Action[][]
-    ) => {
-      return {
-        ...state,
-        actions,
-        completedActions,
-      };
-    },
-    updateProfile: (state: WellnessState, profile: WellnessProfile) => {
-      return {
-        ...state,
-        profile: profile,
-      };
-    },
-    setGoal: (state: WellnessState, updatedGoal: GoalItem) => ({
-      ...state,
-      goals: state.goals.map((goal: GoalItem) => {
-        if (goal.id === updatedGoal.id) {
-          return { ...updatedGoal };
-        }
-        return goal;
-      }),
-    }),
-    setGoals: (state: WellnessState, goals: GoalItem[]) => ({
-      ...state,
-      goals: goals,
-    }),
-    addGoal: (state: WellnessState, goal: GoalItem) => ({
-      ...state,
-      goals: [goal, ...state.goals],
-    }),
-    setBudgets: (state: WellnessState, budgets: WellnessBudget[]) => {
-      return {
-        ...state,
-        budgets,
-      };
-    },
-    setError: (state: WellnessState, error: string) => ({
-      ...state,
-      error,
-    }), */
   },
   effects: (dispatch: Dispatch) => ({
     async getPlayers(payload?: any, rootState?: any) {
-      // const { profile } = rootState;
       try {
         //getData
         const players = await getMockedData("globalPlayers")
@@ -117,6 +75,41 @@ export const global: GlobalModel = {
         dispatch.global.setTables(tables ? tables : [])
       } catch (error) {
         dispatch.global.setError(error.message)
+      }
+    },
+    async createNewPlayer(payload: string, rootState?: any) {
+      const { players } = rootState.global
+      try {
+        const newId = generateQuickGuid("player")
+        const newPlayer: Player = {
+          id: newId,
+          name: payload ? payload : "",
+          games: [],
+        }
+        const newPlayers = [...players, newPlayer]
+        dispatch.global.setPlayers(newPlayers)
+        return newId
+      } catch (error) {
+        dispatch.global.setError(error.message)
+        return "error"
+      }
+    },
+    async createNewTable(payload: any, rootState?: any) {
+      const { tables } = rootState.global
+      try {
+        const newId = generateQuickGuid("table")
+        const newTable: Table = {
+          id: newId,
+          name: payload.name,
+          players: payload.players,
+          used: 0,
+        }
+        const newTables = [...tables, newTable]
+        dispatch.global.setTables(newTables)
+        return newId
+      } catch (error) {
+        dispatch.global.setError(error.message)
+        return "error"
       }
     },
   }),

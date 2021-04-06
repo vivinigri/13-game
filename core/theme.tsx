@@ -78,7 +78,7 @@ export const theme = {
     // textLight: "#a9b1d6",
     textLight: "#A599E9", //"#d4dbf8",
     textPrimary: "#f7768e",
-    textSecondary: "#ff9e64",
+    textSecondary: "#FAD000",
     textTertiary: "#e0af68",
     textDark: "#1E1E3F",
 

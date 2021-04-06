@@ -7,7 +7,8 @@ const Divider = () => {
     <DefaultDivider
       style={{
         backgroundColor: theme.colors.textLight,
-        marginVertical: theme.spacings.padding,
+        marginVertical: theme.spacings.padding * 2,
+        width: "80%",
       }}
     />
   )

@@ -3,8 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
 
-import Colors from "../constants/Colors"
-import useColorScheme from "../hooks/useColorScheme"
 import StartScreen from "@screens/StartScreen"
 import TabTwoScreen from "@screens/TabTwoScreen"
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types"
@@ -13,7 +11,6 @@ import { useTheme } from "react-native-paper"
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
 export default function BottomTabNavigator() {
-  // const colorScheme = useColorScheme()
   const theme = useTheme()
 
   return (

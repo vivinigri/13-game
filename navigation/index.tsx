@@ -9,6 +9,9 @@ import * as React from "react"
 import NotFoundScreen from "@screens/NotFoundScreen"
 import StartScreen from "@screens/StartScreen"
 import SelectTableScreen from "@screens/SelectTableScreen"
+import SelectPlayersScreen from "@screens/SelectPlayersScreen"
+import SelectGameScreen from "@screens/SelectGameScreen"
+import OrderPlayersScreen from "@screens/OrderPlayersScreen"
 import { RootStackParamList } from "../types"
 import BottomTabNavigator from "./BottomTabNavigator"
 import LinkingConfiguration from "./LinkingConfiguration"
@@ -34,6 +37,12 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="StartScreen" component={StartScreen} />
       <Stack.Screen name="SelectTableScreen" component={SelectTableScreen} />
+      <Stack.Screen name="SelectGameScreen" component={SelectGameScreen} />
+      <Stack.Screen name="OrderPlayersScreen" component={OrderPlayersScreen} />
+      <Stack.Screen
+        name="SelectPlayersScreen"
+        component={SelectPlayersScreen}
+      />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"

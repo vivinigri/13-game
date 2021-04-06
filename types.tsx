@@ -5,6 +5,13 @@ export type RootStackParamList = {
   NotFound: undefined
   StartScreen: undefined
   SelectTableScreen: undefined
+  SelectPlayersScreen: {
+    mesa: string
+  }
+  SelectGameScreen: {
+    id: string
+  }
+  OrderPlayersScreen: undefined
 }
 
 export type BottomTabParamList = {

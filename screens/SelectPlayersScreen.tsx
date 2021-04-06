@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState } from "react"
 import {
   StyleSheet,
   TextInput,
@@ -9,30 +9,32 @@ import {
 import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList, Table } from "@types"
+import { Player, RootStackParamList } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
 import TitleHeader from "@components/Headers/TitleHeader"
 import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
-import TableCard from "@components/Cards/TableCard"
-import { GlobalState } from "@store/models/global"
+import PlayerCard from "@components/Cards/PlayerCard"
+import PlayerBubble from "@components/Cards/PlayerBubble"
+import Loading from "@components/Loading"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 
-type Props = StackScreenProps<RootStackParamList, "SelectTableScreen">
+type Props = StackScreenProps<RootStackParamList, "SelectPlayersScreen">
 
-const SelectTableScreen = ({ navigation }: Props) => {
-  const global: GlobalState = useSelector(({ global }: RootState) => global)
-  const { tables, players } = global
+const SelectPlayersScreen = ({ navigation, route }: Props) => {
+  const players: Player[] = useSelector(
+    ({ global }: RootState) => global.players
+  )
 
   const theme = useTheme()
   const themedStyle = styles(theme)
 
-  const [checked, setChecked] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
+  const [jogadores, setJogadores] = useState<string[]>([])
   const [search, setSearch] = useState<string>("")
-  const [allTables, setAllTables] = useState<Table[]>([])
 
   useFocusEffect(
     useCallback(() => {
@@ -41,44 +43,48 @@ const SelectTableScreen = ({ navigation }: Props) => {
     }, [])
   )
 
-  useEffect(() => {
-    const myTables: Table[] = []
-    tables.map((t) => {
-      const names = players
-        .filter((p) => t.players.includes(p.id))
-        .map((m) => m.name)
-      myTables.push({
-        id: t.id,
-        name: t.name,
-        players: names,
-      })
-    })
-    setAllTables(myTables)
-  }, [tables, players])
-
-  const createNewTable = (mesa: string) => {
-    if (tables.some((t) => t.name === mesa)) {
+  const createNewJogador = async (name: string) => {
+    if (players.some((t) => t.name === name)) {
       dispatch.toasts.show({
         variant: "error",
-        content: `Já existe uma mesa com o nome ${mesa}`,
+        content: `Já existe um jogador com o nome ${name}`,
       })
-    } else if (mesa.length === 0) {
+    } else if (name.length === 0) {
       dispatch.toasts.show({
         variant: "error",
-        content: `Nome da mesa é obrigatório`,
+        content: `Nome do jogador é obrigatório`,
       })
     } else {
-      navigation.navigate("SelectPlayersScreen", { mesa })
+      setLoading(true)
+      const newJogador: string = await dispatch.global.createNewPlayer(name)
+      if (newJogador !== "error") {
+        addPlayer(newJogador)
+        setSearch("")
+      }
+      setLoading(false)
     }
   }
 
-  const goToNext = () => {
-    navigation.navigate("SelectGameScreen", { id: checked })
+  const addPlayer = (id: string) => setJogadores([...jogadores, id])
+  const removePlayer = (id: string) =>
+    setJogadores(jogadores.filter((j) => j !== id))
+
+  const createTable = async () => {
+    const payload: any = {
+      name: route.params.mesa,
+      players: jogadores,
+    }
+    const newTable: string = await dispatch.global.createNewTable(payload)
+    navigation.navigate("SelectGameScreen", { id: newTable })
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
     <GradientView>
-      <TitleHeader title="Mesa" />
+      <TitleHeader title="Jogadores" />
       <View style={themedStyle.mainContainer}>
         <Text
           type="header"
@@ -89,7 +95,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
             marginBottom: theme.spacings.padding,
           }}
         >
-          Quem vai jogar?
+          {`Quem tá na mesa ${route.params.mesa}?`}
         </Text>
         <Text
           type="title"
@@ -99,29 +105,25 @@ const SelectTableScreen = ({ navigation }: Props) => {
             marginBottom: theme.spacings.padding * 2,
           }}
         >
-          Busque uma mesa ou crie uma nova
+          Busque jogadores ou crie novos
         </Text>
         <Formik
-          initialValues={{ mesa: "" }}
-          onSubmit={(values) => createNewTable(values.mesa)}
+          initialValues={{ name: "" }}
+          onSubmit={(values) => {
+            createNewJogador(values.name)
+          }}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
+          {({ handleBlur, handleSubmit, values, setFieldValue }) => (
             <View>
               <TextInput
                 style={themedStyle.input}
-                onBlur={handleBlur("mesa")}
+                onBlur={handleBlur("name")}
                 onChangeText={(value) => {
-                  setFieldValue("mesa", value)
+                  setFieldValue("name", value)
                   setSearch(value)
                 }}
-                value={values.mesa}
-                placeholder="Nome da mesa"
+                value={values.name}
+                placeholder="Nome do(a) Jogador(a)"
                 textAlign="center"
               />
               <TouchableOpacity onPress={(values: any) => handleSubmit(values)}>
@@ -139,6 +141,20 @@ const SelectTableScreen = ({ navigation }: Props) => {
             </View>
           )}
         </Formik>
+        <View style={themedStyle.bubblesContainer}>
+          {jogadores.length
+            ? jogadores.map((j) => (
+                <PlayerBubble
+                  key={j}
+                  id={j}
+                  name={
+                    players.filter((p) => p.id === j)[0]?.name || "Undefined"
+                  }
+                  removePlayer={removePlayer}
+                />
+              ))
+            : null}
+        </View>
       </View>
       <View style={{ width: "100%", flex: 1 }}>
         <RoundedHeaderDecoration backgroundColor={theme.colors.textLight} />
@@ -153,19 +169,18 @@ const SelectTableScreen = ({ navigation }: Props) => {
           ]}
         >
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
-            {!!allTables.length ? (
-              allTables
-                .filter((a) =>
-                  search === ""
-                    ? true
-                    : a.name.toLowerCase().includes(search.toLowerCase())
+            {!!players.length ? (
+              players
+                .filter((a: Player) =>
+                  a.name.toLowerCase().includes(search.toLowerCase())
                 )
-                .map((table: Table) => (
-                  <TableCard
-                    key={table.id}
-                    table={table}
-                    setChecked={setChecked}
-                    checked={checked === table.id}
+                .filter((a: Player) => !jogadores.some((j) => j === a.id))
+                .map((a: Player, i: number) => (
+                  <PlayerCard
+                    key={i}
+                    name={a.name}
+                    id={a.id}
+                    addPlayer={addPlayer}
                   />
                 ))
             ) : (
@@ -177,7 +192,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
                   marginBottom: theme.spacings.padding * 2,
                 }}
               >
-                Nenhuma mesa...
+                Nenhum jogador...
               </Text>
             )}
           </View>
@@ -185,15 +200,15 @@ const SelectTableScreen = ({ navigation }: Props) => {
       </View>
 
       <BottomMenu
-        onConfirm={goToNext}
+        onConfirm={createTable}
         confirmLabel="Continuar ➝"
-        disabled={checked !== "" ? false : true}
+        disabled={jogadores.length < 3}
       />
     </GradientView>
   )
 }
 
-export default SelectTableScreen
+export default SelectPlayersScreen
 
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
@@ -219,5 +234,11 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       position: "absolute",
       right: spacings.padding,
       top: -46,
+    },
+    bubblesContainer: {
+      width: "100%",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginHorizontal: spacings.padding * 0.5,
     },
   })
