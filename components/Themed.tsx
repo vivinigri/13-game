@@ -1,5 +1,8 @@
-import * as React from 'react';
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import * as React from "react"
+import { View } from "react-native"
+import { useTheme } from "react-native-paper"
+
+/* import { Text as DefaultText, View as DefaultView } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -38,4 +41,37 @@ export function View(props: ViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+} */
+
+function theme() {
+  const theme = useTheme()
+  const { colors, spacings } = theme
+  return { colors, spacings }
+}
+
+export type ViewProps = View["props"]
+
+export function CardView(props: ViewProps) {
+  const { style, ...otherProps } = props
+
+  return (
+    <View
+      style={[
+        {
+          backgroundColor: theme().colors.primary,
+          width: "80%",
+          marginBottom: theme().spacings.padding,
+          padding: theme().spacings.padding,
+          borderRadius: theme().spacings.section,
+          borderWidth: 2,
+          borderColor: theme().colors.primary,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        },
+        style,
+      ]}
+      {...otherProps}
+    />
+  )
 }

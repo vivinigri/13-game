@@ -1,7 +1,6 @@
 import React from "react"
-import { StyleSheet, TouchableOpacity } from "react-native"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 
-import { View } from "@components/Themed"
 import Text from "@components/Text"
 import { useTheme } from "react-native-paper"
 
@@ -17,13 +16,7 @@ const Button = ({ label, navigate }: ButtonProps) => {
   return (
     <View style={themedStyle.button}>
       <TouchableOpacity onPress={navigate}>
-        <Text
-          type="title"
-          family="medium"
-          // textTransform="uppercase"
-          align="center"
-          variant="white"
-        >
+        <Text type="title" family="medium" align="center" variant="white">
           {label}
         </Text>
       </TouchableOpacity>

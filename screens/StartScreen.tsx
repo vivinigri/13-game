@@ -1,6 +1,5 @@
 import * as React from "react"
-import { StyleSheet } from "react-native"
-import { View } from "../components/Themed"
+import { StyleSheet, View } from "react-native"
 import Text from "@components/Text"
 import Button from "@components/Buttons/ActionButton"
 import Divider from "@components/Divider"
