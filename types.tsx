@@ -15,16 +15,22 @@ export type RootStackParamList = {
 }
 
 export type BottomTabParamList = {
-  TabOne: undefined
-  TabTwo: undefined
+  Apostas: undefined
+  Tabela: undefined
+  Stats: undefined
 }
 
-export type TabOneParamList = {
-  TabOneScreen: undefined
+export type ApostasParamList = {
+  ApostasScreen: undefined
+  ResultadosScreen: undefined
 }
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined
+export type TabelaParamList = {
+  TabelaScreen: undefined
+}
+
+export type StatsParamList = {
+  StatsScreen: undefined
 }
 
 // Toast
@@ -40,7 +46,8 @@ export type Toast = {
 
 // Game -----------------------
 
-export type Naipes = "copas" | "ouros" | "espadas" | "paus"
+export type Naipes = "copas" | "ouros" | "espadas" | "paus" | ""
+export type GameType = "normal" | "novo"
 
 export type Table = {
   id: string
@@ -58,14 +65,20 @@ export type Player = {
 export type Game = {
   table: Table
   rounds: number[]
-  placar: Placar[]
+  type: GameType
   naipes: Naipes[]
+  placar: Placar
 }
 
-export type Placar = {
-  player_id: string
+export type PlacarObject = {
   acertou: number
   errou: number
   placar: number[]
   final: number
+  apostas: number[]
+  acertos: number[]
+}
+
+export type Placar = {
+  [player_id: string]: PlacarObject
 }

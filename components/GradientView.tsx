@@ -38,10 +38,4 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       height: "100%",
       zIndex: -1,
     },
-    separator: {
-      marginVertical: spacings.padding * 2,
-      height: 1,
-      width: "80%",
-      maxWidth: 600,
-    },
   })

@@ -2,11 +2,12 @@ import React from "react"
 import Text from "@components/Text"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { useTheme } from "react-native-paper"
+import { GameType } from "@types"
 
 type GameCardProps = {
   checked: boolean
   setChecked: (type: string) => void
-  type: string
+  type: GameType
   title: string
   description: string
 }

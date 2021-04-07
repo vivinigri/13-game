@@ -92,9 +92,9 @@ export const theme = {
     red: "#B362FF",
     sideMenuFocus: "#FF9D00",
     cyan: "#9EFFFF",
-    green: "#A5FF90",
+    green: "#3AD900",
     silver: "#FB94FF",
-    highlight: "#3AD900",
+    highlight: "#A5FF90",
     error: "#EC3A37",
 
     lightGreen: "#C1F4E5",

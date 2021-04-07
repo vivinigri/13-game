@@ -8,7 +8,7 @@ type CircleButtonProps = {
   size: number
   label: string
   color: string
-}
+} & View["props"]
 
 const CircleButton = ({
   label,
@@ -16,19 +16,23 @@ const CircleButton = ({
   color = "white",
   disabled = false,
   onPress = undefined,
+  ...props
 }: CircleButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View
-        style={{
-          width: size,
-          height: size,
-          borderRadius: size,
-          borderWidth: 2,
-          borderColor: color,
-          opacity: disabled ? 0.3 : 1,
-          justifyContent: "center",
-        }}
+        style={[
+          {
+            width: size,
+            height: size,
+            borderRadius: size,
+            borderWidth: 2,
+            borderColor: color,
+            opacity: disabled ? 0.3 : 1,
+            justifyContent: "center",
+          },
+          props.style || {},
+        ]}
       >
         <Text
           type="mainheading"

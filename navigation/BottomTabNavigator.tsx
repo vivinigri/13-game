@@ -1,11 +1,15 @@
+import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
-import * as React from "react"
-
-import StartScreen from "@screens/StartScreen"
 import TabTwoScreen from "@screens/TabTwoScreen"
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types"
+import ApostasScreen from "@screens/ApostasScreen"
+import {
+  BottomTabParamList,
+  ApostasParamList,
+  TabelaParamList,
+  StatsParamList,
+} from "../types"
 import { useTheme } from "react-native-paper"
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
@@ -15,29 +19,37 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Apostas"
       tabBarOptions={{
-        activeTintColor: theme.colors.white,
+        activeTintColor: theme.colors.yellow,
         inactiveTintColor: theme.colors.textLight,
         activeBackgroundColor: theme.colors.background,
         inactiveBackgroundColor: theme.colors.primary,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Apostas"
+        component={ApostasNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="pencil" color={color} />,
+          // tabBarLabel: () => "",
+        }}
+      />
+      <BottomTab.Screen
+        name="Tabela"
+        component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="grid-outline" color={color} />
           ),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Stats"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="bar-chart-outline" color={color} />
           ),
         }}
       />
@@ -54,22 +66,18 @@ function TabBarIcon(props: {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>()
-
-function TabOneNavigator() {
+const TabOneStack = createStackNavigator<ApostasParamList>()
+function ApostasNavigator() {
   const theme = useTheme()
-
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="StartScreen"
-        component={StartScreen}
+        name="ApostasScreen"
+        component={ApostasScreen}
         options={{
-          title: "",
+          title: "Apostas",
           headerStyle: {
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.dark,
             borderBottomColor: theme.colors.background,
           },
           headerTintColor: theme.colors.white,
@@ -82,13 +90,12 @@ function TabOneNavigator() {
   )
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>()
-
+const TabTwoStack = createStackNavigator<TabelaParamList>()
 function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
+        name="TabelaScreen"
         component={TabTwoScreen}
         options={{ headerTitle: "Tab Two Title" }}
       />

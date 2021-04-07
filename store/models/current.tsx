@@ -1,5 +1,5 @@
 import { Dispatch } from ".."
-import { Player, Table, Game, Placar, Naipes } from "@types"
+import { Player, Table, GameType, Placar, Naipes, PlacarObject } from "@types"
 import { getData, storeData, removeData } from "@core/services/asyncStorage"
 
 // TODO ao terminar o jogo, transformar esses dados em new Game e salvar no localStorage GLOBAL,
@@ -8,9 +8,9 @@ export type CurrentState = {
   players: Player[]
   table: Table
   // game: Game
-  type: string
+  type: GameType
   rounds: number
-  placar: Placar[]
+  placar: Placar
   naipes: Naipes[]
   error: string
   hands: number[]
@@ -22,20 +22,33 @@ export type CurrentModel = {
   reducers: {
     setTable: (state: CurrentState, table: Table) => CurrentState
     setPlayers: (state: CurrentState, players: Player[]) => CurrentState
-    setType: (state: CurrentState, type: string) => CurrentState
+    setType: (state: CurrentState, type: GameType) => CurrentState
     setHands: (state: CurrentState, hands: number[]) => CurrentState
     setRounds: (state: CurrentState, rounds: number) => CurrentState
+    setPlacar: (state: CurrentState, placar: Placar) => CurrentState
   }
-  effects: (dispatch: Dispatch) => {}
+  effects: (
+    dispatch: Dispatch
+  ) => {
+    initPlacar: (payload?: any, rootState?: any) => void
+  }
 }
 
 const defaultTable: Table = { id: "", name: "", players: [], used: 0 }
+const defaultPlacar: PlacarObject = {
+  acertou: 0,
+  errou: 0,
+  placar: [],
+  final: 0,
+  apostas: [],
+  acertos: [],
+}
 
 export const current: CurrentModel = {
   state: {
     players: [],
     table: defaultTable,
-    placar: [],
+    placar: {},
     naipes: [],
     rounds: 0,
     type: "normal",
@@ -56,7 +69,7 @@ export const current: CurrentModel = {
         players,
       }
     },
-    setType: (state: CurrentState, type: string) => {
+    setType: (state: CurrentState, type: GameType) => {
       return {
         ...state,
         type,
@@ -74,6 +87,25 @@ export const current: CurrentModel = {
         rounds,
       }
     },
+    setPlacar: (state: CurrentState, placar: Placar) => {
+      return {
+        ...state,
+        placar,
+      }
+    },
   },
-  effects: (dispatch: Dispatch) => ({}),
+  effects: (dispatch: Dispatch) => ({
+    async initPlacar(payload?: any, rootState?: any) {
+      const { players } = rootState.current
+      try {
+        const placar: Placar = {}
+        players.forEach((p: Player) => {
+          placar[p.id] = defaultPlacar
+        })
+        dispatch.current.setPlacar(placar)
+      } catch (error) {
+        dispatch.global.setError(error.message)
+      }
+    },
+  }),
 }

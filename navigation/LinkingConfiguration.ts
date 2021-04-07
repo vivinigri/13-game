@@ -9,6 +9,7 @@ export default {
       SelectPlayersScreen: "jogadores",
       SelectGameScreen: "game",
       OrderPlayersScreen: "order",
+      ApostasScreen: "apostas",
       Root: {
         screens: {
           TabOne: {

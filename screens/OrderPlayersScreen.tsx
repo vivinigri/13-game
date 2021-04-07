@@ -66,8 +66,8 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const goToNext = () => {
     dispatch.current.setPlayers(playerOrder)
-    // TODO go to main game
-    // navigation.navigate("GameScreen")
+    dispatch.current.initPlacar()
+    navigation.navigate("Root")
   }
 
   return (
