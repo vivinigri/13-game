@@ -17,6 +17,7 @@ import TitleHeader from "@components/Headers/TitleHeader"
 import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
 import PlayerCard from "@components/Cards/PlayerCard"
 import PlayerBubble from "@components/Cards/PlayerBubble"
+import BallButton from "@components/Buttons/BallButton"
 import Loading from "@components/Loading"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
@@ -36,12 +37,12 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
   const [jogadores, setJogadores] = useState<string[]>([])
   const [search, setSearch] = useState<string>("")
 
-  useFocusEffect(
+  /* useFocusEffect(
     useCallback(() => {
       dispatch.global.getTables()
       dispatch.global.getPlayers()
     }, [])
-  )
+  ) */
 
   const createNewJogador = async (name: string) => {
     if (players.some((t) => t.name === name)) {
@@ -126,18 +127,10 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
                 placeholder="Nome do(a) Jogador(a)"
                 textAlign="center"
               />
-              <TouchableOpacity onPress={(values: any) => handleSubmit(values)}>
-                <View style={themedStyle.addButton}>
-                  <Text
-                    type="mainheading"
-                    align="center"
-                    variant="white"
-                    family="bold"
-                  >
-                    +
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <BallButton
+                label="+"
+                onPress={(values: any) => handleSubmit(values)}
+              />
             </View>
           )}
         </Formik>
@@ -147,6 +140,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
                 <PlayerBubble
                   key={j}
                   id={j}
+                  label="✗"
                   name={
                     players.filter((p) => p.id === j)[0]?.name || "Undefined"
                   }
@@ -225,15 +219,6 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       padding: spacings.padding,
       borderRadius: 50,
       marginHorizontal: spacings.padding,
-    },
-    addButton: {
-      backgroundColor: colors.yellow,
-      width: 40,
-      height: 40,
-      borderRadius: 40,
-      position: "absolute",
-      right: spacings.padding,
-      top: -46,
     },
     bubblesContainer: {
       width: "100%",

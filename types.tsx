@@ -46,8 +46,18 @@ export type Toast = {
 
 // Game -----------------------
 
-export type Naipes = "copas" | "ouros" | "espadas" | "paus" | ""
-export type GameType = "normal" | "novo"
+export enum Naipes {
+  COPAS = "copas",
+  OUROS = "ouros",
+  ESPADAS = "espadas",
+  PAUS = "paus",
+  UNDEFINED = "",
+}
+export enum GameType {
+  NORMAL = "normal",
+  NOVO = "novo",
+  UNDEFINED = "",
+}
 
 export type Table = {
   id: string

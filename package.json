@@ -20,6 +20,7 @@
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
     "@rematch/core": "^2.0.1",
+    "@rematch/persist": "^2.0.1",
     "dayjs": "^1.10.4",
     "expo": "~40.0.0",
     "expo-asset": "~8.2.1",

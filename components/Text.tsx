@@ -3,6 +3,21 @@ import { StyleProp, Text as NativeText, TextStyle } from "react-native"
 
 import { useTheme } from "react-native-paper"
 
+export type TextVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "light"
+  | "dark"
+  | "error"
+  | "warning"
+  | "disabled"
+  | "default"
+  | "highlight"
+  | "green"
+  | "atention"
+  | "white"
+
 type Props = React.ComponentProps<typeof NativeText> & {
   type:
     | "giga"
@@ -15,20 +30,7 @@ type Props = React.ComponentProps<typeof NativeText> & {
     | "caption"
   children: React.ReactNode
   family?: "bold" | "medium" | "regular" | "cursive"
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "light"
-    | "dark"
-    | "error"
-    | "warning"
-    | "disabled"
-    | "default"
-    | "highlight"
-    | "green"
-    | "atention"
-    | "white"
+  variant?: TextVariant
   align?: "left" | "center" | "right"
   textTransform?: "none" | "uppercase"
   style?: StyleProp<TextStyle>

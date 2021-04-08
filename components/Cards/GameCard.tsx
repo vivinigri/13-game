@@ -6,7 +6,7 @@ import { GameType } from "@types"
 
 type GameCardProps = {
   checked: boolean
-  setChecked: (type: string) => void
+  setChecked: (type: GameType) => void
   type: GameType
   title: string
   description: string

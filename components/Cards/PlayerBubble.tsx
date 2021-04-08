@@ -6,28 +6,43 @@ import Text from "@components/Text"
 type PlayerBubbleProps = {
   name: string
   id: string
-  removePlayer: (id: string) => void
+  removePlayer?: (id: string) => void
+  color?: string
+  label: string
 }
-const PlayerBubble = ({ name, id, removePlayer }: PlayerBubbleProps) => {
+const PlayerBubble = ({
+  name,
+  id,
+  removePlayer,
+  label,
+  color,
+}: PlayerBubbleProps) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
+  const onPressEvent = () => removePlayer && removePlayer(id)
 
   return (
     <View style={themedStyle.playerBubble}>
       <Text type="title" variant="light">
         {name}
       </Text>
-      <TouchableOpacity onPress={() => removePlayer(id)}>
-        <View style={themedStyle.checked}>
+      <TouchableOpacity onPress={onPressEvent}>
+        <View
+          style={[
+            themedStyle.checked,
+            { borderColor: color ? color : theme.colors.textLight },
+          ]}
+        >
           <Text
-            type="header"
+            type="subheading"
             variant="light"
             align="center"
             style={{
               marginBottom: theme.spacings.padding,
+              color: color ? color : theme.colors.textLight,
             }}
           >
-            ✗
+            {label}
           </Text>
         </View>
       </TouchableOpacity>
@@ -40,10 +55,10 @@ export default PlayerBubble
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     playerBubble: {
-      height: 50,
-      borderRadius: 40,
-      padding: 5,
-      paddingLeft: 15,
+      height: spacings.padding * 4,
+      borderRadius: spacings.padding * 3,
+      padding: spacings.padding * 0.5,
+      paddingLeft: spacings.padding,
       minWidth: 120,
       backgroundColor: colors.backdrop,
       marginHorizontal: spacings.padding * 0.5,
@@ -55,9 +70,9 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       maxWidth: "100%",
     },
     checked: {
-      width: 40,
-      height: 40,
-      borderRadius: 40,
+      width: spacings.padding * 2.5,
+      height: spacings.padding * 2.5,
+      borderRadius: spacings.padding * 2.5,
       borderWidth: 2,
       borderColor: colors.textLight,
     },

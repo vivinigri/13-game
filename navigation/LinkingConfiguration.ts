@@ -6,8 +6,8 @@ export default {
     screens: {
       StartScreen: "start",
       SelectTableScreen: "mesas",
-      SelectPlayersScreen: "jogadores",
-      SelectGameScreen: "game",
+      SelectPlayersScreen: "jogadores/:mesa",
+      SelectGameScreen: "game/type/:id",
       OrderPlayersScreen: "order",
       Root: {
         screens: {

@@ -27,6 +27,11 @@ const ApostaCard = ({
 }: ApostaCardProps) => {
   const theme = useTheme()
   const [aposta, setAposta] = useState<number | null>(selected)
+
+  React.useEffect(() => {
+    setAposta(selected)
+  }, [id])
+
   const color = (i: number) =>
     aposta === i ? theme.colors.yellow : theme.colors.textLight
 
@@ -80,6 +85,7 @@ const ApostaCard = ({
       >
         {Array.from(Array(numCards + 1).keys()).map((i: number) => (
           <CircleButton
+            key={i}
             size={theme.spacings.padding * 3}
             label={i.toString()}
             color={color(i)}

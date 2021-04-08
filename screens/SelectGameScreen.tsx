@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList, Table } from "@types"
+import { RootStackParamList, Table, GameType } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
@@ -21,7 +21,7 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
 
-  const [checked, setChecked] = useState<string>("")
+  const [checked, setChecked] = useState<GameType>(GameType.UNDEFINED)
 
   const maxCards = useCallback(() => {
     const table = tables.filter((t) => t.id === id)[0]
@@ -53,10 +53,10 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     dispatch.current.setTable(table)
     dispatch.current.setType(checked)
     dispatch.current.setRounds(
-      checked === "normal" ? 2 * max - 1 : max - 1 + nPlayers
+      checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
     )
     dispatch.current.setHands(
-      checked === "normal" ? handsNormal(max) : handsNovo(max, nPlayers)
+      checked === GameType.NOVO ? handsNormal(max) : handsNovo(max, nPlayers)
     )
     navigation.navigate("OrderPlayersScreen")
   }
@@ -101,18 +101,18 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
         >
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
             <GameCard
-              type="normal"
+              type={GameType.NORMAL}
               title="Sobe e Desce"
               description="Vai ao máximo e volta ao mínimo"
               setChecked={setChecked}
-              checked={checked === "normal"}
+              checked={checked === GameType.NORMAL}
             />
             <GameCard
-              type="novo"
+              type={GameType.NOVO}
               title="Sobe e Fica"
               description={`Vai ao máximo e repete ${numPlayers()}X`}
               setChecked={setChecked}
-              checked={checked === "novo"}
+              checked={checked === GameType.NOVO}
             />
           </View>
         </ScrollView>

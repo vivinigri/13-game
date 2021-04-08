@@ -20,34 +20,30 @@ const TrunfoCard = ({ trunfo, setTrunfo }: TrunfoCardProps) => {
     <CardView>
       <CircleButton
         size={size}
-        // label="♡"
         label="♥️"
-        color={color("copas")}
-        onPress={() => setTrunfo("copas")}
+        color={color(Naipes.COPAS)}
+        onPress={() => setTrunfo(Naipes.COPAS)}
       />
       <CircleButton
         size={size}
-        // label="♢"
         label="♦️"
-        color={color("ouros")}
-        onPress={() => setTrunfo("ouros")}
+        color={color(Naipes.OUROS)}
+        onPress={() => setTrunfo(Naipes.OUROS)}
       />
       <Text type="title" align="center" variant="white">
         Trunfo
       </Text>
       <CircleButton
         size={size}
-        // label="♡"
         label="♠️"
-        color={color("espadas")}
-        onPress={() => setTrunfo("espadas")}
+        color={color(Naipes.ESPADAS)}
+        onPress={() => setTrunfo(Naipes.ESPADAS)}
       />
       <CircleButton
         size={size}
-        // label="♢"
         label="♣️"
-        color={color("paus")}
-        onPress={() => setTrunfo("paus")}
+        color={color(Naipes.PAUS)}
+        onPress={() => setTrunfo(Naipes.PAUS)}
       />
     </CardView>
   )

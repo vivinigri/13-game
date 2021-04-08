@@ -31,23 +31,27 @@ export default function StartScreen({ navigation }: Props) {
         colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
       />
-      <Logo color={theme.colors.yellow} />
+      <Logo color={theme.colors.orange} />
       <Text
         type="header"
         align="center"
         variant="white"
         family="bold"
         style={{
-          marginTop: 30,
-          marginBottom: 15,
+          marginTop: theme.spacings.padding * 3,
+          marginBottom: theme.spacings.padding * 2,
         }}
       >
         Um jogo de estratégia!
       </Text>
-      <Text type="title" align="center" variant="white">
+      <Text
+        type="title"
+        align="center"
+        variant="white"
+        style={{ marginBottom: theme.spacings.padding * 3 }}
+      >
         ❝do francês strategie, do grego strátegìa, do latim...❞
       </Text>
-      <Divider />
       {menu.map((el) => (
         <Button
           key={el.label}

@@ -1,4 +1,4 @@
-import { Dispatch } from ".."
+import { Dispatch, RootState } from ".."
 import { Player, Table, Game, Placar } from "@types"
 import {
   getData,
@@ -25,10 +25,11 @@ export type GlobalModel = {
   effects: (
     dispatch: Dispatch
   ) => {
-    getPlayers: (payload?: any, rootState?: any) => void
-    getTables: (payload?: any, rootState?: any) => void
+    /* getPlayers: (rootState: RootState) => Player[]
+    getTables: (rootState: RootState) => Table[] */
     createNewPlayer: (payload: string, rootState?: any) => string
     createNewTable: (payload: any, rootState?: any) => string
+    // fetchPlayers: (payload?: any, rootState?: any) => void
   }
 }
 
@@ -60,23 +61,12 @@ export const global: GlobalModel = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async getPlayers(payload?: any, rootState?: any) {
-      try {
-        //getData
-        const players = await getMockedData("globalPlayers")
-        dispatch.global.setPlayers(players ? players : [])
-      } catch (error) {
-        dispatch.global.setError(error.message)
-      }
+    /* getPlayers(rootState: RootState) {
+      return rootState.global.players
     },
-    async getTables(payload?: any, rootState?: any) {
-      try {
-        const tables = await getMockedData("globalTables")
-        dispatch.global.setTables(tables ? tables : [])
-      } catch (error) {
-        dispatch.global.setError(error.message)
-      }
-    },
+    getTables(rootState: RootState) {
+      return rootState.global.tables
+    }, */
     async createNewPlayer(payload: string, rootState?: any) {
       const { players } = rootState.global
       try {
@@ -112,5 +102,22 @@ export const global: GlobalModel = {
         return "error"
       }
     },
+    /* async fetchPlayers(payload?: any, rootState?: any) {
+      try {
+        //getData
+        const players = await getMockedData("globalPlayers")
+        dispatch.global.setPlayers(players ? players : [])
+      } catch (error) {
+        dispatch.global.setError(error.message)
+      }
+    },
+    async fetchTables(payload?: any, rootState?: any) {
+      try {
+        const tables = await getMockedData("globalTables")
+        dispatch.global.setTables(tables ? tables : [])
+      } catch (error) {
+        dispatch.global.setError(error.message)
+      }
+    }, */
   }),
 }

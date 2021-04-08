@@ -1,11 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react"
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native"
+import { StyleSheet, TextInput, View, ScrollView, Image } from "react-native"
 import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -16,10 +10,12 @@ import BottomMenu from "@components/Footers/BottomMenu"
 import TitleHeader from "@components/Headers/TitleHeader"
 import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
 import TableCard from "@components/Cards/TableCard"
+import BallButton from "@components/Buttons/BallButton"
 import { GlobalState } from "@store/models/global"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
+import BgImage from "@assets/images/"
 
 type Props = StackScreenProps<RootStackParamList, "SelectTableScreen">
 
@@ -34,12 +30,12 @@ const SelectTableScreen = ({ navigation }: Props) => {
   const [search, setSearch] = useState<string>("")
   const [allTables, setAllTables] = useState<Table[]>([])
 
-  useFocusEffect(
+  /* useFocusEffect(
     useCallback(() => {
-      dispatch.global.getTables()
-      dispatch.global.getPlayers()
+      dispatch.global.fetchTables()
+      dispatch.global.fetchPlayers()
     }, [])
-  )
+  ) */
 
   useEffect(() => {
     const myTables: Table[] = []
@@ -105,13 +101,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
           initialValues={{ mesa: "" }}
           onSubmit={(values) => createNewTable(values.mesa)}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
+          {({ handleBlur, handleSubmit, values, setFieldValue }) => (
             <View>
               <TextInput
                 style={themedStyle.input}
@@ -124,18 +114,10 @@ const SelectTableScreen = ({ navigation }: Props) => {
                 placeholder="Nome da mesa"
                 textAlign="center"
               />
-              <TouchableOpacity onPress={(values: any) => handleSubmit(values)}>
-                <View style={themedStyle.addButton}>
-                  <Text
-                    type="mainheading"
-                    align="center"
-                    variant="white"
-                    family="bold"
-                  >
-                    +
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <BallButton
+                label="+"
+                onPress={(values: any) => handleSubmit(values)}
+              />
             </View>
           )}
         </Formik>
@@ -210,14 +192,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       padding: spacings.padding,
       borderRadius: 50,
       marginHorizontal: spacings.padding,
-    },
-    addButton: {
-      backgroundColor: colors.yellow,
-      width: 40,
-      height: 40,
-      borderRadius: 40,
-      position: "absolute",
-      right: spacings.padding,
-      top: -46,
     },
   })

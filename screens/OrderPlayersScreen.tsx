@@ -28,11 +28,11 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const [playerOrder, setPlayerOrder] = useState<Player[]>([])
 
-  useFocusEffect(
+  /* useFocusEffect(
     useCallback(() => {
       dispatch.global.getPlayers()
     }, [])
-  )
+  ) */
 
   useEffect(() => {
     const myPlayers: Player[] = players.filter((a: Player) =>
