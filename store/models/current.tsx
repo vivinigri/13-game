@@ -31,6 +31,7 @@ export type CurrentModel = {
     dispatch: Dispatch
   ) => {
     initPlacar: (payload?: any, rootState?: any) => void
+    setApostas: (apostas: number[], rootState?: any) => void
   }
 }
 
@@ -51,7 +52,7 @@ export const current: CurrentModel = {
     placar: {},
     naipes: [],
     rounds: 0,
-    type: "normal",
+    type: GameType.UNDEFINED,
     hands: [],
     currentRound: 0,
     error: "",
@@ -103,6 +104,19 @@ export const current: CurrentModel = {
           placar[p.id] = defaultPlacar
         })
         dispatch.current.setPlacar(placar)
+      } catch (error) {
+        dispatch.global.setError(error.message)
+      }
+    },
+    async setApostas(apostas: number[], rootState?: any) {
+      const { placar, players, currentRound } = rootState.current
+      const newPlacar = { ...placar }
+      const ids = players.map((p: Player) => p.id)
+      try {
+        ids.forEach((id: string, i: number) => {
+          newPlacar[id].apostas[currentRound] = apostas[i]
+        })
+        dispatch.current.setPlacar(newPlacar)
       } catch (error) {
         dispatch.global.setError(error.message)
       }

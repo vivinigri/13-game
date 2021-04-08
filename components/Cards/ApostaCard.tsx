@@ -14,6 +14,8 @@ type ApostaCardProps = {
   confirm: (id: string, aposta: number) => void
   cancel: () => void
   selected: number | null
+  totalPlayers: number
+  totalApostas: number
 }
 
 const ApostaCard = ({
@@ -24,6 +26,8 @@ const ApostaCard = ({
   cancel,
   selected,
   index,
+  totalPlayers,
+  totalApostas,
 }: ApostaCardProps) => {
   const theme = useTheme()
   const [aposta, setAposta] = useState<number | null>(selected)
@@ -83,19 +87,23 @@ const ApostaCard = ({
           justifyContent: "center",
         }}
       >
-        {Array.from(Array(numCards + 1).keys()).map((i: number) => (
-          <CircleButton
-            key={i}
-            size={theme.spacings.padding * 3}
-            label={i.toString()}
-            color={color(i)}
-            onPress={() => setAposta(i)}
-            style={{
-              marginHorizontal: theme.spacings.padding * 0.5,
-              marginVertical: theme.spacings.padding * 0.5,
-            }}
-          />
-        ))}
+        {Array.from(Array(numCards + 1).keys()).map((i: number) => {
+          if (index !== totalPlayers - 1 || i !== numCards - totalApostas) {
+            return (
+              <CircleButton
+                key={i}
+                size={theme.spacings.padding * 3}
+                label={i.toString()}
+                color={color(i)}
+                onPress={() => setAposta(i)}
+                style={{
+                  marginHorizontal: theme.spacings.padding * 0.5,
+                  marginVertical: theme.spacings.padding * 0.5,
+                }}
+              />
+            )
+          }
+        })}
       </View>
     </CardView>
   )

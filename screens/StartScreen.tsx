@@ -1,8 +1,7 @@
 import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import Text from "@components/Text"
-import Button from "@components/Buttons/ActionButton"
-import Divider from "@components/Divider"
+import { ActionButton } from "@components/Buttons"
 import Logo from "@assets/icons/logo"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
@@ -53,10 +52,10 @@ export default function StartScreen({ navigation }: Props) {
         ❝do francês strategie, do grego strátegìa, do latim...❞
       </Text>
       {menu.map((el) => (
-        <Button
+        <ActionButton
           key={el.label}
           label={el.label}
-          navigate={() => navigate(el.redirect)}
+          onPress={() => navigate(el.redirect)}
         />
       ))}
     </View>

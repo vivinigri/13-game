@@ -55,6 +55,7 @@ const ApostasScreen = () => {
   }
 
   const closeApostas = () => {
+    dispatch.current.setApostas(aposta)
     // navigation.navigate("GameScreen")
   }
 
@@ -105,7 +106,9 @@ const ApostasScreen = () => {
               const { width, height } = e.nativeEvent.layout
               console.log("width, height", width, height)
             }}
-          ></View> */}
+          >
+          <Background color={theme.colors.yellow} />
+          </View> */}
           <View
             style={[
               themedStyle.mainContainer,
@@ -121,6 +124,8 @@ const ApostasScreen = () => {
               index={index}
               confirm={confirmAposta}
               cancel={cancelAposta}
+              totalPlayers={players.length}
+              totalApostas={aposta.length ? aposta.reduce((a, b) => a + b) : 0}
             />
             <View style={themedStyle.bubblesContainer}>
               {aposta.map((a: number, i: number) => (
@@ -133,7 +138,6 @@ const ApostasScreen = () => {
                 />
               ))}
             </View>
-            {/* <Background color={theme.colors.yellow} /> */}
           </View>
         </ScrollView>
         <View style={themedStyle.actionBtnView}>

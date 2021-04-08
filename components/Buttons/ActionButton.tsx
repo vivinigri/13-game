@@ -12,7 +12,7 @@ import { useTheme } from "react-native-paper"
 type ButtonProps = {
   label: string
   onPress?: (event: GestureResponderEvent) => void | undefined
-  disabled: boolean
+  disabled?: boolean
 } & View["props"]
 
 const Button = ({
