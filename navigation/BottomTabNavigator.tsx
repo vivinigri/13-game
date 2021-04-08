@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
 import TabTwoScreen from "@screens/TabTwoScreen"
 import ApostasScreen from "@screens/ApostasScreen"
+import ResultadosScreen from "@screens/ResultadosScreen"
 import {
   BottomTabParamList,
   ApostasParamList,
@@ -76,6 +77,21 @@ function ApostasNavigator() {
         component={ApostasScreen}
         options={{
           title: "Apostas",
+          headerStyle: {
+            backgroundColor: theme.colors.dark,
+            borderBottomColor: theme.colors.background,
+          },
+          headerTintColor: theme.colors.white,
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <TabOneStack.Screen
+        name="ResultadosScreen"
+        component={ResultadosScreen}
+        options={{
+          title: "Resultados",
           headerStyle: {
             backgroundColor: theme.colors.dark,
             borderBottomColor: theme.colors.background,

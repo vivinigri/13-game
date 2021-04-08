@@ -1,37 +1,39 @@
-import React, { useCallback, useState } from "react"
-import { StyleSheet, View, ScrollView, Image } from "react-native"
+import React, { useState } from "react"
+import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { Naipes, ApostasParamList } from "@types"
+import { ApostasParamList } from "@types"
 import { Text, GradientView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
-import { TrunfoCard, ApostaCard, PlayerBubble } from "@components/Cards"
+import { ResultadoCard } from "@components/Cards"
 import { ActionButton } from "@components/Buttons"
 
-type Props = BottomTabScreenProps<ApostasParamList, "ApostasScreen">
+type Props = BottomTabScreenProps<ApostasParamList, "ResultadosScreen">
 
-// TODO header undo all button (so limpar as apostas useState)
-const ApostasScreen = ({ navigation }: Props) => {
+// TODO header resetar rodada. Deu algo errado e tem que recomecar as apostas
+// voltar para apostas e limpar elas do current
+
+// TODO validar total de levadas
+const ResultadosScreen = ({ navigation }: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { currentRound, players, hands } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
 
-  const [trunfo, setTrunfo] = useState<Naipes>(Naipes.UNDEFINED)
-  const [aposta, setAposta] = useState<number[]>([])
-  const [index, setIndex] = useState<number>(0)
+  const [resultados, setResultados] = useState<number[]>([])
+  const [hasError, setHasError] = useState<boolean>(false)
 
-  useFocusEffect(
-    useCallback(() => {
-      setTrunfo(Naipes.UNDEFINED)
-    }, [currentRound])
-  )
+  const confirmResultado = (index: number, levou: number) => {
+    const newResultados = [...resultados]
+    newResultados[index] = levou
+    setResultados(newResultados)
+  }
 
-  const confirmAposta = (id: string, value: number) => {
+  /* const confirmAposta = (id: string, value: number) => {
     const newApostas = [...aposta]
     newApostas[index] = value
     setAposta(newApostas)
@@ -46,10 +48,11 @@ const ApostasScreen = ({ navigation }: Props) => {
     setAposta(newApostas)
     setIndex(index - 1)
   }
-
+ */
   const closeApostas = () => {
-    dispatch.current.setApostas(aposta)
-    navigation.navigate("ResultadosScreen")
+    // TODO dispatch.current.setResultados(aposta)
+    // TODO dispatch.current.currentRound++
+    // navigation.navigate("ApostasScreen")
   }
 
   return (
@@ -92,35 +95,22 @@ const ApostasScreen = ({ navigation }: Props) => {
               { alignItems: "center", zIndex: 10, marginTop: 20 },
             ]}
           >
-            <TrunfoCard trunfo={trunfo} setTrunfo={setTrunfo} />
-            <ApostaCard
-              name={players[index].name}
-              id={players[index].id}
-              numCards={hands[currentRound]}
-              selected={aposta[index] || null}
-              index={index}
-              confirm={confirmAposta}
-              cancel={cancelAposta}
-              totalPlayers={players.length}
-              totalApostas={aposta.length ? aposta.reduce((a, b) => a + b) : 0}
-            />
-            <View style={themedStyle.bubblesContainer}>
-              {aposta.map((a: number, i: number) => (
-                <PlayerBubble
-                  key={i}
-                  color={theme.colors.yellow}
-                  label={a.toString()}
-                  name={players[i].name}
-                  id={players[i].id}
-                />
-              ))}
-            </View>
+            {players.map((p, i) => (
+              <ResultadoCard
+                key={p.id}
+                name={p.name}
+                index={i}
+                numCards={hands[currentRound]}
+                aposta={current.placar[p.id].apostas[currentRound]}
+                setResultado={confirmResultado}
+              />
+            ))}
           </View>
         </ScrollView>
         <View style={themedStyle.actionBtnView}>
           <ActionButton
             label="Confirmar"
-            disabled={trunfo === Naipes.UNDEFINED || index < players.length - 1}
+            disabled={resultados.length < players.length || hasError}
             onPress={closeApostas}
             style={{ maxWidth: 200 }}
           />
@@ -130,7 +120,7 @@ const ApostasScreen = ({ navigation }: Props) => {
   )
 }
 
-export default ApostasScreen
+export default ResultadosScreen
 
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
@@ -138,12 +128,6 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       justifyContent: "flex-start",
       width: "100%",
       maxWidth: 600,
-    },
-    bubblesContainer: {
-      flexDirection: "row",
-      maxWidth: "100%",
-      flexWrap: "wrap",
-      justifyContent: "center",
     },
     actionBtnView: {
       width: "100%",

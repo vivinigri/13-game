@@ -14,6 +14,7 @@ export default {
           Apostas: {
             screens: {
               ApostasScreen: "apostas",
+              ResultadosScreen: "resultados",
             },
           },
           TabTwo: {
