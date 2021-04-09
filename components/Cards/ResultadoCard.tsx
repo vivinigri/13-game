@@ -63,6 +63,7 @@ const ResultadoCard = ({
             label="🗸"
             color={theme.colors.green}
             onPress={() => {
+              setLevou(null)
               setAcertou(true)
               setResultado(index, aposta)
             }}

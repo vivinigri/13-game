@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
@@ -16,7 +16,6 @@ type Props = BottomTabScreenProps<ApostasParamList, "ResultadosScreen">
 // TODO header resetar rodada. Deu algo errado e tem que recomecar as apostas
 // voltar para apostas e limpar elas do current
 
-// TODO validar total de levadas
 const ResultadosScreen = ({ navigation }: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { currentRound, players, hands } = current
@@ -27,32 +26,31 @@ const ResultadosScreen = ({ navigation }: Props) => {
   const [resultados, setResultados] = useState<number[]>([])
   const [hasError, setHasError] = useState<boolean>(false)
 
+  useFocusEffect(
+    useCallback(() => {
+      setResultados([])
+      setHasError(false)
+    }, [currentRound])
+  )
+
   const confirmResultado = (index: number, levou: number) => {
     const newResultados = [...resultados]
     newResultados[index] = levou
     setResultados(newResultados)
-  }
-
-  /* const confirmAposta = (id: string, value: number) => {
-    const newApostas = [...aposta]
-    newApostas[index] = value
-    setAposta(newApostas)
-    if (index < players.length - 1) {
-      setIndex(index + 1)
+    if (index === players.length - 1 || resultados.length === players.length) {
+      const total = newResultados.reduce((a, b) => a + b)
+      if (total !== hands[currentRound]) {
+        setHasError(true)
+      } else {
+        setHasError(false)
+      }
     }
   }
 
-  const cancelAposta = () => {
-    const newApostas = [...aposta]
-    newApostas.pop()
-    setAposta(newApostas)
-    setIndex(index - 1)
-  }
- */
-  const closeApostas = () => {
-    // TODO dispatch.current.setResultados(aposta)
-    // TODO dispatch.current.currentRound++
-    // navigation.navigate("ApostasScreen")
+  const saveResults = () => {
+    dispatch.current.setResultados(resultados)
+    dispatch.current.nextRound()
+    navigation.navigate("ApostasScreen")
   }
 
   return (
@@ -106,15 +104,18 @@ const ResultadosScreen = ({ navigation }: Props) => {
               />
             ))}
           </View>
-        </ScrollView>
-        <View style={themedStyle.actionBtnView}>
+          {hasError ? (
+            <Text type="title" align="center" variant="error" family="bold">
+              Resultados não corretos
+            </Text>
+          ) : null}
           <ActionButton
             label="Confirmar"
             disabled={resultados.length < players.length || hasError}
-            onPress={closeApostas}
+            onPress={saveResults}
             style={{ maxWidth: 200 }}
           />
-        </View>
+        </ScrollView>
       </View>
     </GradientView>
   )
@@ -128,13 +129,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       justifyContent: "flex-start",
       width: "100%",
       maxWidth: 600,
-    },
-    actionBtnView: {
-      width: "100%",
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      position: "absolute",
-      bottom: 0,
     },
   })

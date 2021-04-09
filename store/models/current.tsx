@@ -26,21 +26,24 @@ export type CurrentModel = {
     setHands: (state: CurrentState, hands: number[]) => CurrentState
     setRounds: (state: CurrentState, rounds: number) => CurrentState
     setPlacar: (state: CurrentState, placar: Placar) => CurrentState
+    setCurrentRound: (state: CurrentState, round: number) => CurrentState
   }
   effects: (
     dispatch: Dispatch
   ) => {
     initPlacar: (payload?: any, rootState?: any) => void
     setApostas: (apostas: number[], rootState?: any) => void
+    setResultados: (results: number[], rootState?: any) => void
+    nextRound: (payload?: any, rootState?: any) => void
   }
 }
 
 const defaultTable: Table = { id: "", name: "", players: [], used: 0 }
 const defaultPlacar: PlacarObject = {
-  acertou: 0,
-  errou: 0,
-  placar: [],
   final: 0,
+  errou: 0,
+  acertou: 0,
+  placar: [],
   apostas: [],
   acertos: [],
 }
@@ -94,6 +97,12 @@ export const current: CurrentModel = {
         placar,
       }
     },
+    setCurrentRound: (state: CurrentState, round: number) => {
+      return {
+        ...state,
+        currentRound: round,
+      }
+    },
   },
   effects: (dispatch: Dispatch) => ({
     async initPlacar(payload?: any, rootState?: any) {
@@ -104,6 +113,7 @@ export const current: CurrentModel = {
           placar[p.id] = defaultPlacar
         })
         dispatch.current.setPlacar(placar)
+        dispatch.current.setCurrentRound(0)
       } catch (error) {
         dispatch.global.setError(error.message)
       }
@@ -120,6 +130,35 @@ export const current: CurrentModel = {
       } catch (error) {
         dispatch.global.setError(error.message)
       }
+    },
+    async setResultados(results: number[], rootState?: any) {
+      const { placar, players, currentRound } = rootState.current
+      const newPlacar = { ...placar }
+      const ids = players.map((p: Player) => p.id)
+      try {
+        ids.forEach((id: string, i: number) => {
+          newPlacar[id].acertos[currentRound] = results[i]
+          if (newPlacar[id].apostas[currentRound] === results[i]) {
+            newPlacar[id].acertou++
+            newPlacar[id].placar[currentRound] = 10 + results[i] * 3
+            newPlacar[id].final += 10 + results[i] * 3
+          } else {
+            newPlacar[id].errou++
+            newPlacar[id].placar[currentRound] =
+              -Math.abs(newPlacar[id].apostas[currentRound] - results[i]) * 3
+            newPlacar[id].final -=
+              Math.abs(newPlacar[id].apostas[currentRound] - results[i]) * 3
+          }
+        })
+        dispatch.current.setPlacar(newPlacar)
+      } catch (error) {
+        dispatch.global.setError(error.message)
+      }
+    },
+    async nextRound(payload?: any, rootState?: any) {
+      // TODO mudar ordem dos jogadores
+      const { currentRound } = rootState.current
+      dispatch.current.setCurrentRound(currentRound + 1)
     },
   }),
 }

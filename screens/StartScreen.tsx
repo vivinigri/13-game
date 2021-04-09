@@ -30,34 +30,36 @@ export default function StartScreen({ navigation }: Props) {
         colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
       />
-      <Logo color={theme.colors.orange} />
-      <Text
-        type="header"
-        align="center"
-        variant="white"
-        family="bold"
-        style={{
-          marginTop: theme.spacings.padding * 3,
-          marginBottom: theme.spacings.padding * 2,
-        }}
-      >
-        Um jogo de estratégia!
-      </Text>
-      <Text
-        type="title"
-        align="center"
-        variant="white"
-        style={{ marginBottom: theme.spacings.padding * 3 }}
-      >
-        ❝do francês strategie, do grego strátegìa, do latim...❞
-      </Text>
-      {menu.map((el) => (
-        <ActionButton
-          key={el.label}
-          label={el.label}
-          onPress={() => navigate(el.redirect)}
-        />
-      ))}
+      <View style={{ width: "100%", maxWidth: 600, alignItems: "center" }}>
+        <Logo color={theme.colors.orange} />
+        <Text
+          type="header"
+          align="center"
+          variant="white"
+          family="bold"
+          style={{
+            marginTop: theme.spacings.padding * 3,
+            marginBottom: theme.spacings.padding * 2,
+          }}
+        >
+          Um jogo de estratégia!
+        </Text>
+        <Text
+          type="title"
+          align="center"
+          variant="white"
+          style={{ marginBottom: theme.spacings.padding * 3 }}
+        >
+          ❝do francês strategie, do grego strátegìa, do latim...❞
+        </Text>
+        {menu.map((el) => (
+          <ActionButton
+            key={el.label}
+            label={el.label}
+            onPress={() => navigate(el.redirect)}
+          />
+        ))}
+      </View>
     </View>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import { StyleSheet, View, ScrollView, Image } from "react-native"
+import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { Naipes, ApostasParamList } from "@types"
@@ -28,6 +28,8 @@ const ApostasScreen = ({ navigation }: Props) => {
   useFocusEffect(
     useCallback(() => {
       setTrunfo(Naipes.UNDEFINED)
+      setAposta([])
+      setIndex(0)
     }, [currentRound])
   )
 
