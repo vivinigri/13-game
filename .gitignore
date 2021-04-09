@@ -9,6 +9,7 @@ yarn-error.log
 *.mobileprovision
 *.orig.*
 web-report/
+web-build/
 storybook-static/**/*
 *.rest
 
