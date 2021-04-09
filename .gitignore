@@ -8,7 +8,6 @@ yarn-error.log
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
 web-report/
 storybook-static/**/*
 *.rest

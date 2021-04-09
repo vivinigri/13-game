@@ -110,7 +110,7 @@ const ApostasScreen = ({ navigation }: Props) => {
               {aposta.map((a: number, i: number) => (
                 <PlayerBubble
                   key={i}
-                  color={theme.colors.yellow}
+                  color={theme.colors.hover}
                   label={a.toString()}
                   name={players[i].name}
                   id={players[i].id}

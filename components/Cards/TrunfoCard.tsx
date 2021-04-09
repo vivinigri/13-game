@@ -14,7 +14,7 @@ const TrunfoCard = ({ trunfo, setTrunfo }: TrunfoCardProps) => {
   const theme = useTheme()
   const size = theme.spacings.padding * 3
   const color = (type: Naipes) =>
-    type === trunfo ? theme.colors.yellow : theme.colors.textLight
+    type === trunfo ? theme.colors.hover : theme.colors.textLight
 
   return (
     <CardView>

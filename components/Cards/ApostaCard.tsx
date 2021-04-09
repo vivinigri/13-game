@@ -37,7 +37,7 @@ const ApostaCard = ({
   }, [id])
 
   const color = (i: number) =>
-    aposta === i ? theme.colors.yellow : theme.colors.textLight
+    aposta === i ? theme.colors.hover : theme.colors.textLight
 
   return (
     <CardView style={{ flexDirection: "column" }}>

@@ -7,7 +7,6 @@ import { getData, storeData, removeData } from "@core/services/asyncStorage"
 export type CurrentState = {
   players: Player[]
   table: Table
-  // game: Game
   type: GameType
   rounds: number
   placar: Placar
@@ -112,8 +111,8 @@ export const current: CurrentModel = {
         players.forEach((p: Player) => {
           placar[p.id] = { ...defaultPlacar }
         })
-        dispatch.current.setPlacar(placar)
         dispatch.current.setCurrentRound(0)
+        dispatch.current.setPlacar(placar)
       } catch (error) {
         dispatch.global.setError(error.message)
       }

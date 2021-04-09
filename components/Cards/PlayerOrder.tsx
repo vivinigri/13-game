@@ -26,7 +26,7 @@ const PlayerOrder = ({
         onPress={() => playerUp(index)}
         label="🡡"
         size={theme.spacings.padding * 3}
-        color={theme.colors.yellow}
+        color={theme.colors.hover}
         disabled={index === 0}
       />
       <Text
@@ -43,7 +43,7 @@ const PlayerOrder = ({
         onPress={() => playerDown(index)}
         label="🡣"
         size={theme.spacings.padding * 3}
-        color={theme.colors.yellow}
+        color={theme.colors.hover}
         disabled={index >= len - 1}
       />
     </CardView>

@@ -26,7 +26,7 @@ const ResultadoCard = ({
   const [levou, setLevou] = useState<number | null>()
 
   const color = (i: number) =>
-    levou === i ? theme.colors.yellow : theme.colors.textLight
+    levou === i ? theme.colors.hover : theme.colors.textLight
 
   return (
     <CardView style={{ flexDirection: "column" }}>

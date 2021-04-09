@@ -12,10 +12,10 @@ type Props = StackScreenProps<RootStackParamList, "StartScreen">
 
 const menu = [
   { label: "✨ Novo jogo", redirect: "SelectTableScreen" },
-  { label: "💡 Continuar", redirect: "Root" },
+  /* { label: "💡 Continuar", redirect: "Root" },
   { label: "🪑 Mesas", redirect: "TabTwo" },
   { label: "👪 Jogadores", redirect: "TabTwo" },
-  { label: "📊 Estatísticas", redirect: "TabTwo" },
+  { label: "📊 Estatísticas", redirect: "TabTwo" }, */
 ]
 
 export default function StartScreen({ navigation }: Props) {

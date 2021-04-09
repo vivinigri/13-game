@@ -1,12 +1,16 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "homepage": "http://vivinigri.github.io/13-game",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "build": "expo build:web",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d web-build"
   },
   "jest": {
     "preset": "jest-expo"
@@ -49,6 +53,7 @@
     "@types/react": "^17.0.3",
     "@types/react-native": "~0.63.2",
     "@types/react-redux": "^7.1.16",
+    "gh-pages": "^3.1.0",
     "jest-expo": "~40.0.0",
     "typescript": "~4.0.0"
   },

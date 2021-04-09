@@ -36,16 +36,21 @@ const TabelaScreen = ({ navigation }: Props) => {
   useFocusEffect(
     useCallback(() => {
       const tabela: Cell[][] = []
+      const maxScore = Math.max(...Object.values(placar).map((p) => p.final))
+
       for (let i = 0; i <= hands.length; i++) {
         tabela[i] = []
         for (let j = 0; j <= players.length; j++) {
           if (i == 0 && j === 0) {
             tabela[i][j] = { type: CellType.EMPTY }
           } else if (i === 0) {
+            const player = players.find(
+              (p) => p.id === Object.keys(placar)[j - 1]
+            ) || { id: "0", name: "quem" }
             tabela[i][j] = {
               type: CellType.NAME,
-              label: players.find((p) => p.id === Object.keys(placar)[j - 1])
-                ?.name,
+              label: player?.name,
+              won: !!(maxScore && placar[player?.id].final === maxScore),
             }
           } else if (j === 0) {
             tabela[i][j] = { type: CellType.ROUND, label: hands[i - 1] }
@@ -61,7 +66,6 @@ const TabelaScreen = ({ navigation }: Props) => {
           }
         }
       }
-      console.log("tabela", tabela)
       setTable(tabela)
     }, [currentRound])
   )
@@ -89,6 +93,7 @@ const TabelaScreen = ({ navigation }: Props) => {
                       <View key={`${i}${j}`} style={themedStyle.cell}>
                         <Text type="label" variant="warning" align="center">
                           {cell.label}
+                          {cell.won ? "🎉" : ""}
                         </Text>
                       </View>
                     )
