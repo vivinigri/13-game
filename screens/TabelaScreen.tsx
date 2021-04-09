@@ -51,19 +51,13 @@ const TabelaScreen = ({ navigation }: Props) => {
             tabela[i][j] = { type: CellType.ROUND, label: hands[i - 1] }
           } else {
             const cur = Object.values(placar)[j - 1].placar
-            console.log(i, j, cur[i - 1], cur[i])
-            const venceu = (tabela[i][j] = {
+            tabela[i][j] = {
               type: CellType.SCORE,
-              won:
-                cur[i - 1] && cur[i - 2]
-                  ? cur[i - 1] > cur[i - 2]
-                  : i === 1 && cur[i - 1] > 0
-                  ? true
-                  : null,
+              won: cur[i - 1] ? cur[i - 1] > 0 : null,
               label: cur[i - 1]
                 ? cur.reduce((a, b, c) => a + (c < i ? b : 0))
                 : "",
-            })
+            }
           }
         }
       }

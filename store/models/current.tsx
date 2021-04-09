@@ -110,7 +110,7 @@ export const current: CurrentModel = {
       try {
         const placar: Placar = {}
         players.forEach((p: Player) => {
-          placar[p.id] = defaultPlacar
+          placar[p.id] = { ...defaultPlacar }
         })
         dispatch.current.setPlacar(placar)
         dispatch.current.setCurrentRound(0)
