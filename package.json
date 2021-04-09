@@ -1,6 +1,6 @@
 {
   "main": "node_modules/expo/AppEntry.js",
-  "homepage": "https://vivinigri.github.io/13-game",
+  "homepage": "https://vivinigri.github.io/13-game/",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

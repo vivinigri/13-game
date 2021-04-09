@@ -1,7 +1,7 @@
 import * as Linking from "expo-linking"
 
 export default {
-  prefixes: [Linking.makeUrl("/")],
+  prefixes: [Linking.makeUrl("/13-game")],
   config: {
     screens: {
       StartScreen: "start",
