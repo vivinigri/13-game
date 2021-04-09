@@ -156,9 +156,11 @@ export const current: CurrentModel = {
       }
     },
     async nextRound(payload?: any, rootState?: any) {
-      // TODO mudar ordem dos jogadores
-      const { currentRound } = rootState.current
+      const { currentRound, players } = rootState.current
+      const newPlayers = [...players]
+      newPlayers.push(newPlayers.shift())
       dispatch.current.setCurrentRound(currentRound + 1)
+      dispatch.current.setPlayers(newPlayers)
     },
   }),
 }

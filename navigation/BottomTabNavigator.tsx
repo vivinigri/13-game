@@ -2,7 +2,7 @@ import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
-import TabTwoScreen from "@screens/TabTwoScreen"
+import TabelaScreen from "@screens/TabelaScreen"
 import ApostasScreen from "@screens/ApostasScreen"
 import ResultadosScreen from "@screens/ResultadosScreen"
 import {
@@ -38,7 +38,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Tabela"
-        component={TabTwoNavigator}
+        component={TabelaNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="grid-outline" color={color} />
@@ -47,7 +47,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Stats"
-        component={TabTwoNavigator}
+        component={TabelaNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-chart-outline" color={color} />
@@ -107,13 +107,24 @@ function ApostasNavigator() {
 }
 
 const TabTwoStack = createStackNavigator<TabelaParamList>()
-function TabTwoNavigator() {
+function TabelaNavigator() {
+  const theme = useTheme()
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabelaScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
+        component={TabelaScreen}
+        options={{
+          headerTitle: "Placar",
+          headerStyle: {
+            backgroundColor: theme.colors.dark,
+            borderBottomColor: theme.colors.background,
+          },
+          headerTintColor: theme.colors.white,
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
       />
     </TabTwoStack.Navigator>
   )

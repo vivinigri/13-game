@@ -17,9 +17,9 @@ export default {
               ResultadosScreen: "resultados",
             },
           },
-          TabTwo: {
+          Tabela: {
             screens: {
-              TabTwoScreen: "two",
+              TabelaScreen: "tabela",
             },
           },
         },

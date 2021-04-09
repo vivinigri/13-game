@@ -39,7 +39,7 @@ const ResultadoCard = ({
         }}
       >
         <Text type="title" variant="white" align="center">
-          {name}
+          {`${name} | ${aposta}`}
         </Text>
         <View
           style={{

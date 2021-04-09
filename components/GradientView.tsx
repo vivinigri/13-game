@@ -5,12 +5,12 @@ import { StyleSheet, View } from "react-native"
 
 export type ViewProps = View["props"]
 
-const GradientView = ({ children }: ViewProps) => {
+const GradientView = ({ style, children }: ViewProps) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
 
   return (
-    <View style={themedStyle.container}>
+    <View style={[themedStyle.container, style]}>
       <LinearGradient
         colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
