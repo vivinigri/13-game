@@ -28,18 +28,14 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const [playerOrder, setPlayerOrder] = useState<Player[]>([])
 
-  /* useFocusEffect(
+  useFocusEffect(
     useCallback(() => {
-      dispatch.global.getPlayers()
+      const myPlayers: Player[] = players.filter((a: Player) =>
+        table.players.some((p) => p === a.id)
+      )
+      setPlayerOrder(myPlayers)
     }, [])
-  ) */
-
-  useEffect(() => {
-    const myPlayers: Player[] = players.filter((a: Player) =>
-      table.players.some((p) => p === a.id)
-    )
-    setPlayerOrder(myPlayers)
-  }, [table])
+  )
 
   const insertAndShift = (arr: Player[], to: number, from: number) => {
     let newArray: Player[] = []
@@ -66,7 +62,6 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const goToNext = () => {
     dispatch.current.setPlayers(playerOrder)
-    dispatch.current.initPlacar()
     navigation.navigate("Root")
   }
 

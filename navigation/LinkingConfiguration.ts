@@ -1,11 +1,15 @@
 import * as Linking from "expo-linking"
 
 export default {
-  prefixes: [Linking.makeUrl("/")],
+  prefixes: [
+    Linking.makeUrl("/"),
+    "13-game/",
+    "https://vivinigri.github.io/13-game",
+  ],
   config: {
     screens: {
-      StartScreen: "13-game/start",
-      SelectTableScreen: "13-game/mesas",
+      StartScreen: "start",
+      SelectTableScreen: "mesas",
       SelectPlayersScreen: "jogadores/:mesa",
       SelectGameScreen: "game/type/:id",
       OrderPlayersScreen: "order",

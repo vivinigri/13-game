@@ -36,7 +36,6 @@ const ResultadosScreen = ({ navigation }: Props) => {
   const confirmResultado = (index: number, levou: number) => {
     const newResultados = [...resultados]
     newResultados[index] = levou
-    console.log("newResultados", newResultados)
     setResultados(newResultados)
     if (index === players.length - 1 || resultados.length === players.length) {
       const total = newResultados.reduce((a, b) => a + b)

@@ -1,6 +1,6 @@
 import { Dispatch } from ".."
 import { Player, Table, GameType, Placar, Naipes, PlacarObject } from "@types"
-import { getData, storeData, removeData } from "@core/services/asyncStorage"
+import { insertItem } from "@core/helpers/arrayUtils"
 
 // TODO ao terminar o jogo, transformar esses dados em new Game e salvar no localStorage GLOBAL,
 // ao longo do jogo ir salvando no LocalStorage CURRENT
@@ -14,6 +14,10 @@ export type CurrentState = {
   error: string
   hands: number[]
   currentRound: number
+}
+
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export type CurrentModel = {
@@ -30,8 +34,8 @@ export type CurrentModel = {
   effects: (
     dispatch: Dispatch
   ) => {
-    initPlacar: (payload?: any, rootState?: any) => void
-    setApostas: (apostas: number[], rootState?: any) => void
+    initPlacar: (len: number, rootState?: any) => void
+    setApostas: (apostas: number[], rootState?: any) => boolean
     setResultados: (results: number[], rootState?: any) => void
     nextRound: (payload?: any, rootState?: any) => void
   }
@@ -104,13 +108,15 @@ export const current: CurrentModel = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initPlacar(payload?: any, rootState?: any) {
+    async initPlacar(len: number, rootState?: any) {
       const { players } = rootState.current
       try {
         const placar: Placar = {}
-        players.forEach((p: Player) => {
-          placar[p.id] = { ...defaultPlacar }
-        })
+        await players.reduce(async (memo, player, i) => {
+          await memo
+          await sleep(100)
+          placar[player.id] = { ...defaultPlacar }
+        }, undefined)
         dispatch.current.setCurrentRound(0)
         dispatch.current.setPlacar(placar)
       } catch (error) {
@@ -122,12 +128,19 @@ export const current: CurrentModel = {
       const newPlacar = { ...placar }
       const ids = players.map((p: Player) => p.id)
       try {
-        ids.forEach((id: string, i: number) => {
-          newPlacar[id].apostas[currentRound] = apostas[i]
-        })
+        await ids.reduce(async (memo, id, i) => {
+          await memo
+          await sleep(100)
+          newPlacar[id].apostas = insertItem(newPlacar[id].apostas, {
+            index: currentRound,
+            item: apostas[i],
+          })
+        }, undefined)
         dispatch.current.setPlacar(newPlacar)
+        return true
       } catch (error) {
         dispatch.global.setError(error.message)
+        return false
       }
     },
     async setResultados(results: number[], rootState?: any) {
@@ -135,20 +148,30 @@ export const current: CurrentModel = {
       const newPlacar = { ...placar }
       const ids = players.map((p: Player) => p.id)
       try {
-        ids.forEach((id: string, i: number) => {
+        let score = 0
+        await ids.reduce(async (memo, id, i) => {
+          await memo
+          await sleep(100)
           newPlacar[id].acertos[currentRound] = results[i]
           if (newPlacar[id].apostas[currentRound] === results[i]) {
+            score = 10 + results[i] * 3
             newPlacar[id].acertou++
-            newPlacar[id].placar[currentRound] = 10 + results[i] * 3
-            newPlacar[id].final += 10 + results[i] * 3
+            newPlacar[id].placar = insertItem(newPlacar[id].placar, {
+              index: currentRound,
+              item: score,
+            })
+            newPlacar[id].final += score
           } else {
-            newPlacar[id].errou++
-            newPlacar[id].placar[currentRound] =
+            score =
               -Math.abs(newPlacar[id].apostas[currentRound] - results[i]) * 3
-            newPlacar[id].final -=
-              Math.abs(newPlacar[id].apostas[currentRound] - results[i]) * 3
+            newPlacar[id].errou++
+            newPlacar[id].placar = insertItem(newPlacar[id].placar, {
+              index: currentRound,
+              item: score,
+            })
+            newPlacar[id].final += score
           }
-        })
+        }, undefined)
         dispatch.current.setPlacar(newPlacar)
       } catch (error) {
         dispatch.global.setError(error.message)

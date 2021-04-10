@@ -49,8 +49,8 @@ const ApostasScreen = ({ navigation }: Props) => {
     setIndex(index - 1)
   }
 
-  const closeApostas = () => {
-    dispatch.current.setApostas(aposta)
+  const closeApostas = async () => {
+    const response = await dispatch.current.setApostas(aposta)
     navigation.navigate("ResultadosScreen")
   }
 
@@ -122,7 +122,11 @@ const ApostasScreen = ({ navigation }: Props) => {
         <View style={themedStyle.actionBtnView}>
           <ActionButton
             label="Confirmar"
-            disabled={trunfo === Naipes.UNDEFINED || index < players.length - 1}
+            disabled={
+              trunfo === Naipes.UNDEFINED ||
+              index < players.length - 1 ||
+              aposta.length < players.length
+            }
             onPress={closeApostas}
             style={{ maxWidth: 200 }}
           />

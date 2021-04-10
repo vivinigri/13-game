@@ -50,6 +50,9 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     const table = tables.filter((t) => t.id === id)[0]
     const max = maxCards()
     const nPlayers = numPlayers()
+    dispatch.current.initPlacar(
+      checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
+    )
     dispatch.current.setTable(table)
     dispatch.current.setType(checked)
     dispatch.current.setRounds(

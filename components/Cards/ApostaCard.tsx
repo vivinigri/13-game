@@ -49,11 +49,26 @@ const ApostaCard = ({
           width: "100%",
         }}
       >
-        <View style={{ minWidth: 70 }}></View>
+        <View
+          style={{
+            minWidth: 70,
+            flexDirection: "row",
+            justifyContent: "flex-start",
+          }}
+        >
+          <CircleButton
+            size={theme.spacings.padding * 2}
+            label="🠔"
+            color={theme.colors.white}
+            onPress={() => cancel()}
+            style={{ marginRight: theme.spacings.padding * 0.5 }}
+          />
+        </View>
         <Text type="title" variant="white" align="center">
           {name}
         </Text>
-        <View
+        <View style={{ minWidth: 70 }}></View>
+        {/* <View
           style={{
             minWidth: 70,
             flexDirection: "row",
@@ -76,7 +91,7 @@ const ApostaCard = ({
             onPress={() => confirm(id, aposta || 0)}
             disabled={aposta === null}
           />
-        </View>
+        </View> */}
       </View>
 
       <Divider />
@@ -95,7 +110,11 @@ const ApostaCard = ({
                 size={theme.spacings.padding * 3}
                 label={i.toString()}
                 color={color(i)}
-                onPress={() => setAposta(i)}
+                // onPress={() => setAposta(i)}
+                onPress={() => {
+                  setAposta(i)
+                  confirm(id, i)
+                }}
                 style={{
                   marginHorizontal: theme.spacings.padding * 0.5,
                   marginVertical: theme.spacings.padding * 0.5,
