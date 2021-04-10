@@ -14,7 +14,7 @@ export default function NotFoundScreen({
         onPress={() => navigation.navigate("StartScreen")}
         style={styles.link}
       >
-        <Text style={styles.linkText}>Go to Start Screen!</Text>
+        <Text style={styles.linkText}>🠔 Voltar o menu</Text>
       </TouchableOpacity>
     </View>
   )
