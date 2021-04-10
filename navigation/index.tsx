@@ -40,7 +40,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"
-        component={NotFoundScreen}
+        component={StartScreen}
         options={{ title: "Oops!" }}
       />
     </Stack.Navigator>
