@@ -4,6 +4,8 @@ export default {
   prefixes: [
     Linking.makeUrl("/"),
     "13-game/",
+    "13-game",
+    "13-game",
     "https://vivinigri.github.io/13-game",
   ],
   config: {
