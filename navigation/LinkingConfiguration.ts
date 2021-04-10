@@ -10,7 +10,7 @@ export default {
   ],
   config: {
     screens: {
-      StartScreen: "",
+      StartScreen: "13-game",
       SelectTableScreen: "mesas",
       SelectPlayersScreen: "jogadores/:mesa",
       SelectGameScreen: "game/type/:id",
