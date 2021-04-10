@@ -25,7 +25,10 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="StartScreen"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="StartScreen" component={StartScreen} />
       <Stack.Screen name="SelectTableScreen" component={SelectTableScreen} />
       <Stack.Screen name="SelectGameScreen" component={SelectGameScreen} />
