@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Player, RootStackParamList, Table } from "@types"
+import { Player } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
@@ -14,8 +14,10 @@ import { GlobalState } from "@store/models/global"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
+import { RootStackParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = StackScreenProps<RootStackParamList, "OrderPlayersScreen">
+type Props = StackScreenProps<RootStackParamList, RouteNames.OrderPlayersScreen>
 
 const OrderPlayersScreen = ({ navigation }: Props) => {
   const global: GlobalState = useSelector(({ global }: RootState) => global)
@@ -62,7 +64,7 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const goToNext = () => {
     dispatch.current.setPlayers(playerOrder)
-    navigation.navigate("Root")
+    navigation.navigate(RouteNames.Root)
   }
 
   return (

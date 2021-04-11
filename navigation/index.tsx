@@ -8,10 +8,10 @@ import SelectTableScreen from "@screens/SelectTableScreen"
 import SelectPlayersScreen from "@screens/SelectPlayersScreen"
 import SelectGameScreen from "@screens/SelectGameScreen"
 import OrderPlayersScreen from "@screens/OrderPlayersScreen"
-import ApostasScreen from "@screens/ApostasScreen"
-import { RootStackParamList } from "../types"
-import BottomTabNavigator from "./BottomTabNavigator"
-import LinkingConfiguration from "./LinkingConfiguration"
+import { RootStackParamList } from "@navigation/navTypes"
+import BottomTabNavigator from "@navigation/BottomTabNavigator"
+import LinkingConfiguration from "@navigation/LinkingConfiguration"
+import { RouteNames } from "@navigation/RouteNames"
 
 export default function Navigation() {
   return (
@@ -26,20 +26,29 @@ const Stack = createStackNavigator<RootStackParamList>()
 function RootNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="StartScreen"
+      initialRouteName={RouteNames.StartScreen}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="StartScreen" component={StartScreen} />
-      <Stack.Screen name="SelectTableScreen" component={SelectTableScreen} />
-      <Stack.Screen name="SelectGameScreen" component={SelectGameScreen} />
-      <Stack.Screen name="OrderPlayersScreen" component={OrderPlayersScreen} />
+      <Stack.Screen name={RouteNames.StartScreen} component={StartScreen} />
       <Stack.Screen
-        name="SelectPlayersScreen"
+        name={RouteNames.SelectTableScreen}
+        component={SelectTableScreen}
+      />
+      <Stack.Screen
+        name={RouteNames.SelectGameScreen}
+        component={SelectGameScreen}
+      />
+      <Stack.Screen
+        name={RouteNames.OrderPlayersScreen}
+        component={OrderPlayersScreen}
+      />
+      <Stack.Screen
+        name={RouteNames.SelectPlayersScreen}
         component={SelectPlayersScreen}
       />
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name={RouteNames.Root} component={BottomTabNavigator} />
       <Stack.Screen
-        name="NotFound"
+        name={RouteNames.NotFoundScreen}
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />

@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View, ScrollView, Image } from "react-native"
 import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList, Table } from "@types"
+import { Table } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
@@ -15,9 +15,10 @@ import { GlobalState } from "@store/models/global"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
-import BgImage from "@assets/images/"
+import { RootStackParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = StackScreenProps<RootStackParamList, "SelectTableScreen">
+type Props = StackScreenProps<RootStackParamList, RouteNames.SelectTableScreen>
 
 const SelectTableScreen = ({ navigation }: Props) => {
   const global: GlobalState = useSelector(({ global }: RootState) => global)
@@ -64,12 +65,12 @@ const SelectTableScreen = ({ navigation }: Props) => {
         content: `Nome da mesa é obrigatório`,
       })
     } else {
-      navigation.navigate("SelectPlayersScreen", { mesa })
+      navigation.navigate(RouteNames.SelectPlayersScreen, { mesa })
     }
   }
 
   const goToNext = () => {
-    navigation.navigate("SelectGameScreen", { id: checked })
+    navigation.navigate(RouteNames.SelectGameScreen, { id: checked })
   }
 
   return (

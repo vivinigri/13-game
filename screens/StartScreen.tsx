@@ -6,12 +6,17 @@ import Logo from "@assets/icons/logo"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@types"
+import { RootStackParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = StackScreenProps<RootStackParamList, "StartScreen">
+type Props = StackScreenProps<RootStackParamList, RouteNames.StartScreen>
+type MenuItem = {
+  label: string
+  redirect: RouteNames
+}
 
-const menu = [
-  { label: "✨ Novo jogo", redirect: "SelectTableScreen" },
+const menu: MenuItem[] = [
+  { label: "✨ Novo jogo", redirect: RouteNames.SelectTableScreen },
   /* { label: "💡 Continuar", redirect: "Root" },
   { label: "🪑 Mesas", redirect: "TabTwo" },
   { label: "👪 Jogadores", redirect: "TabTwo" },
@@ -22,7 +27,8 @@ export default function StartScreen({ navigation }: Props) {
   const theme = useTheme()
   const themedStyle = styles(theme)
 
-  const navigate = (screen: string) => navigation.navigate(screen)
+  const navigate = (screen: RouteNames) =>
+    navigation.navigate(screen as keyof RootStackParamList)
 
   return (
     <View style={themedStyle.container}>

@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { ApostasParamList } from "@types"
 import { Text, GradientView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
@@ -10,8 +9,10 @@ import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { ResultadoCard } from "@components/Cards"
 import { ActionButton } from "@components/Buttons"
+import { ApostasParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = BottomTabScreenProps<ApostasParamList, "ResultadosScreen">
+type Props = BottomTabScreenProps<ApostasParamList, RouteNames.ResultadosScreen>
 
 // TODO header resetar rodada. Deu algo errado e tem que recomecar as apostas
 // voltar para apostas e limpar elas do current
@@ -50,7 +51,7 @@ const ResultadosScreen = ({ navigation }: Props) => {
   const saveResults = () => {
     dispatch.current.setResultados(resultados)
     dispatch.current.nextRound()
-    navigation.navigate("ApostasScreen")
+    navigation.navigate(RouteNames.ApostasScreen)
   }
 
   return (

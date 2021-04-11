@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList, Table, GameType } from "@types"
+import { Table, GameType } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
@@ -11,8 +11,10 @@ import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration
 import GameCard from "@components/Cards/GameCard"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
+import { RootStackParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = StackScreenProps<RootStackParamList, "SelectGameScreen">
+type Props = StackScreenProps<RootStackParamList, RouteNames.SelectGameScreen>
 
 const SelectGameScreen = ({ navigation, route }: Props) => {
   const tables: Table[] = useSelector(({ global }: RootState) => global.tables)
@@ -61,7 +63,7 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     dispatch.current.setHands(
       checked === GameType.NOVO ? handsNormal(max) : handsNovo(max, nPlayers)
     )
-    navigation.navigate("OrderPlayersScreen")
+    navigation.navigate(RouteNames.OrderPlayersScreen)
   }
 
   return (

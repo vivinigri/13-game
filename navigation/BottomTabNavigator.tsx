@@ -1,16 +1,22 @@
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { createStackNavigator } from "@react-navigation/stack"
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from "@react-navigation/stack"
 import TabelaScreen from "@screens/TabelaScreen"
+import StatsScreen from "@screens/StatsScreen"
 import ApostasScreen from "@screens/ApostasScreen"
 import ResultadosScreen from "@screens/ResultadosScreen"
+import GameOverScreen from "@screens/ResultadosScreen"
 import {
   BottomTabParamList,
   ApostasParamList,
   TabelaParamList,
   StatsParamList,
-} from "../types"
+} from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 import { useTheme } from "react-native-paper"
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
@@ -20,7 +26,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Apostas"
+      initialRouteName={RouteNames.Apostas}
       tabBarOptions={{
         activeTintColor: theme.colors.yellow,
         inactiveTintColor: theme.colors.textLight,
@@ -29,7 +35,7 @@ export default function BottomTabNavigator() {
       }}
     >
       <BottomTab.Screen
-        name="Apostas"
+        name={RouteNames.Apostas}
         component={ApostasNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="pencil" color={color} />,
@@ -37,7 +43,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Tabela"
+        name={RouteNames.Tabela}
         component={TabelaNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -46,8 +52,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Stats"
-        component={TabelaNavigator}
+        name={RouteNames.Stats}
+        component={StatsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-chart-outline" color={color} />
@@ -58,8 +64,20 @@ export default function BottomTabNavigator() {
   )
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
+const headerOptions = (title: string, theme: ReactNativePaper.Theme) => {
+  return {
+    title: title,
+    headerStyle: {
+      backgroundColor: theme.colors.dark,
+      borderBottomColor: theme.colors.background,
+    },
+    headerTintColor: theme.colors.white,
+    headerTitleStyle: {
+      fontWeight: "bold",
+    },
+  } as StackNavigationOptions
+}
+
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"]
   color: string
@@ -67,65 +85,54 @@ function TabBarIcon(props: {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
 }
 
-const TabOneStack = createStackNavigator<ApostasParamList>()
+const ApostaStack = createStackNavigator<ApostasParamList>()
 function ApostasNavigator() {
   const theme = useTheme()
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="ApostasScreen"
+    <ApostaStack.Navigator>
+      <ApostaStack.Screen
+        name={RouteNames.ApostasScreen}
         component={ApostasScreen}
-        options={{
-          title: "Apostas",
-          headerStyle: {
-            backgroundColor: theme.colors.dark,
-            borderBottomColor: theme.colors.background,
-          },
-          headerTintColor: theme.colors.white,
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
+        options={headerOptions("Apostas", theme)}
       />
-      <TabOneStack.Screen
-        name="ResultadosScreen"
+      <ApostaStack.Screen
+        name={RouteNames.ResultadosScreen}
         component={ResultadosScreen}
-        options={{
-          title: "Resultados",
-          headerStyle: {
-            backgroundColor: theme.colors.dark,
-            borderBottomColor: theme.colors.background,
-          },
-          headerTintColor: theme.colors.white,
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
+        options={headerOptions("Resultados", theme)}
       />
-    </TabOneStack.Navigator>
+      <ApostaStack.Screen
+        name={RouteNames.GameOverScreen}
+        component={GameOverScreen}
+        options={headerOptions("Game Over", theme)}
+      />
+    </ApostaStack.Navigator>
   )
 }
 
-const TabTwoStack = createStackNavigator<TabelaParamList>()
+const TabelaStack = createStackNavigator<TabelaParamList>()
 function TabelaNavigator() {
   const theme = useTheme()
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabelaScreen"
+    <TabelaStack.Navigator>
+      <TabelaStack.Screen
+        name={RouteNames.TabelaScreen}
         component={TabelaScreen}
-        options={{
-          headerTitle: "Placar",
-          headerStyle: {
-            backgroundColor: theme.colors.dark,
-            borderBottomColor: theme.colors.background,
-          },
-          headerTintColor: theme.colors.white,
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
+        options={headerOptions("Placar", theme)}
       />
-    </TabTwoStack.Navigator>
+    </TabelaStack.Navigator>
+  )
+}
+
+const StatsStack = createStackNavigator<StatsParamList>()
+function StatsNavigator() {
+  const theme = useTheme()
+  return (
+    <StatsStack.Navigator>
+      <StatsStack.Screen
+        name={RouteNames.StatsScreen}
+        component={StatsScreen}
+        options={headerOptions("Stats", theme)}
+      />
+    </StatsStack.Navigator>
   )
 }

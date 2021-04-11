@@ -9,7 +9,7 @@ import {
 import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Player, RootStackParamList } from "@types"
+import { Player } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
@@ -22,8 +22,13 @@ import Loading from "@components/Loading"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
+import { RootStackParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = StackScreenProps<RootStackParamList, "SelectPlayersScreen">
+type Props = StackScreenProps<
+  RootStackParamList,
+  RouteNames.SelectPlayersScreen
+>
 
 const SelectPlayersScreen = ({ navigation, route }: Props) => {
   const players: Player[] = useSelector(
@@ -76,7 +81,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
       players: jogadores,
     }
     const newTable: string = await dispatch.global.createNewTable(payload)
-    navigation.navigate("SelectGameScreen", { id: newTable })
+    navigation.navigate(RouteNames.SelectGameScreen, { id: newTable })
   }
 
   if (loading) {

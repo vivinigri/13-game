@@ -2,14 +2,15 @@ import React, { useState, useCallback } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { TabelaParamList } from "@types"
 import { Text, GradientView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
+import { TabelaParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = BottomTabScreenProps<TabelaParamList, "TabelaScreen">
+type Props = BottomTabScreenProps<TabelaParamList, RouteNames.TabelaScreen>
 
 enum CellType {
   EMPTY = "empty",

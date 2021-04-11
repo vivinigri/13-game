@@ -1,21 +1,15 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import * as React from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import React from "react"
+import { StyleSheet, Text, View } from "react-native"
 import { RootStackParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 
-export default function NotFoundScreen({
+export default function StatsScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, RouteNames.NotFoundScreen>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>WHy?!?😰</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(RouteNames.StartScreen)}
-        style={styles.link}
-      >
-        <Text style={styles.linkText}>🠔 Voltar o menu</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>🚧 Em construção 🚧</Text>
     </View>
   )
 }

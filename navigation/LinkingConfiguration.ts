@@ -1,4 +1,5 @@
 import * as Linking from "expo-linking"
+import { RouteNames } from "@navigation/RouteNames"
 
 export default {
   prefixes: [
@@ -10,27 +11,33 @@ export default {
     path: "13-game",
     initialRouteName: "StartScreen",
     screens: {
-      StartScreen: "start",
-      SelectTableScreen: "mesas",
-      SelectPlayersScreen: "jogadores/:mesa",
-      SelectGameScreen: "game/type/:id",
-      OrderPlayersScreen: "order",
-      Root: {
+      [RouteNames.StartScreen]: "start",
+      [RouteNames.SelectTableScreen]: "mesas",
+      [RouteNames.SelectPlayersScreen]: "jogadores/:mesa",
+      [RouteNames.SelectGameScreen]: "game/type/:id",
+      [RouteNames.OrderPlayersScreen]: "order",
+      [RouteNames.Root]: {
         screens: {
-          Apostas: {
+          [RouteNames.Apostas]: {
             screens: {
-              ApostasScreen: "apostas",
-              ResultadosScreen: "resultados",
+              [RouteNames.ApostasScreen]: "apostas",
+              [RouteNames.ResultadosScreen]: "resultados",
+              [RouteNames.GameOverScreen]: "gameOver",
             },
           },
-          Tabela: {
+          [RouteNames.Tabela]: {
             screens: {
-              TabelaScreen: "tabela",
+              [RouteNames.TabelaScreen]: "tabela",
+            },
+          },
+          [RouteNames.Stats]: {
+            screens: {
+              [RouteNames.StatsScreen]: "stats",
             },
           },
         },
       },
-      NotFound: "*",
+      [RouteNames.NotFound]: "*",
     },
   },
 }

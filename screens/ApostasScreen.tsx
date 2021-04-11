@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { Naipes, ApostasParamList } from "@types"
+import { Naipes } from "@types"
 import { Text, GradientView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
@@ -10,8 +10,10 @@ import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { TrunfoCard, ApostaCard, PlayerBubble } from "@components/Cards"
 import { ActionButton } from "@components/Buttons"
+import { ApostasParamList } from "@navigation/navTypes"
+import { RouteNames } from "@navigation/RouteNames"
 
-type Props = BottomTabScreenProps<ApostasParamList, "ApostasScreen">
+type Props = BottomTabScreenProps<ApostasParamList, RouteNames.ApostasScreen>
 
 // TODO header undo all button (so limpar as apostas useState)
 const ApostasScreen = ({ navigation }: Props) => {
