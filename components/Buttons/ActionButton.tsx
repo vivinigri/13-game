@@ -13,12 +13,14 @@ type ButtonProps = {
   label: string
   onPress?: (event: GestureResponderEvent) => void | undefined
   disabled?: boolean
+  secondary?: boolean
 } & View["props"]
 
 const Button = ({
   label,
   onPress,
   disabled = false,
+  secondary = false,
   ...props
 }: ButtonProps) => {
   const theme = useTheme()
@@ -28,12 +30,20 @@ const Button = ({
     <View
       style={[
         themedStyle.button,
-        { opacity: disabled ? 0.5 : 1 },
+        {
+          opacity: disabled ? 0.5 : 1,
+          backgroundColor: secondary ? theme.colors.dark : theme.colors.yellow,
+        },
         props.style || {},
       ]}
     >
       <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <Text type="title" family="bold" align="center" variant="dark">
+        <Text
+          type="title"
+          family="bold"
+          align="center"
+          variant={secondary ? "warning" : "dark"}
+        >
           {label}
         </Text>
       </TouchableOpacity>
@@ -44,15 +54,12 @@ const Button = ({
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     button: {
-      // backgroundColor: colors.transparent,
       backgroundColor: colors.yellow,
       width: "100%",
       maxWidth: 300,
       height: 46,
       borderRadius: 46,
       marginBottom: spacings.padding * 2,
-      // borderWidth: 2,
-      // borderColor: colors.cyan,
       justifyContent: "center",
     },
   })

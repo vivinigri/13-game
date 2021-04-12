@@ -8,8 +8,8 @@ export default {
     "https://vivinigri.github.io",
   ],
   config: {
-    path: "13-game",
-    initialRouteName: "StartScreen",
+    // path: "13-game",
+    initialRouteName: RouteNames.StartScreen,
     screens: {
       [RouteNames.StartScreen]: "start",
       [RouteNames.SelectTableScreen]: "mesas",
@@ -37,7 +37,7 @@ export default {
           },
         },
       },
-      [RouteNames.NotFound]: "*",
+      [RouteNames.NotFoundScreen]: "*",
     },
   },
 }

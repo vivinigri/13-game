@@ -9,7 +9,7 @@ import TabelaScreen from "@screens/TabelaScreen"
 import StatsScreen from "@screens/StatsScreen"
 import ApostasScreen from "@screens/ApostasScreen"
 import ResultadosScreen from "@screens/ResultadosScreen"
-import GameOverScreen from "@screens/ResultadosScreen"
+import GameOverScreen from "@screens/GameOverScreen"
 import {
   BottomTabParamList,
   ApostasParamList,
@@ -18,6 +18,7 @@ import {
 } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { useTheme } from "react-native-paper"
+import { headerOptions } from "@core/config"
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -64,20 +65,6 @@ export default function BottomTabNavigator() {
   )
 }
 
-const headerOptions = (title: string, theme: ReactNativePaper.Theme) => {
-  return {
-    title: title,
-    headerStyle: {
-      backgroundColor: theme.colors.dark,
-      borderBottomColor: theme.colors.background,
-    },
-    headerTintColor: theme.colors.white,
-    headerTitleStyle: {
-      fontWeight: "bold",
-    },
-  } as StackNavigationOptions
-}
-
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"]
   color: string
@@ -89,21 +76,21 @@ const ApostaStack = createStackNavigator<ApostasParamList>()
 function ApostasNavigator() {
   const theme = useTheme()
   return (
-    <ApostaStack.Navigator>
+    <ApostaStack.Navigator screenOptions={{ headerShown: true }}>
       <ApostaStack.Screen
         name={RouteNames.ApostasScreen}
         component={ApostasScreen}
-        options={headerOptions("Apostas", theme)}
+        options={headerOptions("", theme)}
       />
       <ApostaStack.Screen
         name={RouteNames.ResultadosScreen}
         component={ResultadosScreen}
-        options={headerOptions("Resultados", theme)}
+        options={headerOptions("", theme)}
       />
       <ApostaStack.Screen
         name={RouteNames.GameOverScreen}
         component={GameOverScreen}
-        options={headerOptions("Game Over", theme)}
+        options={headerOptions("", theme)}
       />
     </ApostaStack.Navigator>
   )
@@ -113,11 +100,11 @@ const TabelaStack = createStackNavigator<TabelaParamList>()
 function TabelaNavigator() {
   const theme = useTheme()
   return (
-    <TabelaStack.Navigator>
+    <TabelaStack.Navigator screenOptions={{ headerShown: false }}>
       <TabelaStack.Screen
         name={RouteNames.TabelaScreen}
         component={TabelaScreen}
-        options={headerOptions("Placar", theme)}
+        // options={headerOptions("", theme)}
       />
     </TabelaStack.Navigator>
   )
@@ -131,7 +118,7 @@ function StatsNavigator() {
       <StatsStack.Screen
         name={RouteNames.StatsScreen}
         component={StatsScreen}
-        options={headerOptions("Stats", theme)}
+        // options={headerOptions("", theme)}
       />
     </StatsStack.Navigator>
   )

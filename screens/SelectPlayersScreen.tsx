@@ -1,25 +1,19 @@
 import React, { useCallback, useState } from "react"
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native"
+import { StyleSheet, TextInput, View } from "react-native"
 import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Player } from "@types"
+import { Player, Table } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
-import TitleHeader from "@components/Headers/TitleHeader"
-import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
+import { RoundedScrollView } from "@components/Themed"
 import PlayerCard from "@components/Cards/PlayerCard"
 import PlayerBubble from "@components/Cards/PlayerBubble"
 import BallButton from "@components/Buttons/BallButton"
 import Loading from "@components/Loading"
 import { RootState, dispatch } from "@store"
+import { GlobalState } from "@store/models/global"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { RootStackParamList } from "@navigation/navTypes"
@@ -31,9 +25,8 @@ type Props = StackScreenProps<
 >
 
 const SelectPlayersScreen = ({ navigation, route }: Props) => {
-  const players: Player[] = useSelector(
-    ({ global }: RootState) => global.players
-  )
+  const global: GlobalState = useSelector(({ global }: RootState) => global)
+  const { players } = global
 
   const theme = useTheme()
   const themedStyle = styles(theme)
@@ -81,6 +74,12 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
       players: jogadores,
     }
     const newTable: string = await dispatch.global.createNewTable(payload)
+    const table: Table = global.tables.filter((t) => t.id === newTable)[0]
+    dispatch.current.setTable(table)
+    const players = global.players.filter((p) =>
+      table.players.some((t) => t === p.id)
+    )
+    dispatch.current.setPlayers(players)
     navigation.navigate(RouteNames.SelectGameScreen, { id: newTable })
   }
 
@@ -90,7 +89,6 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
 
   return (
     <GradientView>
-      <TitleHeader title="Jogadores" />
       <View style={themedStyle.mainContainer}>
         <Text
           type="header"
@@ -98,7 +96,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
           variant="white"
           family="bold"
           style={{
-            marginBottom: theme.spacings.padding,
+            marginVertical: theme.spacings.padding,
           }}
         >
           {`Quem tá na mesa ${route.params.mesa}?`}
@@ -156,17 +154,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
         </View>
       </View>
       <View style={{ width: "100%", flex: 1 }}>
-        <RoundedHeaderDecoration backgroundColor={theme.colors.textLight} />
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center" }}
-          style={[
-            {
-              backgroundColor: theme.colors.textLight,
-              marginBottom: 70,
-              height: 300,
-            },
-          ]}
-        >
+        <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
             {!!players.length ? (
               players
@@ -195,14 +183,13 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
               </Text>
             )}
           </View>
-        </ScrollView>
+          <BottomMenu
+            onConfirm={createTable}
+            confirmLabel="Continuar ➝"
+            disabled={jogadores.length < 3}
+          />
+        </RoundedScrollView>
       </View>
-
-      <BottomMenu
-        onConfirm={createTable}
-        confirmLabel="Continuar ➝"
-        disabled={jogadores.length < 3}
-      />
     </GradientView>
   )
 }

@@ -6,13 +6,12 @@ import { Table, GameType } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
-import TitleHeader from "@components/Headers/TitleHeader"
-import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
 import GameCard from "@components/Cards/GameCard"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { RootStackParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
+import { RoundedScrollView } from "@components/Themed"
 
 type Props = StackScreenProps<RootStackParamList, RouteNames.SelectGameScreen>
 
@@ -49,26 +48,25 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
   }, [])
 
   const goToNext = () => {
-    const table = tables.filter((t) => t.id === id)[0]
     const max = maxCards()
     const nPlayers = numPlayers()
     dispatch.current.initPlacar(
       checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
     )
-    dispatch.current.setTable(table)
     dispatch.current.setType(checked)
+    /* dispatch.current.setRounds(2)
+    dispatch.current.setHands([1, 2]) */
     dispatch.current.setRounds(
       checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
     )
     dispatch.current.setHands(
-      checked === GameType.NOVO ? handsNormal(max) : handsNovo(max, nPlayers)
+      checked === GameType.NOVO ? handsNovo(max, nPlayers) : handsNormal(max)
     )
     navigation.navigate(RouteNames.OrderPlayersScreen)
   }
 
   return (
     <GradientView>
-      <TitleHeader title="Jogo" />
       <View style={themedStyle.mainContainer}>
         <Text
           type="header"
@@ -76,34 +74,17 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
           variant="white"
           family="bold"
           style={{
-            marginBottom: theme.spacings.padding,
+            marginVertical: theme.spacings.padding,
           }}
         >
           Selecione o tipo de jogo
         </Text>
-        <Text
-          type="title"
-          align="center"
-          variant="white"
-          style={{
-            marginBottom: theme.spacings.padding * 2,
-          }}
-        >
+        <Text type="title" align="center" variant="white">
           {`Máximo de ${maxCards()} cartas por jogadores`}
         </Text>
       </View>
       <View style={{ width: "100%", flex: 1 }}>
-        <RoundedHeaderDecoration backgroundColor={theme.colors.textLight} />
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center" }}
-          style={[
-            {
-              backgroundColor: theme.colors.textLight,
-              marginBottom: 70,
-              height: 300,
-            },
-          ]}
-        >
+        <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
             <GameCard
               type={GameType.NORMAL}
@@ -120,14 +101,13 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
               checked={checked === GameType.NOVO}
             />
           </View>
-        </ScrollView>
+          <BottomMenu
+            onConfirm={goToNext}
+            confirmLabel="Continuar ➝"
+            disabled={checked !== "" ? false : true}
+          />
+        </RoundedScrollView>
       </View>
-
-      <BottomMenu
-        onConfirm={goToNext}
-        confirmLabel="Continuar ➝"
-        disabled={checked !== "" ? false : true}
-      />
     </GradientView>
   )
 }

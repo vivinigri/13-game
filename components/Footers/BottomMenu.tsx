@@ -1,8 +1,8 @@
 import React from "react"
-import { View, TouchableOpacity, Platform } from "react-native"
-import Text from "@components/Text"
+import { View } from "react-native"
 import { StyleSheet } from "react-native"
 import { useTheme } from "react-native-paper"
+import { ActionButton } from "@components/Buttons"
 
 type BottomMenuProps = {
   confirmLabel?: string
@@ -10,6 +10,7 @@ type BottomMenuProps = {
   onConfirm?: () => void
   onCancel?: () => void
   disabled?: boolean
+  relative?: boolean
 }
 
 const BottomMenu = ({
@@ -17,6 +18,7 @@ const BottomMenu = ({
   onCancel,
   confirmLabel,
   cancelLabel,
+  relative = true,
   disabled = false,
 }: BottomMenuProps) => {
   const theme = useTheme()
@@ -26,44 +28,30 @@ const BottomMenu = ({
       style={[
         themedStyle.bottomMenu,
         {
-          justifyContent:
-            !onConfirm || !onCancel ? "flex-end" : "space-between",
+          justifyContent: !onConfirm || !onCancel ? "center" : "space-between",
+          position: relative ? "relative" : "absolute",
         },
       ]}
     >
       {onConfirm ? (
-        <TouchableOpacity
+        <ActionButton
+          label={`${confirmLabel ? confirmLabel : "Confirmar"}`}
+          disabled={disabled}
           onPress={() => {
             if (disabled) {
               return
             }
             onConfirm()
           }}
-        >
-          <View
-            style={[themedStyle.confirmBtn, { opacity: disabled ? 0.3 : 1 }]}
-          >
-            <Text
-              type="header"
-              variant={disabled ? "light" : "white"}
-              family="bold"
-            >
-              {`${confirmLabel ? confirmLabel : "Confirmar"}`}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        />
       ) : null}
       {onCancel ? (
-        <TouchableOpacity onPress={onCancel}>
-          <Text
-            type="header"
-            variant="highlight"
-            family="bold"
-            textTransform="uppercase"
-          >
-            {`${cancelLabel ? cancelLabel : "Voltar"}`}
-          </Text>
-        </TouchableOpacity>
+        <ActionButton
+          secondary={true}
+          label={`${cancelLabel ? cancelLabel : "Voltar"}`}
+          disabled={disabled}
+          onPress={onCancel}
+        />
       ) : null}
     </View>
   )
@@ -77,8 +65,8 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       alignItems: "center",
       height: spacings.footerSize,
       padding: spacings.padding,
-      backgroundColor: colors.dark,
-      position: "absolute",
+      marginTop: spacings.padding * 2,
+      backgroundColor: colors.textLight,
       bottom: 0,
       zIndex: 10,
     },

@@ -7,8 +7,7 @@ import { Table } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
-import TitleHeader from "@components/Headers/TitleHeader"
-import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
+import { RoundedScrollView } from "@components/Themed"
 import TableCard from "@components/Cards/TableCard"
 import BallButton from "@components/Buttons/BallButton"
 import { GlobalState } from "@store/models/global"
@@ -70,12 +69,17 @@ const SelectTableScreen = ({ navigation }: Props) => {
   }
 
   const goToNext = () => {
+    const table: Table = allTables.filter((t) => t.id === checked)[0]
+    dispatch.current.setTable(table)
+    const players = global.players.filter((p) =>
+      table.players.some((t) => t === p.name)
+    )
+    dispatch.current.setPlayers(players)
     navigation.navigate(RouteNames.SelectGameScreen, { id: checked })
   }
 
   return (
     <GradientView>
-      <TitleHeader title="Mesa" />
       <View style={themedStyle.mainContainer}>
         <Text
           type="header"
@@ -83,7 +87,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
           variant="white"
           family="bold"
           style={{
-            marginBottom: theme.spacings.padding,
+            marginVertical: theme.spacings.padding,
           }}
         >
           Quem vai jogar?
@@ -123,19 +127,14 @@ const SelectTableScreen = ({ navigation }: Props) => {
           )}
         </Formik>
       </View>
-      <View style={{ width: "100%", flex: 1 }}>
-        <RoundedHeaderDecoration backgroundColor={theme.colors.textLight} />
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center" }}
-          style={[
-            {
-              backgroundColor: theme.colors.textLight,
-              marginBottom: 70,
-              height: 300,
-            },
-          ]}
-        >
-          <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+        }}
+      >
+        <RoundedScrollView>
+          <View style={themedStyle.cardsContainer}>
             {!!allTables.length ? (
               allTables
                 .filter((a) =>
@@ -164,14 +163,13 @@ const SelectTableScreen = ({ navigation }: Props) => {
               </Text>
             )}
           </View>
-        </ScrollView>
+          <BottomMenu
+            onConfirm={goToNext}
+            confirmLabel="Continuar ➝"
+            disabled={checked !== "" ? false : true}
+          />
+        </RoundedScrollView>
       </View>
-
-      <BottomMenu
-        onConfirm={goToNext}
-        confirmLabel="Continuar ➝"
-        disabled={checked !== "" ? false : true}
-      />
     </GradientView>
   )
 }
@@ -184,6 +182,12 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       justifyContent: "flex-start",
       width: "100%",
       maxWidth: 600,
+    },
+    cardsContainer: {
+      justifyContent: "flex-start",
+      width: "100%",
+      maxWidth: 600,
+      alignItems: "center",
     },
     input: {
       height: 50,

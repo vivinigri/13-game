@@ -6,8 +6,7 @@ import { Player } from "@types"
 import Text from "@components/Text"
 import GradientView from "@components/GradientView"
 import BottomMenu from "@components/Footers/BottomMenu"
-import TitleHeader from "@components/Headers/TitleHeader"
-import RoundedHeaderDecoration from "@components/Headers/RoundedHeaderDecoration"
+import { RoundedScrollView } from "@components/Themed"
 import PlayerOrder from "@components/Cards/PlayerOrder"
 import { CurrentState } from "@store/models/current"
 import { GlobalState } from "@store/models/global"
@@ -22,22 +21,12 @@ type Props = StackScreenProps<RootStackParamList, RouteNames.OrderPlayersScreen>
 const OrderPlayersScreen = ({ navigation }: Props) => {
   const global: GlobalState = useSelector(({ global }: RootState) => global)
   const current: CurrentState = useSelector(({ current }: RootState) => current)
-  const { players } = global
-  const { table } = current
+  const { players } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
 
-  const [playerOrder, setPlayerOrder] = useState<Player[]>([])
-
-  useFocusEffect(
-    useCallback(() => {
-      const myPlayers: Player[] = players.filter((a: Player) =>
-        table.players.some((p) => p === a.id)
-      )
-      setPlayerOrder(myPlayers)
-    }, [])
-  )
+  const [playerOrder, setPlayerOrder] = useState<Player[]>(players)
 
   const insertAndShift = (arr: Player[], to: number, from: number) => {
     let newArray: Player[] = []
@@ -69,7 +58,6 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <TitleHeader title="Ordem" />
       <View style={themedStyle.mainContainer}>
         <Text
           type="header"
@@ -77,34 +65,17 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
           variant="white"
           family="bold"
           style={{
-            marginBottom: theme.spacings.padding,
+            marginVertical: theme.spacings.padding,
           }}
         >
           Como os jogadores estão sentados?
         </Text>
-        <Text
-          type="title"
-          align="center"
-          variant="white"
-          style={{
-            marginBottom: theme.spacings.padding * 2,
-          }}
-        >
+        <Text type="title" align="center" variant="white">
           Ordene do primeiro a fazer a aposta na primeira rodada ao último
         </Text>
       </View>
       <View style={{ width: "100%", flex: 1 }}>
-        <RoundedHeaderDecoration backgroundColor={theme.colors.textLight} />
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center" }}
-          style={[
-            {
-              backgroundColor: theme.colors.textLight,
-              marginBottom: 70,
-              height: 300,
-            },
-          ]}
-        >
+        <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
             {playerOrder.length
               ? playerOrder.map((p: Player, i: number) => (
@@ -119,13 +90,13 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
                 ))
               : null}
           </View>
-        </ScrollView>
+          <BottomMenu
+            onConfirm={goToNext}
+            confirmLabel="Continuar ➝"
+            disabled={false}
+          />
+        </RoundedScrollView>
       </View>
-      <BottomMenu
-        onConfirm={goToNext}
-        confirmLabel="Continuar ➝"
-        disabled={false}
-      />
     </GradientView>
   )
 }

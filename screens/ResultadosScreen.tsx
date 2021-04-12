@@ -9,6 +9,8 @@ import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { ResultadoCard } from "@components/Cards"
 import { ActionButton } from "@components/Buttons"
+import BottomMenu from "@components/Footers/BottomMenu"
+import { RoundedScrollView } from "@components/Themed"
 import { ApostasParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 
@@ -25,12 +27,12 @@ const ResultadosScreen = ({ navigation }: Props) => {
   const themedStyle = styles(theme)
 
   const [resultados, setResultados] = useState<number[]>([])
-  const [hasError, setHasError] = useState<boolean>(false)
+  const [error, setError] = useState<string>("")
 
   useFocusEffect(
     useCallback(() => {
       setResultados([])
-      setHasError(false)
+      setError("")
     }, [currentRound])
   )
 
@@ -41,17 +43,25 @@ const ResultadosScreen = ({ navigation }: Props) => {
     if (index === players.length - 1 || resultados.length === players.length) {
       const total = newResultados.reduce((a, b) => a + b)
       if (total !== hands[currentRound]) {
-        setHasError(true)
+        if (total > hands[currentRound]) {
+          setError(`${total - hands[currentRound]} apostas a mais`)
+        } else {
+          setError(`${hands[currentRound] - total} apostas a mais`)
+        }
       } else {
-        setHasError(false)
+        setError("")
       }
     }
   }
 
   const saveResults = () => {
     dispatch.current.setResultados(resultados)
-    dispatch.current.nextRound()
-    navigation.navigate(RouteNames.ApostasScreen)
+    if (currentRound >= hands.length - 1) {
+      navigation.navigate(RouteNames.GameOverScreen)
+    } else {
+      dispatch.current.nextRound()
+      navigation.navigate(RouteNames.ApostasScreen)
+    }
   }
 
   return (
@@ -66,7 +76,7 @@ const ResultadosScreen = ({ navigation }: Props) => {
             marginVertical: theme.spacings.padding,
           }}
         >
-          {`Round ${current.currentRound}/${current.rounds}`}
+          {`Resultado da rodada ${current.currentRound + 1}`}
         </Text>
         <Text type="title" align="center" variant="white">
           Hora da verdade
@@ -77,17 +87,9 @@ const ResultadosScreen = ({ navigation }: Props) => {
           width: "100%",
           flex: 1,
           justifyContent: "center",
-          paddingTop: 20,
         }}
       >
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center", height: "100%" }}
-          style={{
-            backgroundColor: theme.colors.textLight,
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
-          }}
-        >
+        <RoundedScrollView>
           <View
             style={[
               themedStyle.mainContainer,
@@ -105,18 +107,23 @@ const ResultadosScreen = ({ navigation }: Props) => {
               />
             ))}
           </View>
-          {hasError ? (
-            <Text type="title" align="center" variant="error" family="bold">
-              Resultados não corretos
+          {error !== "" ? (
+            <Text
+              type="title"
+              align="center"
+              variant="error"
+              family="bold"
+              style={{ marginBottom: 20 }}
+            >
+              {`Resultados não corretos - ${error}`}
             </Text>
           ) : null}
-          <ActionButton
-            label="Confirmar"
-            disabled={resultados.length < players.length || hasError}
-            onPress={saveResults}
-            style={{ maxWidth: 200 }}
+          <BottomMenu
+            onConfirm={saveResults}
+            confirmLabel="Confirmar"
+            disabled={resultados.length < players.length || error !== ""}
           />
-        </ScrollView>
+        </RoundedScrollView>
       </View>
     </GradientView>
   )

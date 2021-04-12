@@ -9,9 +9,10 @@ import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { TrunfoCard, ApostaCard, PlayerBubble } from "@components/Cards"
-import { ActionButton } from "@components/Buttons"
+import BottomMenu from "@components/Footers/BottomMenu"
 import { ApostasParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
+import { RoundedScrollView } from "@components/Themed"
 
 type Props = BottomTabScreenProps<ApostasParamList, RouteNames.ApostasScreen>
 
@@ -53,7 +54,7 @@ const ApostasScreen = ({ navigation }: Props) => {
 
   const closeApostas = async () => {
     const response = await dispatch.current.setApostas(aposta)
-    navigation.navigate("ResultadosScreen")
+    navigation.navigate(RouteNames.ResultadosScreen)
   }
 
   return (
@@ -68,7 +69,9 @@ const ApostasScreen = ({ navigation }: Props) => {
             marginVertical: theme.spacings.padding,
           }}
         >
-          {`Round ${current.currentRound}/${current.rounds}`}
+          {`${hands[current.currentRound]} rodada${
+            hands[current.currentRound] > 1 ? "s" : ""
+          }`}
         </Text>
         <Text type="title" align="center" variant="white">
           Façam suas apostas
@@ -79,21 +82,13 @@ const ApostasScreen = ({ navigation }: Props) => {
           width: "100%",
           flex: 1,
           justifyContent: "center",
-          paddingTop: 20,
         }}
       >
-        <ScrollView
-          contentContainerStyle={{ alignItems: "center", height: "100%" }}
-          style={{
-            backgroundColor: theme.colors.textLight,
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
-          }}
-        >
+        <RoundedScrollView>
           <View
             style={[
               themedStyle.mainContainer,
-              { alignItems: "center", zIndex: 10, marginTop: 20 },
+              { alignItems: "center", zIndex: 10 },
             ]}
           >
             <TrunfoCard trunfo={trunfo} setTrunfo={setTrunfo} />
@@ -120,19 +115,16 @@ const ApostasScreen = ({ navigation }: Props) => {
               ))}
             </View>
           </View>
-        </ScrollView>
-        <View style={themedStyle.actionBtnView}>
-          <ActionButton
-            label="Confirmar"
+          <BottomMenu
+            onConfirm={closeApostas}
+            confirmLabel="Confirmar"
             disabled={
               trunfo === Naipes.UNDEFINED ||
               index < players.length - 1 ||
               aposta.length < players.length
             }
-            onPress={closeApostas}
-            style={{ maxWidth: 200 }}
           />
-        </View>
+        </RoundedScrollView>
       </View>
     </GradientView>
   )
