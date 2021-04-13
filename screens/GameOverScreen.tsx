@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from "react"
+import React from "react"
 import { StyleSheet, View, useWindowDimensions } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import Text from "@components/Text"
-import GradientView from "@components/GradientView"
+import {GradientView, Text, TopView} from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
-import { ApostasParamList, RootStackParamList } from "@navigation/navTypes"
+import { ApostasParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { RoundedScrollView } from "@components/Themed"
 import { BarChart, Grid } from "react-native-svg-charts"
@@ -76,22 +75,7 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          Game Over
-        </Text>
-        <Text type="title" align="center" variant="white">
-          Resultado final do jogo
-        </Text>
-      </View>
+      <TopView title="Game Over" subtitle="Resultado final do jogo"/>
       <View style={{ width: "100%", flex: 1 }}>
         <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>

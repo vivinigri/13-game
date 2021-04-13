@@ -4,8 +4,7 @@ import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Table } from "@types"
-import Text from "@components/Text"
-import GradientView from "@components/GradientView"
+import { Text, TopView, GradientView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import TableCard from "@components/Cards/TableCard"
@@ -80,34 +79,16 @@ const SelectTableScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          Quem vai jogar?
-        </Text>
-        <Text
-          type="title"
-          align="center"
-          variant="white"
-          style={{
-            marginBottom: theme.spacings.padding * 2,
-          }}
-        >
-          Busque uma mesa ou crie uma nova
-        </Text>
+      <TopView
+        title="Quem vai jogar?"
+        subtitle="Busque uma mesa ou crie uma nova"
+      >
         <Formik
           initialValues={{ mesa: "" }}
           onSubmit={(values) => createNewTable(values.mesa)}
         >
           {({ handleBlur, handleSubmit, values, setFieldValue }) => (
-            <View>
+            <View style={{ marginTop: theme.spacings.padding * 2 }}>
               <TextInput
                 style={themedStyle.input}
                 onBlur={handleBlur("mesa")}
@@ -126,7 +107,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
             </View>
           )}
         </Formik>
-      </View>
+      </TopView>
       <View
         style={{
           width: "100%",

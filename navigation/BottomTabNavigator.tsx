@@ -114,7 +114,7 @@ const StatsStack = createStackNavigator<StatsParamList>()
 function StatsNavigator() {
   const theme = useTheme()
   return (
-    <StatsStack.Navigator>
+    <StatsStack.Navigator screenOptions={{ headerShown: false }}>
       <StatsStack.Screen
         name={RouteNames.StatsScreen}
         component={StatsScreen}

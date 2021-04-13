@@ -4,8 +4,7 @@ import { Formik } from "formik"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Player, Table } from "@types"
-import Text from "@components/Text"
-import GradientView from "@components/GradientView"
+import { GradientView, Text, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import PlayerCard from "@components/Cards/PlayerCard"
@@ -89,28 +88,10 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          {`Quem tá na mesa ${route.params.mesa}?`}
-        </Text>
-        <Text
-          type="title"
-          align="center"
-          variant="white"
-          style={{
-            marginBottom: theme.spacings.padding * 2,
-          }}
-        >
-          Busque jogadores ou crie novos
-        </Text>
+      <TopView
+        title={`Quem tá na mesa ${route.params.mesa}?`}
+        subtitle="Busque jogadores ou crie novos"
+      >
         <Formik
           initialValues={{ name: "" }}
           onSubmit={(values) => {
@@ -118,7 +99,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
           }}
         >
           {({ handleBlur, handleSubmit, values, setFieldValue }) => (
-            <View>
+            <View style={{ marginTop: theme.spacings.padding * 2 }}>
               <TextInput
                 style={themedStyle.input}
                 onBlur={handleBlur("name")}
@@ -152,7 +133,8 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
               ))
             : null}
         </View>
-      </View>
+      </TopView>
+
       <View style={{ width: "100%", flex: 1 }}>
         <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>

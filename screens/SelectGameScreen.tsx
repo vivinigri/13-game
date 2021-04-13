@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from "react"
-import { StyleSheet, View, ScrollView } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Table, GameType } from "@types"
-import Text from "@components/Text"
-import GradientView from "@components/GradientView"
+import { GradientView, Text, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import GameCard from "@components/Cards/GameCard"
 import { RootState, dispatch } from "@store"
@@ -52,35 +51,23 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     const nPlayers = numPlayers()
     dispatch.current.initPlacar()
     dispatch.current.setType(checked)
-    /* dispatch.current.setRounds(2)
-    dispatch.current.setHands([1, 2]) */
-    dispatch.current.setRounds(
+    dispatch.current.setRounds(2)
+    dispatch.current.setHands([1, 2])
+    /* dispatch.current.setRounds(
       checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
     )
     dispatch.current.setHands(
       checked === GameType.NOVO ? handsNovo(max, nPlayers) : handsNormal(max)
-    )
+    ) */
     navigation.navigate(RouteNames.OrderPlayersScreen)
   }
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          Selecione o tipo de jogo
-        </Text>
-        <Text type="title" align="center" variant="white">
-          {`Máximo de ${maxCards()} cartas por jogadores`}
-        </Text>
-      </View>
+      <TopView
+        title="Selecione o tipo de jogo"
+        subtitle={`Máximo de ${maxCards()} cartas por jogadores`}
+      />
       <View style={{ width: "100%", flex: 1 }}>
         <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>

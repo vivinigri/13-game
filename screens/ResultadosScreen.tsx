@@ -1,14 +1,13 @@
 import React, { useState, useCallback } from "react"
-import { StyleSheet, View, ScrollView } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { Text, GradientView } from "@components"
+import { Text, GradientView, TopView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { ResultadoCard } from "@components/Cards"
-import { ActionButton } from "@components/Buttons"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import { ApostasParamList } from "@navigation/navTypes"
@@ -66,22 +65,10 @@ const ResultadosScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          {`Resultado da rodada ${current.currentRound + 1}`}
-        </Text>
-        <Text type="title" align="center" variant="white">
-          Hora da verdade
-        </Text>
-      </View>
+      <TopView
+        title={`Resultado da rodada ${current.currentRound + 1}`}
+        subtitle="Hora da verdade"
+      />
       <View
         style={{
           width: "100%",

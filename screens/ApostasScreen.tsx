@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { Naipes } from "@types"
-import { Text, GradientView } from "@components"
+import { Text, GradientView, TopView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
@@ -59,24 +59,12 @@ const ApostasScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          {`${hands[current.currentRound]} carta${
+      <TopView 
+        title={`${hands[current.currentRound]} carta${
             hands[current.currentRound] > 1 ? "s" : ""
-          }`}
-        </Text>
-        <Text type="title" align="center" variant="white">
-          {players[players.length - 1].name} distribui - Façam suas apostas!
-        </Text>
-      </View>
+          }`} 
+        subtitle={`${players[players.length - 1].name} distribui - Façam suas apostas!`}
+      />
       <View
         style={{
           width: "100%",

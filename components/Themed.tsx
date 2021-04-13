@@ -36,14 +36,17 @@ export function CardView(props: ViewProps) {
 
 export type ScrollViewProps = ScrollView["props"]
 export function RoundedScrollView(props: ScrollViewProps) {
-  const { style, ...otherProps } = props
+  const { style, contentContainerStyle, ...otherProps } = props
   return (
     <ScrollView
-      contentContainerStyle={{
-        alignItems: "center",
-        height: "100%",
-        paddingTop: theme().spacings.padding * 2,
-      }}
+      contentContainerStyle={[
+        {
+          alignItems: "center",
+          height: "100%",
+          paddingTop: theme().spacings.padding * 2,
+        },
+        contentContainerStyle,
+      ]}
       style={[
         {
           backgroundColor: theme().colors.textLight,

@@ -1,4 +1,4 @@
-// Naviagtion
+// UI -----------------------
 
 export type Toast = {
   id: string
@@ -7,6 +7,11 @@ export type Toast = {
   duration?: number
   tryAgain?: () => void
   label?: string
+}
+
+export type Tab = {
+  id: string
+  label: string
 }
 
 // Game -----------------------

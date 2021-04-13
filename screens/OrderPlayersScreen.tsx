@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react"
-import { StyleSheet, View, ScrollView } from "react-native"
+import React, { useState } from "react"
+import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Player } from "@types"
-import Text from "@components/Text"
-import GradientView from "@components/GradientView"
+import {GradientView, Text, TopView} from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import PlayerOrder from "@components/Cards/PlayerOrder"
@@ -12,7 +11,6 @@ import { CurrentState } from "@store/models/current"
 import { GlobalState } from "@store/models/global"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
-import { useFocusEffect } from "@react-navigation/native"
 import { RootStackParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 
@@ -58,22 +56,10 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <View style={themedStyle.mainContainer}>
-        <Text
-          type="header"
-          align="center"
-          variant="white"
-          family="bold"
-          style={{
-            marginVertical: theme.spacings.padding,
-          }}
-        >
-          Como os jogadores estão sentados?
-        </Text>
-        <Text type="title" align="center" variant="white">
-          Ordene do primeiro a fazer a aposta na primeira rodada ao último
-        </Text>
-      </View>
+      <TopView 
+        title="Como os jogadores estão sentados?" 
+        subtitle="Ordene do primeiro a fazer a aposta na primeira rodada ao último"
+      />
       <View style={{ width: "100%", flex: 1 }}>
         <RoundedScrollView>
           <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
@@ -101,8 +87,6 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
   )
 }
 
-export default OrderPlayersScreen
-
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     mainContainer: {
@@ -111,3 +95,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       maxWidth: 600,
     },
   })
+
+export default OrderPlayersScreen
