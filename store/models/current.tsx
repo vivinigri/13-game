@@ -34,7 +34,7 @@ export type CurrentModel = {
   effects: (
     dispatch: Dispatch
   ) => {
-    initPlacar: (len: number, rootState?: any) => void
+    initPlacar: (len?: number, rootState?: any) => void
     setApostas: (apostas: number[], rootState?: any) => boolean
     setResultados: (results: number[], rootState?: any) => void
     nextRound: (payload?: any, rootState?: any) => void
@@ -108,7 +108,7 @@ export const current: CurrentModel = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initPlacar(len: number, rootState?: any) {
+    async initPlacar(len?: number, rootState?: any) {
       const { players } = rootState.current
       try {
         const placar: Placar = {}

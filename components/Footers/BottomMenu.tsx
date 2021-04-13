@@ -35,6 +35,7 @@ const BottomMenu = ({
     >
       {onConfirm ? (
         <ActionButton
+          style={onCancel && themedStyle.actionButtonDouble}
           label={`${confirmLabel ? confirmLabel : "Confirmar"}`}
           disabled={disabled}
           onPress={() => {
@@ -47,6 +48,7 @@ const BottomMenu = ({
       ) : null}
       {onCancel ? (
         <ActionButton
+          style={onConfirm && themedStyle.actionButtonDouble}
           secondary={true}
           label={`${cancelLabel ? cancelLabel : "Voltar"}`}
           disabled={disabled}
@@ -59,9 +61,13 @@ const BottomMenu = ({
 
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
+    actionButtonDouble: {
+      flex: 1,
+      marginHorizontal: spacings.padding * 2,
+    },
     bottomMenu: {
       width: "100%",
-      flexDirection: "row",
+      flexDirection: "row-reverse",
       alignItems: "center",
       height: spacings.footerSize,
       padding: spacings.padding,
@@ -69,9 +75,6 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       backgroundColor: colors.textLight,
       bottom: 0,
       zIndex: 10,
-    },
-    confirmBtn: {
-      backgroundColor: colors.dark,
     },
   })
 

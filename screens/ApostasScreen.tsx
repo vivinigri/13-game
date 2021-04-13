@@ -69,12 +69,12 @@ const ApostasScreen = ({ navigation }: Props) => {
             marginVertical: theme.spacings.padding,
           }}
         >
-          {`${hands[current.currentRound]} rodada${
+          {`${hands[current.currentRound]} carta${
             hands[current.currentRound] > 1 ? "s" : ""
           }`}
         </Text>
         <Text type="title" align="center" variant="white">
-          Façam suas apostas
+          {players[players.length - 1].name} distribui - Façam suas apostas!
         </Text>
       </View>
       <View
