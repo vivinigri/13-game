@@ -29,8 +29,12 @@ function RootNavigator() {
   const theme = useTheme()
   return (
     // <Stack.Navigator screenOptions={headerOptions("", theme)}>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={RouteNames.StartScreen} component={StartScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
+      <Stack.Screen
+        name={RouteNames.StartScreen}
+        component={StartScreen}
+        options={headerOptions("", theme)}
+      />
       <Stack.Screen
         name={RouteNames.SelectTableScreen}
         component={SelectTableScreen}
@@ -51,7 +55,11 @@ function RootNavigator() {
         component={SelectPlayersScreen}
         options={headerOptions("", theme)}
       />
-      <Stack.Screen name={RouteNames.Root} component={BottomTabNavigator} />
+      <Stack.Screen
+        name={RouteNames.Root}
+        component={BottomTabNavigator}
+        options={headerOptions("", theme)}
+      />
       <Stack.Screen
         name={RouteNames.NotFoundScreen}
         component={NotFoundScreen}

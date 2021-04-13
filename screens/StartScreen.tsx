@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 import Text from "@components/Text"
 import { ActionButton } from "@components/Buttons"
 import Logo from "@assets/icons/logo"
+import Cards from "@assets/icons/cards"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -37,7 +38,16 @@ export default function StartScreen({ navigation }: Props) {
         style={themedStyle.background}
       />
       <View style={{ width: "100%", maxWidth: 600, alignItems: "center" }}>
-        <Logo color={theme.colors.orange} />
+        <View
+          style={{
+            maxWidth: 400,
+            maxHeight: 400,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Cards color={theme.colors.hover} />
+        </View>
         <Text
           type="header"
           align="center"

@@ -76,7 +76,7 @@ const ApostaStack = createStackNavigator<ApostasParamList>()
 function ApostasNavigator() {
   const theme = useTheme()
   return (
-    <ApostaStack.Navigator screenOptions={{ headerShown: true }}>
+    <ApostaStack.Navigator screenOptions={{ headerShown: false }}>
       <ApostaStack.Screen
         name={RouteNames.ApostasScreen}
         component={ApostasScreen}
