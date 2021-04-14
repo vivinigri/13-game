@@ -2,27 +2,19 @@ import React from "react"
 import { StyleSheet, View, useWindowDimensions } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import {GradientView, Text, TopView} from "@components"
+import { GradientView, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { ApostasParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { RoundedScrollView } from "@components/Themed"
-import { BarChart, Grid } from "react-native-svg-charts"
-import { Text as TextSvg } from "react-native-svg"
+import MyBarChart from "@components/Charts/MyBarChart"
 import { CurrentState } from "@store/models/current"
 
 type Props = BottomTabScreenProps<ApostasParamList, RouteNames.GameOverScreen>
 
-type LabelsType = {
-  data: number[]
-  x: Function
-  y: Function
-  bandwidth: number
-}
-
-const GameOverScreen = ({ navigation, route }: Props) => {
+const GameOverScreen = ({ navigation }: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { placar, players } = current
 
@@ -37,75 +29,24 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
   const data = Object.values(placar).map((p) => p.final)
   const ids = Object.keys(placar).map((p) => p)
-  const labels = ids.map((id) => players.find((p) => p.id === id)?.name)
-  const height = useWindowDimensions().height - 320
-  const CUT_OFF = 20
-
-  const Values = ({ x, y, bandwidth, data }: LabelsType) =>
-    data.map((value: number, index: number) => (
-      <TextSvg
-        key={index}
-        x={x(index) + bandwidth / 2}
-        y={value < CUT_OFF ? y(value) - 10 : y(value) + 15}
-        fontSize={14}
-        fill={value >= CUT_OFF ? "white" : theme.colors.dark}
-        alignmentBaseline={"middle"}
-        textAnchor={"middle"}
-        fontWeight={"bold"}
-      >
-        {value}
-      </TextSvg>
-    ))
-
-  const Labels = ({ x, y, bandwidth, data }: LabelsType) =>
-    data.map((value: number, index: number) => (
-      <TextSvg
-        key={index}
-        x={x(index) + bandwidth / 2}
-        y={value < CUT_OFF ? y(value) - 40 : y(value) - 15}
-        fontSize={14}
-        fill={theme.colors.dark}
-        alignmentBaseline={"middle"}
-        textAnchor={"middle"}
-        fontWeight={"bold"}
-      >
-        {labels[index]}
-      </TextSvg>
-    ))
+  const labels = ids.map((id) => players.find((p) => p.id === id)!!.name)
+  const height = useWindowDimensions().height - 300
 
   return (
     <GradientView>
-      <TopView title="Game Over" subtitle="Resultado final do jogo"/>
-      <View style={{ width: "100%", flex: 1 }}>
-        <RoundedScrollView>
-          <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
-            <BarChart
-              style={{
-                height: height,
-                width: "100%",
-                marginHorizontal: theme.spacings.padding * 2,
-                paddingHorizontal: theme.spacings.padding * 2,
-              }}
-              data={data}
-              animate={false}
-              animationDuration={0}
-              svg={{ fill: theme.colors.hover }}
-              contentInset={{ top: 30, bottom: 30 }}
-            >
-              <Grid />
-              <Labels />
-              <Values />
-            </BarChart>
-          </View>
-          <BottomMenu
-            onConfirm={startNew}
-            confirmLabel="Novo Jogo"
-            onCancel={goToMenu}
-            cancelLabel="Menu"
-            disabled={false}
-          />
-        </RoundedScrollView>
-      </View>
+      <TopView title="Game Over" subtitle="Resultado final do jogo" />
+      <RoundedScrollView>
+        <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
+          <MyBarChart data={data} labels={labels} height={height} />
+        </View>
+        <BottomMenu
+          onConfirm={startNew}
+          confirmLabel="Novo Jogo"
+          onCancel={goToMenu}
+          cancelLabel="Menu"
+          disabled={false}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }
@@ -118,14 +59,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       justifyContent: "flex-start",
       width: "100%",
       maxWidth: 600,
-    },
-    input: {
-      height: 50,
-      color: colors.white,
-      borderColor: colors.yellow,
-      backgroundColor: colors.backdrop,
-      padding: spacings.padding,
-      borderRadius: 50,
-      marginHorizontal: spacings.padding,
     },
   })

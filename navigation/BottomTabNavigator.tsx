@@ -90,7 +90,7 @@ function ApostasNavigator() {
       <ApostaStack.Screen
         name={RouteNames.GameOverScreen}
         component={GameOverScreen}
-        options={headerOptions("", theme)}
+        // options={headerOptions("", theme)}
       />
     </ApostaStack.Navigator>
   )

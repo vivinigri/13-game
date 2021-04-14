@@ -59,61 +59,56 @@ const ApostasScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <TopView 
+      <TopView
         title={`${hands[current.currentRound]} carta${
-            hands[current.currentRound] > 1 ? "s" : ""
-          }`} 
-        subtitle={`${players[players.length - 1].name} distribui - Façam suas apostas!`}
+          hands[current.currentRound] > 1 ? "s" : ""
+        }`}
+        subtitle={`${
+          players[players.length - 1].name
+        } distribui - Façam suas apostas!`}
       />
-      <View
-        style={{
-          width: "100%",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <RoundedScrollView>
-          <View
-            style={[
-              themedStyle.mainContainer,
-              { alignItems: "center", zIndex: 10 },
-            ]}
-          >
-            <TrunfoCard trunfo={trunfo} setTrunfo={setTrunfo} />
-            <ApostaCard
-              name={players[index].name}
-              id={players[index].id}
-              numCards={hands[currentRound]}
-              selected={aposta[index] || null}
-              index={index}
-              confirm={confirmAposta}
-              cancel={cancelAposta}
-              totalPlayers={players.length}
-              totalApostas={aposta.length ? aposta.reduce((a, b) => a + b) : 0}
-            />
-            <View style={themedStyle.bubblesContainer}>
-              {aposta.map((a: number, i: number) => (
-                <PlayerBubble
-                  key={i}
-                  color={theme.colors.hover}
-                  label={a.toString()}
-                  name={players[i].name}
-                  id={players[i].id}
-                />
-              ))}
-            </View>
-          </View>
-          <BottomMenu
-            onConfirm={closeApostas}
-            confirmLabel="Confirmar"
-            disabled={
-              trunfo === Naipes.UNDEFINED ||
-              index < players.length - 1 ||
-              aposta.length < players.length
-            }
+
+      <RoundedScrollView>
+        <View
+          style={[
+            themedStyle.mainContainer,
+            { alignItems: "center", zIndex: 10 },
+          ]}
+        >
+          <TrunfoCard trunfo={trunfo} setTrunfo={setTrunfo} />
+          <ApostaCard
+            name={players[index].name}
+            id={players[index].id}
+            numCards={hands[currentRound]}
+            selected={aposta[index] || null}
+            index={index}
+            confirm={confirmAposta}
+            cancel={cancelAposta}
+            totalPlayers={players.length}
+            totalApostas={aposta.length ? aposta.reduce((a, b) => a + b) : 0}
           />
-        </RoundedScrollView>
-      </View>
+          <View style={themedStyle.bubblesContainer}>
+            {aposta.map((a: number, i: number) => (
+              <PlayerBubble
+                key={i}
+                color={theme.colors.hover}
+                label={a.toString()}
+                name={players[i].name}
+                id={players[i].id}
+              />
+            ))}
+          </View>
+        </View>
+        <BottomMenu
+          onConfirm={closeApostas}
+          confirmLabel="Confirmar"
+          disabled={
+            trunfo === Naipes.UNDEFINED ||
+            index < players.length - 1 ||
+            aposta.length < players.length
+          }
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

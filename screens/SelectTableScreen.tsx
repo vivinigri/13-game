@@ -108,49 +108,43 @@ const SelectTableScreen = ({ navigation }: Props) => {
           )}
         </Formik>
       </TopView>
-      <View
-        style={{
-          width: "100%",
-          flex: 1,
-        }}
-      >
-        <RoundedScrollView>
-          <View style={themedStyle.cardsContainer}>
-            {!!allTables.length ? (
-              allTables
-                .filter((a) =>
-                  search === ""
-                    ? true
-                    : a.name.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((table: Table) => (
-                  <TableCard
-                    key={table.id}
-                    table={table}
-                    setChecked={setChecked}
-                    checked={checked === table.id}
-                  />
-                ))
-            ) : (
-              <Text
-                type="title"
-                align="center"
-                variant="dark"
-                style={{
-                  marginBottom: theme.spacings.padding * 2,
-                }}
-              >
-                Nenhuma mesa...
-              </Text>
-            )}
-          </View>
-          <BottomMenu
-            onConfirm={goToNext}
-            confirmLabel="Continuar ➝"
-            disabled={checked !== "" ? false : true}
-          />
-        </RoundedScrollView>
-      </View>
+
+      <RoundedScrollView>
+        <View style={themedStyle.cardsContainer}>
+          {!!allTables.length ? (
+            allTables
+              .filter((a) =>
+                search === ""
+                  ? true
+                  : a.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((table: Table) => (
+                <TableCard
+                  key={table.id}
+                  table={table}
+                  setChecked={setChecked}
+                  checked={checked === table.id}
+                />
+              ))
+          ) : (
+            <Text
+              type="title"
+              align="center"
+              variant="dark"
+              style={{
+                marginBottom: theme.spacings.padding * 2,
+              }}
+            >
+              Nenhuma mesa...
+            </Text>
+          )}
+        </View>
+        <BottomMenu
+          onConfirm={goToNext}
+          confirmLabel="Continuar ➝"
+          disabled={checked !== "" ? false : true}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

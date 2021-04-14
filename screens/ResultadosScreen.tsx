@@ -69,49 +69,42 @@ const ResultadosScreen = ({ navigation }: Props) => {
         title={`Resultado da rodada ${current.currentRound + 1}`}
         subtitle="Hora da verdade"
       />
-      <View
-        style={{
-          width: "100%",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <RoundedScrollView>
-          <View
-            style={[
-              themedStyle.mainContainer,
-              { alignItems: "center", zIndex: 10, marginTop: 20 },
-            ]}
+
+      <RoundedScrollView>
+        <View
+          style={[
+            themedStyle.mainContainer,
+            { alignItems: "center", zIndex: 10, marginTop: 20 },
+          ]}
+        >
+          {players.map((p, i) => (
+            <ResultadoCard
+              key={p.id}
+              name={p.name}
+              index={i}
+              numCards={hands[currentRound]}
+              aposta={current.placar[p.id].apostas[currentRound]}
+              setResultado={confirmResultado}
+            />
+          ))}
+        </View>
+        {error !== "" ? (
+          <Text
+            type="title"
+            align="center"
+            variant="error"
+            family="bold"
+            style={{ marginBottom: 20 }}
           >
-            {players.map((p, i) => (
-              <ResultadoCard
-                key={p.id}
-                name={p.name}
-                index={i}
-                numCards={hands[currentRound]}
-                aposta={current.placar[p.id].apostas[currentRound]}
-                setResultado={confirmResultado}
-              />
-            ))}
-          </View>
-          {error !== "" ? (
-            <Text
-              type="title"
-              align="center"
-              variant="error"
-              family="bold"
-              style={{ marginBottom: 20 }}
-            >
-              {`Resultados não corretos - ${error}`}
-            </Text>
-          ) : null}
-          <BottomMenu
-            onConfirm={saveResults}
-            confirmLabel="Confirmar"
-            disabled={resultados.length < players.length || error !== ""}
-          />
-        </RoundedScrollView>
-      </View>
+            {`Resultados não corretos - ${error}`}
+          </Text>
+        ) : null}
+        <BottomMenu
+          onConfirm={saveResults}
+          confirmLabel="Confirmar"
+          disabled={resultados.length < players.length || error !== ""}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

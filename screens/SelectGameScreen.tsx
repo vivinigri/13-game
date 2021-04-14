@@ -68,31 +68,29 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
         title="Selecione o tipo de jogo"
         subtitle={`Máximo de ${maxCards()} cartas por jogadores`}
       />
-      <View style={{ width: "100%", flex: 1 }}>
-        <RoundedScrollView>
-          <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
-            <GameCard
-              type={GameType.NORMAL}
-              title="Sobe e Desce"
-              description="Vai ao máximo e volta ao mínimo"
-              setChecked={setChecked}
-              checked={checked === GameType.NORMAL}
-            />
-            <GameCard
-              type={GameType.NOVO}
-              title="Sobe e Fica"
-              description={`Vai ao máximo e repete ${numPlayers()}X`}
-              setChecked={setChecked}
-              checked={checked === GameType.NOVO}
-            />
-          </View>
-          <BottomMenu
-            onConfirm={goToNext}
-            confirmLabel="Continuar ➝"
-            disabled={checked !== "" ? false : true}
+      <RoundedScrollView>
+        <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
+          <GameCard
+            type={GameType.NORMAL}
+            title="Sobe e Desce"
+            description="Vai ao máximo e volta ao mínimo"
+            setChecked={setChecked}
+            checked={checked === GameType.NORMAL}
           />
-        </RoundedScrollView>
-      </View>
+          <GameCard
+            type={GameType.NOVO}
+            title="Sobe e Fica"
+            description={`Vai ao máximo e repete ${numPlayers()}X`}
+            setChecked={setChecked}
+            checked={checked === GameType.NOVO}
+          />
+        </View>
+        <BottomMenu
+          onConfirm={goToNext}
+          confirmLabel="Continuar ➝"
+          disabled={checked !== "" ? false : true}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

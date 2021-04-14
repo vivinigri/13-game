@@ -12,25 +12,28 @@ import { RootState, dispatch } from "@store"
 import { useFocusEffect } from "@react-navigation/native"
 import TabView from "@components/TabView"
 import { Tab } from "@types"
+import MyPieChart from "@components/Charts/MyPieChart"
+
+const geralTab = {
+  id: "geral",
+  label: "Geral",
+}
 
 type Props = BottomTabScreenProps<TabelaParamList, RouteNames.TabelaScreen>
+
 export default function StatsScreen({ navigation }: Props) {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
-  const { players } = current
+  const { players, placar } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
 
   const [tabs, setTabs] = useState<Tab[]>([])
+  const [selectedTab, setSelectedTab] = useState<Tab>(geralTab)
 
   useFocusEffect(
     useCallback(() => {
-      let myTabs = [
-        {
-          id: "geral",
-          label: "Geral",
-        },
-      ]
+      let myTabs = [geralTab]
       players.map((p) => {
         myTabs.push({
           id: p.id,
@@ -44,24 +47,25 @@ export default function StatsScreen({ navigation }: Props) {
   return (
     <GradientView>
       <TopView title="Estatísticas" subtitle="Acompanhe este jogo em números" />
-      <View
-        style={{
-          width: "100%",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <RoundedScrollView contentContainerStyle={{ paddingTop: 0 }}>
-          <View
-            style={[
-              themedStyle.mainContainer,
-              { alignItems: "center", zIndex: 10 },
-            ]}
-          >
-            <TabView tabs={tabs} currentTab={tabs[0]} onTabChange={() => {}} />
+      <RoundedScrollView contentContainerStyle={{ paddingTop: 0 }}>
+        <View
+          style={[
+            themedStyle.mainContainer,
+            { alignItems: "center", zIndex: 10 },
+          ]}
+        >
+          <TabView
+            tabs={tabs}
+            currentTab={selectedTab}
+            onTabChange={(tab: Tab) => setSelectedTab(tab)}
+          />
+          <View style={[themedStyle.mainContainer, { maxWidth: 600 }]}>
+            {selectedTab !== geralTab ? (
+              <MyPieChart height={200} placar={placar[selectedTab.id]} />
+            ) : null}
           </View>
-        </RoundedScrollView>
-      </View>
+        </View>
+      </RoundedScrollView>
     </GradientView>
   )
 }
@@ -71,6 +75,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
     mainContainer: {
       justifyContent: "flex-start",
       width: "100%",
-      // maxWidth: 600,
     },
   })

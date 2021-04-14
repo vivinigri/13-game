@@ -135,43 +135,41 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
         </View>
       </TopView>
 
-      <View style={{ width: "100%", flex: 1 }}>
-        <RoundedScrollView>
-          <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
-            {!!players.length ? (
-              players
-                .filter((a: Player) =>
-                  a.name.toLowerCase().includes(search.toLowerCase())
-                )
-                .filter((a: Player) => !jogadores.some((j) => j === a.id))
-                .map((a: Player, i: number) => (
-                  <PlayerCard
-                    key={i}
-                    name={a.name}
-                    id={a.id}
-                    addPlayer={addPlayer}
-                  />
-                ))
-            ) : (
-              <Text
-                type="title"
-                align="center"
-                variant="dark"
-                style={{
-                  marginBottom: theme.spacings.padding * 2,
-                }}
-              >
-                Nenhum jogador...
-              </Text>
-            )}
-          </View>
-          <BottomMenu
-            onConfirm={createTable}
-            confirmLabel="Continuar ➝"
-            disabled={jogadores.length < 3}
-          />
-        </RoundedScrollView>
-      </View>
+      <RoundedScrollView>
+        <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
+          {!!players.length ? (
+            players
+              .filter((a: Player) =>
+                a.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .filter((a: Player) => !jogadores.some((j) => j === a.id))
+              .map((a: Player, i: number) => (
+                <PlayerCard
+                  key={i}
+                  name={a.name}
+                  id={a.id}
+                  addPlayer={addPlayer}
+                />
+              ))
+          ) : (
+            <Text
+              type="title"
+              align="center"
+              variant="dark"
+              style={{
+                marginBottom: theme.spacings.padding * 2,
+              }}
+            >
+              Nenhum jogador...
+            </Text>
+          )}
+        </View>
+        <BottomMenu
+          onConfirm={createTable}
+          confirmLabel="Continuar ➝"
+          disabled={jogadores.length < 3}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

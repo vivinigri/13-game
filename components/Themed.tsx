@@ -38,25 +38,27 @@ export type ScrollViewProps = ScrollView["props"]
 export function RoundedScrollView(props: ScrollViewProps) {
   const { style, contentContainerStyle, ...otherProps } = props
   return (
-    <ScrollView
-      contentContainerStyle={[
-        {
-          alignItems: "center",
-          height: "100%",
-          paddingTop: theme().spacings.padding * 2,
-        },
-        contentContainerStyle,
-      ]}
-      style={[
-        {
-          backgroundColor: theme().colors.textLight,
-          borderTopLeftRadius: theme().spacings.padding * 2,
-          borderTopRightRadius: theme().spacings.padding * 2,
-          marginTop: theme().spacings.padding * 2,
-        },
-        style,
-      ]}
-      {...otherProps}
-    />
+    <View style={{ width: "100%", flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={[
+          {
+            alignItems: "center",
+            height: "100%",
+            paddingTop: theme().spacings.padding * 2,
+          },
+          contentContainerStyle,
+        ]}
+        style={[
+          {
+            backgroundColor: theme().colors.textLight,
+            borderTopLeftRadius: theme().spacings.padding * 2,
+            borderTopRightRadius: theme().spacings.padding * 2,
+            marginTop: theme().spacings.padding * 2,
+          },
+          style,
+        ]}
+        {...otherProps}
+      />
+    </View>
   )
 }

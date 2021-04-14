@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Player } from "@types"
-import {GradientView, Text, TopView} from "@components"
+import { GradientView, Text, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import PlayerOrder from "@components/Cards/PlayerOrder"
@@ -56,33 +56,31 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   return (
     <GradientView>
-      <TopView 
-        title="Como os jogadores estão sentados?" 
+      <TopView
+        title="Como os jogadores estão sentados?"
         subtitle="Ordene do primeiro a fazer a aposta na primeira rodada ao último"
       />
-      <View style={{ width: "100%", flex: 1 }}>
-        <RoundedScrollView>
-          <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
-            {playerOrder.length
-              ? playerOrder.map((p: Player, i: number) => (
-                  <PlayerOrder
-                    key={p.id}
-                    len={playerOrder.length}
-                    name={p.name}
-                    index={i}
-                    playerDown={playerDown}
-                    playerUp={playerUp}
-                  />
-                ))
-              : null}
-          </View>
-          <BottomMenu
-            onConfirm={goToNext}
-            confirmLabel="Continuar ➝"
-            disabled={false}
-          />
-        </RoundedScrollView>
-      </View>
+      <RoundedScrollView>
+        <View style={[themedStyle.mainContainer, { alignItems: "center" }]}>
+          {playerOrder.length
+            ? playerOrder.map((p: Player, i: number) => (
+                <PlayerOrder
+                  key={p.id}
+                  len={playerOrder.length}
+                  name={p.name}
+                  index={i}
+                  playerDown={playerDown}
+                  playerUp={playerUp}
+                />
+              ))
+            : null}
+        </View>
+        <BottomMenu
+          onConfirm={goToNext}
+          confirmLabel="Continuar ➝"
+          disabled={false}
+        />
+      </RoundedScrollView>
     </GradientView>
   )
 }

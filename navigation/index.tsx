@@ -29,7 +29,7 @@ function RootNavigator() {
   const theme = useTheme()
   return (
     // <Stack.Navigator screenOptions={headerOptions("", theme)}>
-    <Stack.Navigator screenOptions={{ headerShown: true }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name={RouteNames.StartScreen}
         component={StartScreen}
