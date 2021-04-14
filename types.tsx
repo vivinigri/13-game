@@ -14,6 +14,11 @@ export type Tab = {
   label: string
 }
 
+export type Legend = {
+  label: string
+  color: string
+}
+
 // Game -----------------------
 
 export enum Naipes {

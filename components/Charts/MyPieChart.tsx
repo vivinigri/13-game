@@ -35,6 +35,8 @@ export default function MyPieChart({ height, placar }: Props) {
     },
   ]
 
+  console.log("pieData", pieData)
+
   const Labels = ({ slices, height, width }: any) => {
     return slices.map((slice: any, index: number) => {
       const { labelCentroid, pieCentroid, data } = slice
@@ -58,7 +60,7 @@ export default function MyPieChart({ height, placar }: Props) {
 
   return (
     <PieChart
-      style={{ height, marginTop: theme.spacings.padding * 2 }}
+      style={{ height, width: height, marginVertical: theme.spacings.padding }}
       data={pieData}
       valueAccessor={({ item }) => item.value}
       outerRadius={"95%"}

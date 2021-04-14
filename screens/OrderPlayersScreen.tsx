@@ -51,7 +51,7 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const goToNext = () => {
     dispatch.current.setPlayers(playerOrder)
-    navigation.navigate(RouteNames.Root)
+    navigation.navigate(RouteNames.Tabs)
   }
 
   return (

@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { TabelaParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import { GradientView, TopView } from "@components"
+import { GradientView, TopView, Text } from "@components"
 import { RoundedScrollView } from "@components/Themed"
 import { useTheme } from "react-native-paper"
 import { CurrentState } from "@store/models/current"
@@ -13,11 +13,26 @@ import { useFocusEffect } from "@react-navigation/native"
 import TabView from "@components/TabView"
 import { Tab } from "@types"
 import MyPieChart from "@components/Charts/MyPieChart"
+import MyLineChart from "@components/Charts/MyLineChart"
+import Legendas from "@components/Charts/Legendas"
+import { Legend } from "@types"
+import { theme } from "@core/theme"
 
 const geralTab = {
   id: "geral",
   label: "Geral",
 }
+
+const PIE_CHART_LEGEND: Legend[] = [
+  {
+    label: "Acertos",
+    color: theme.colors.green,
+  },
+  {
+    label: "Erros",
+    color: theme.colors.error,
+  },
+]
 
 type Props = BottomTabScreenProps<TabelaParamList, RouteNames.TabelaScreen>
 
@@ -59,11 +74,22 @@ export default function StatsScreen({ navigation }: Props) {
             currentTab={selectedTab}
             onTabChange={(tab: Tab) => setSelectedTab(tab)}
           />
-          <View style={[themedStyle.mainContainer, { maxWidth: 600 }]}>
-            {selectedTab !== geralTab ? (
-              <MyPieChart height={200} placar={placar[selectedTab.id]} />
-            ) : null}
-          </View>
+
+          {selectedTab !== geralTab ? (
+            <View
+              style={[themedStyle.mainContainer, themedStyle.chartContainer]}
+            >
+              <Text variant="dark" type="subheading" family="bold">
+                Aproveitamento
+              </Text>
+              <Legendas legendas={PIE_CHART_LEGEND} />
+              <MyPieChart height={150} placar={placar[selectedTab.id]} />
+              <Text variant="dark" type="subheading" family="bold">
+                Desempenho
+              </Text>
+              <MyLineChart height={200} placar={placar[selectedTab.id]} />
+            </View>
+          ) : null}
         </View>
       </RoundedScrollView>
     </GradientView>
@@ -75,5 +101,26 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
     mainContainer: {
       justifyContent: "flex-start",
       width: "100%",
+    },
+    chartContainer: {
+      maxWidth: 600,
+      alignItems: "center",
+      paddingTop: spacings.padding * 2,
+    },
+    legenda: {
+      flexDirection: "row",
+      marginVertical: spacings.padding,
+    },
+    circle: {
+      width: spacings.padding * 1.5,
+      height: spacings.padding * 1.5,
+      borderRadius: spacings.padding * 1.5,
+      marginRight: spacings.padding * 0.5,
+    },
+    certo: {
+      backgroundColor: colors.green,
+    },
+    errado: {
+      backgroundColor: colors.error,
     },
   })

@@ -13,8 +13,15 @@ export enum RouteNames {
   TabelaScreen = "TabelaScreen",
   StatsScreen = "StatsScreen",
   // tabs
-  Root = "Root",
   Apostas = "Apostas",
   Tabela = "Tabela",
   Stats = "Stats",
+  //navigation
+  Root = "Root",
+  Tabs = "Tabs",
+}
+
+export enum NavigationNames {
+  Root = "Root",
+  Tabs = "Tabs",
 }

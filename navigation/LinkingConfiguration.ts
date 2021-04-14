@@ -1,5 +1,5 @@
 import * as Linking from "expo-linking"
-import { RouteNames } from "@navigation/RouteNames"
+import { RouteNames, NavigationNames } from "@navigation/RouteNames"
 
 export default {
   prefixes: [
@@ -8,15 +8,21 @@ export default {
     "https://vivinigri.github.io",
   ],
   config: {
-    // path: "13-game",
-    initialRouteName: RouteNames.StartScreen,
+    initialRouteName: NavigationNames.Root,
     screens: {
-      [RouteNames.StartScreen]: "start",
-      [RouteNames.SelectTableScreen]: "mesas",
-      [RouteNames.SelectPlayersScreen]: "jogadores/:mesa",
-      [RouteNames.SelectGameScreen]: "game/type/:id",
-      [RouteNames.OrderPlayersScreen]: "order",
-      [RouteNames.Root]: {
+      [NavigationNames.Root]: {
+        path: "13-game",
+        initialRouteName: RouteNames.StartScreen,
+        screens: {
+          [RouteNames.StartScreen]: "start",
+          [RouteNames.SelectTableScreen]: "mesas",
+          [RouteNames.SelectPlayersScreen]: "jogadores/:mesa",
+          [RouteNames.SelectGameScreen]: "match/type/:id",
+          [RouteNames.OrderPlayersScreen]: "order",
+        },
+      },
+      [NavigationNames.Tabs]: {
+        path: "13-game/game",
         screens: {
           [RouteNames.Apostas]: {
             screens: {

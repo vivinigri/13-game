@@ -1,8 +1,7 @@
-import { RouteNames } from "@navigation/RouteNames"
+import { RouteNames, NavigationNames } from "@navigation/RouteNames"
+import { NavigatorScreenParams } from "@react-navigation/native"
 
 export type RootStackParamList = {
-  [RouteNames.Root]: undefined
-  [RouteNames.NotFoundScreen]: undefined
   [RouteNames.StartScreen]: undefined
   [RouteNames.SelectTableScreen]: undefined
   [RouteNames.SelectPlayersScreen]: {
@@ -12,6 +11,12 @@ export type RootStackParamList = {
     id: string
   }
   [RouteNames.OrderPlayersScreen]: undefined
+}
+
+export type MainStackParamList = {
+  [RouteNames.Root]: undefined
+  [RouteNames.Tabs]: undefined
+  [RouteNames.NotFoundScreen]: undefined
 }
 
 export type BottomTabParamList = {
@@ -32,4 +37,9 @@ export type TabelaParamList = {
 
 export type StatsParamList = {
   [RouteNames.StatsScreen]: undefined
+}
+
+export type NaviagtorParamList = {
+  [NavigationNames.Tabs]: NavigatorScreenParams<BottomTabParamList>
+  [NavigationNames.Root]: NavigatorScreenParams<RootStackParamList>
 }
