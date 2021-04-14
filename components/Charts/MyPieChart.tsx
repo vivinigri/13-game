@@ -2,40 +2,20 @@ import React from "react"
 import { PieChart } from "react-native-svg-charts"
 import { Text } from "react-native-svg"
 import { useTheme } from "react-native-paper"
-import { PlacarObject } from "@types"
 
 type Props = {
   height: number
-  placar: PlacarObject
+  pieData: PieChartData[]
 }
 
-type PieChartData = {
+export type PieChartData = {
   value: number
   svg: any
   key: string
 }
 
-export default function MyPieChart({ height, placar }: Props) {
+export default function MyPieChart({ height, pieData }: Props) {
   const theme = useTheme()
-
-  const pieData: PieChartData[] = [
-    {
-      value: placar.errou,
-      key: "error",
-      svg: {
-        fill: theme.colors.error,
-      },
-    },
-    {
-      value: placar.acertou,
-      key: "correct",
-      svg: {
-        fill: theme.colors.green,
-      },
-    },
-  ]
-
-  console.log("pieData", pieData)
 
   const Labels = ({ slices, height, width }: any) => {
     return slices.map((slice: any, index: number) => {

@@ -6,13 +6,12 @@ import { PlacarObject } from "@types"
 
 type Props = {
   height?: number
-  placar: PlacarObject
+  data: number[]
 }
 
-export default function MyLineChart({ placar, height = 200 }: Props) {
+export default function MyLineChart({ data, height = 200 }: Props) {
   const theme = useTheme()
 
-  const data: number[] = placar.placar
   const axesSvg = { fontSize: 12, fill: theme.colors.dark }
   const verticalContentInset = { top: 10, bottom: 10 }
   const xAxisHeight = 30
@@ -39,7 +38,7 @@ export default function MyLineChart({ placar, height = 200 }: Props) {
           style={{ flex: 1 }}
           data={data}
           contentInset={verticalContentInset}
-          svg={{ stroke: theme.colors.yellow, strokeWidth: 3 }}
+          svg={{ stroke: theme.colors.dark, strokeWidth: 4 }}
         >
           <Grid />
         </LineChart>

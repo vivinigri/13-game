@@ -11,8 +11,8 @@ import { useSelector } from "react-redux"
 import { RootState, dispatch } from "@store"
 import { useFocusEffect } from "@react-navigation/native"
 import TabView from "@components/TabView"
-import { Tab } from "@types"
-import MyPieChart from "@components/Charts/MyPieChart"
+import { Tab, PlacarObject } from "@types"
+import MyPieChart, { PieChartData } from "@components/Charts/MyPieChart"
 import MyLineChart from "@components/Charts/MyLineChart"
 import Legendas from "@components/Charts/Legendas"
 import { Legend } from "@types"
@@ -59,6 +59,26 @@ export default function StatsScreen({ navigation }: Props) {
     }, [players])
   )
 
+  const getPieData = useCallback((placar: PlacarObject) => {
+    const pieData: PieChartData[] = [
+      {
+        value: placar.errou,
+        key: "error",
+        svg: {
+          fill: theme.colors.error,
+        },
+      },
+      {
+        value: placar.acertou,
+        key: "correct",
+        svg: {
+          fill: theme.colors.green,
+        },
+      },
+    ]
+    return pieData
+  }, [])
+
   return (
     <GradientView>
       <TopView title="Estatísticas" subtitle="Acompanhe este jogo em números" />
@@ -83,11 +103,14 @@ export default function StatsScreen({ navigation }: Props) {
                 Aproveitamento
               </Text>
               <Legendas legendas={PIE_CHART_LEGEND} />
-              <MyPieChart height={150} placar={placar[selectedTab.id]} />
+              <MyPieChart
+                height={150}
+                pieData={getPieData(placar[selectedTab.id])}
+              />
               <Text variant="dark" type="subheading" family="bold">
                 Desempenho
               </Text>
-              <MyLineChart height={200} placar={placar[selectedTab.id]} />
+              <MyLineChart height={200} data={placar[selectedTab.id].placar} />
             </View>
           ) : null}
         </View>
