@@ -53,7 +53,8 @@ const ApostasScreen = ({ navigation }: Props) => {
   }
 
   const closeApostas = async () => {
-    const response = await dispatch.current.setApostas(aposta)
+    await dispatch.current.setApostas(aposta)
+    await dispatch.current.addNaipe(trunfo)
     navigation.navigate(RouteNames.ResultadosScreen)
   }
 

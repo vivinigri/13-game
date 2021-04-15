@@ -23,6 +23,11 @@ declare global {
       white: string
       dark: string
       cyan: string
+      silver: string
+      toastError: string
+      toastSuccess: string
+      toastWarning: string
+      toastInfo: string
     }
 
     interface ThemeFontSizes {

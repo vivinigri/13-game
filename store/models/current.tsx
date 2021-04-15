@@ -30,6 +30,7 @@ export type CurrentModel = {
     setRounds: (state: CurrentState, rounds: number) => CurrentState
     setPlacar: (state: CurrentState, placar: Placar) => CurrentState
     setCurrentRound: (state: CurrentState, round: number) => CurrentState
+    setNaipes: (state: CurrentState, naipes: Naipes[]) => CurrentState
   }
   effects: (
     dispatch: Dispatch
@@ -38,6 +39,7 @@ export type CurrentModel = {
     setApostas: (apostas: number[], rootState?: any) => boolean
     setResultados: (results: number[], rootState?: any) => void
     nextRound: (payload?: any, rootState?: any) => void
+    addNaipe: (naipe: Naipes, rootState?: any) => void
   }
 }
 
@@ -106,13 +108,19 @@ export const current: CurrentModel = {
         currentRound: round,
       }
     },
+    setNaipes: (state: CurrentState, naipes: Naipes[]) => {
+      return {
+        ...state,
+        naipes,
+      }
+    },
   },
   effects: (dispatch: Dispatch) => ({
     async initPlacar(len?: number, rootState?: any) {
       const { players } = rootState.current
       try {
         const placar: Placar = {}
-        await players.reduce(async (memo, player, i) => {
+        await players.reduce(async (memo: any, player: Player, i: number) => {
           await memo
           await sleep(100)
           placar[player.id] = { ...defaultPlacar }
@@ -128,7 +136,7 @@ export const current: CurrentModel = {
       const newPlacar = { ...placar }
       const ids = players.map((p: Player) => p.id)
       try {
-        await ids.reduce(async (memo, id, i) => {
+        await ids.reduce(async (memo: any, id: string, i: number) => {
           await memo
           await sleep(100)
           newPlacar[id].apostas = insertItem(newPlacar[id].apostas, {
@@ -149,7 +157,7 @@ export const current: CurrentModel = {
       const ids = players.map((p: Player) => p.id)
       try {
         let score = 0
-        await ids.reduce(async (memo, id, i) => {
+        await ids.reduce(async (memo: any, id: string, i: number) => {
           await memo
           await sleep(100)
           newPlacar[id].acertos[currentRound] = results[i]
@@ -183,6 +191,12 @@ export const current: CurrentModel = {
       newPlayers.push(newPlayers.shift())
       dispatch.current.setCurrentRound(currentRound + 1)
       dispatch.current.setPlayers(newPlayers)
+    },
+    async addNaipe(naipe: Naipes, rootState?: any) {
+      const { currentRound, naipes } = rootState.current
+      const newNaipes = [...naipes]
+      newNaipes[currentRound] = naipe
+      dispatch.current.setNaipes(newNaipes)
     },
   }),
 }

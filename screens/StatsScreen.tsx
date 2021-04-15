@@ -11,34 +11,20 @@ import { useSelector } from "react-redux"
 import { RootState, dispatch } from "@store"
 import { useFocusEffect } from "@react-navigation/native"
 import TabView from "@components/TabView"
-import { Tab, PlacarObject } from "@types"
-import MyPieChart, { PieChartData } from "@components/Charts/MyPieChart"
-import MyLineChart from "@components/Charts/MyLineChart"
-import Legendas from "@components/Charts/Legendas"
-import { Legend } from "@types"
-import { theme } from "@core/theme"
+import { Tab, PlacarObject, Naipes } from "@types"
+import InGamePlayerStats from "@components/Stats/InGamePlayerStats"
+import InGameGeralStats from "@components/Stats/InGameGeralStats"
 
 const geralTab = {
   id: "geral",
   label: "Geral",
 }
 
-const PIE_CHART_LEGEND: Legend[] = [
-  {
-    label: "Acertos",
-    color: theme.colors.green,
-  },
-  {
-    label: "Erros",
-    color: theme.colors.error,
-  },
-]
-
 type Props = BottomTabScreenProps<TabelaParamList, RouteNames.TabelaScreen>
 
 export default function StatsScreen({ navigation }: Props) {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
-  const { players, placar } = current
+  const { players, placar, naipes } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
@@ -59,26 +45,6 @@ export default function StatsScreen({ navigation }: Props) {
     }, [players])
   )
 
-  const getPieData = useCallback((placar: PlacarObject) => {
-    const pieData: PieChartData[] = [
-      {
-        value: placar.errou,
-        key: "error",
-        svg: {
-          fill: theme.colors.error,
-        },
-      },
-      {
-        value: placar.acertou,
-        key: "correct",
-        svg: {
-          fill: theme.colors.green,
-        },
-      },
-    ]
-    return pieData
-  }, [])
-
   return (
     <GradientView>
       <TopView title="Estatísticas" subtitle="Acompanhe este jogo em números" />
@@ -96,23 +62,10 @@ export default function StatsScreen({ navigation }: Props) {
           />
 
           {selectedTab !== geralTab ? (
-            <View
-              style={[themedStyle.mainContainer, themedStyle.chartContainer]}
-            >
-              <Text variant="dark" type="subheading" family="bold">
-                Aproveitamento
-              </Text>
-              <Legendas legendas={PIE_CHART_LEGEND} />
-              <MyPieChart
-                height={150}
-                pieData={getPieData(placar[selectedTab.id])}
-              />
-              <Text variant="dark" type="subheading" family="bold">
-                Desempenho
-              </Text>
-              <MyLineChart height={200} data={placar[selectedTab.id].placar} />
-            </View>
-          ) : null}
+            <InGamePlayerStats placar={placar} id={selectedTab.id} />
+          ) : (
+            <InGameGeralStats naipes={naipes} />
+          )}
         </View>
       </RoundedScrollView>
     </GradientView>
@@ -129,21 +82,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       maxWidth: 600,
       alignItems: "center",
       paddingTop: spacings.padding * 2,
-    },
-    legenda: {
-      flexDirection: "row",
-      marginVertical: spacings.padding,
-    },
-    circle: {
-      width: spacings.padding * 1.5,
-      height: spacings.padding * 1.5,
-      borderRadius: spacings.padding * 1.5,
-      marginRight: spacings.padding * 0.5,
-    },
-    certo: {
-      backgroundColor: colors.green,
-    },
-    errado: {
-      backgroundColor: colors.error,
     },
   })
