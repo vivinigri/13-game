@@ -129,12 +129,4 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
       flexWrap: "wrap",
       justifyContent: "center",
     },
-    actionBtnView: {
-      width: "100%",
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      position: "absolute",
-      bottom: 0,
-    },
   })

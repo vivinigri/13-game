@@ -1,12 +1,13 @@
-import React, { useCallback } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useCallback, useMemo } from "react"
+import { View } from "react-native"
 import { Text } from "@components"
-import { useTheme } from "react-native-paper"
 import { Naipes } from "@types"
 import MyPieChart, { PieChartData } from "@components/Charts/MyPieChart"
 import Legendas from "@components/Charts/Legendas"
-import { Legend } from "@types"
+import { Legend, Placar } from "@types"
 import { theme } from "@core/theme"
+import MyLineChart from "@components/Charts/MyLineChart"
+import { styles } from "./styles"
 
 const PIE_CHART_TRUNFO_LEGEND: Legend[] = [
   {
@@ -29,12 +30,11 @@ const PIE_CHART_TRUNFO_LEGEND: Legend[] = [
 
 type Props = {
   naipes: Naipes[]
+  totais: number[]
+  placar: Placar
 }
 
-export default function InGameGeralStats({ naipes }: Props) {
-  const theme = useTheme()
-  const themedStyle = styles(theme)
-
+export default function InGameGeralStats({ naipes, totais, placar }: Props) {
   const getPieTrunfoData = useCallback(
     (naipes: Naipes[]) => {
       const pieData: PieChartData[] = [
@@ -72,26 +72,50 @@ export default function InGameGeralStats({ naipes }: Props) {
     [naipes]
   )
 
+  const media = useMemo(
+    () => Math.round(totais.reduce((a, b) => a + b) / totais.length),
+    [totais]
+  )
+
+  const desempenho = useMemo(() => {
+    const numPlayers = Object.keys(placar).length
+    const lenPlacar = Object.values(placar)[0].placar.length
+    const des = []
+    let sum = 0
+    for (let j = 0; j < lenPlacar; j++) {
+      sum = 0
+      for (let i = 0; i < numPlayers; i++) {
+        sum += Object.values(placar)[i].placar[j] > 0 ? 1 : 0
+      }
+      des.push(sum)
+    }
+    return des
+  }, [placar])
+
   return (
-    <View style={[themedStyle.mainContainer, themedStyle.chartContainer]}>
+    <View style={styles.chartContainer}>
+      <Text
+        variant="dark"
+        type="subheading"
+        family="bold"
+        style={{ marginBottom: theme.spacings.padding * 2 }}
+      >
+        {`Média de pontos: ${media}`}
+      </Text>
       <Text variant="dark" type="subheading" family="bold">
         Trunfos
       </Text>
       <Legendas legendas={PIE_CHART_TRUNFO_LEGEND} />
       <MyPieChart height={150} pieData={getPieTrunfoData(naipes)} />
+      <Text
+        variant="dark"
+        type="subheading"
+        family="bold"
+        style={{ marginTop: theme.spacings.padding * 2 }}
+      >
+        Desempenho
+      </Text>
+      <MyLineChart height={200} data={desempenho} />
     </View>
   )
 }
-
-const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
-  StyleSheet.create({
-    mainContainer: {
-      justifyContent: "flex-start",
-      width: "100%",
-    },
-    chartContainer: {
-      maxWidth: 600,
-      alignItems: "center",
-      paddingTop: spacings.padding * 2,
-    },
-  })

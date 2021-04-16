@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 import { TabelaParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
@@ -26,11 +26,11 @@ export default function StatsScreen({ navigation }: Props) {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { players, placar, naipes } = current
 
-  const theme = useTheme()
-  const themedStyle = styles(theme)
-
   const [tabs, setTabs] = useState<Tab[]>([])
   const [selectedTab, setSelectedTab] = useState<Tab>(geralTab)
+
+  const theme = useTheme()
+  const themedStyle = styles(theme)
 
   useFocusEffect(
     useCallback(() => {
@@ -44,6 +44,10 @@ export default function StatsScreen({ navigation }: Props) {
       setTabs(myTabs)
     }, [players])
   )
+
+  const totais = useMemo(() => Object.values(placar).map((p) => p.final), [
+    placar,
+  ])
 
   return (
     <GradientView>
@@ -64,7 +68,7 @@ export default function StatsScreen({ navigation }: Props) {
           {selectedTab !== geralTab ? (
             <InGamePlayerStats placar={placar} id={selectedTab.id} />
           ) : (
-            <InGameGeralStats naipes={naipes} />
+            <InGameGeralStats naipes={naipes} totais={totais} placar={placar} />
           )}
         </View>
       </RoundedScrollView>
@@ -77,10 +81,5 @@ const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
     mainContainer: {
       justifyContent: "flex-start",
       width: "100%",
-    },
-    chartContainer: {
-      maxWidth: 600,
-      alignItems: "center",
-      paddingTop: spacings.padding * 2,
     },
   })

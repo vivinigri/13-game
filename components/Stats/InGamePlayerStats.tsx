@@ -1,13 +1,13 @@
 import React, { useCallback } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 import { Text } from "@components"
-import { useTheme } from "react-native-paper"
 import { PlacarObject, Placar } from "@types"
 import MyPieChart, { PieChartData } from "@components/Charts/MyPieChart"
 import MyLineChart from "@components/Charts/MyLineChart"
 import Legendas from "@components/Charts/Legendas"
 import { Legend } from "@types"
 import { theme } from "@core/theme"
+import { styles } from "./styles"
 
 const PIE_CHART_PLAYER_LEGEND: Legend[] = [
   {
@@ -26,9 +26,6 @@ type Props = {
 }
 
 export default function InGamePlayerStats({ placar, id }: Props) {
-  const theme = useTheme()
-  const themedStyle = styles(theme)
-
   const getPiePlayerData = useCallback(
     (placar: PlacarObject) => {
       const pieData: PieChartData[] = [
@@ -53,7 +50,7 @@ export default function InGamePlayerStats({ placar, id }: Props) {
   )
 
   return (
-    <View style={[themedStyle.mainContainer, themedStyle.chartContainer]}>
+    <View style={styles.chartContainer}>
       <Text variant="dark" type="subheading" family="bold">
         Aproveitamento
       </Text>
@@ -71,16 +68,3 @@ export default function InGamePlayerStats({ placar, id }: Props) {
     </View>
   )
 }
-
-const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
-  StyleSheet.create({
-    mainContainer: {
-      justifyContent: "flex-start",
-      width: "100%",
-    },
-    chartContainer: {
-      maxWidth: 600,
-      alignItems: "center",
-      paddingTop: spacings.padding * 2,
-    },
-  })
