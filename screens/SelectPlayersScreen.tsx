@@ -26,6 +26,7 @@ type Props = StackScreenProps<
 const SelectPlayersScreen = ({ navigation, route }: Props) => {
   const global: GlobalState = useSelector(({ global }: RootState) => global)
   const { players } = global
+  const { mesa } = route.params
 
   const theme = useTheme()
   const themedStyle = styles(theme)
@@ -73,12 +74,14 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
       players: jogadores,
     }
     const newTable: string = await dispatch.global.createNewTable(payload)
+    console.log("newTable", newTable)
     const table: Table = global.tables.filter((t) => t.id === newTable)[0]
     dispatch.current.setTable(table)
-    const players = global.players.filter((p) =>
-      table.players.some((t) => t === p.id)
+    const newplayers = global.players.filter((p) =>
+      jogadores.some((t) => t === p.id)
     )
-    dispatch.current.setPlayers(players)
+    console.log("newplayers", newplayers)
+    dispatch.current.setPlayers(newplayers)
     navigation.navigate(RouteNames.SelectGameScreen, { id: newTable })
   }
 
