@@ -2,49 +2,28 @@ import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
-import { createDrawerNavigator } from "@react-navigation/drawer"
-import TabelaScreen from "@screens/TabelaScreen"
-import StatsScreen from "@screens/StatsScreen"
-import ApostasScreen from "@screens/ApostasScreen"
-import ResultadosScreen from "@screens/ResultadosScreen"
-import GameOverScreen from "@screens/GameOverScreen"
 import {
   BottomTabParamList,
   ApostasParamList,
   TabelaParamList,
   StatsParamList,
-  DrawerParamList,
 } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
-import { useTheme } from "react-native-paper"
-import { headerOptions } from "@core/config"
-
-const Drawer = createDrawerNavigator<DrawerParamList>()
-export function DrawerNavigator() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name={RouteNames.Drawer}
-        component={BottomTabNavigator}
-        options={{ drawerLabel: "Profile" }}
-      />
-    </Drawer.Navigator>
-  )
-}
+// style
+import { headerOptions, tabBarOPtions } from "@core/config"
+//screens
+import TabelaScreen from "@screens/TabelaScreen"
+import StatsScreen from "@screens/StatsScreen"
+import ApostasScreen from "@screens/ApostasScreen"
+import ResultadosScreen from "@screens/ResultadosScreen"
+import GameOverScreen from "@screens/GameOverScreen"
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 export function BottomTabNavigator() {
-  const theme = useTheme()
-
   return (
     <BottomTab.Navigator
       initialRouteName={RouteNames.Apostas}
-      tabBarOptions={{
-        activeTintColor: theme.colors.yellow,
-        inactiveTintColor: theme.colors.textLight,
-        activeBackgroundColor: theme.colors.background,
-        inactiveBackgroundColor: theme.colors.primary,
-      }}
+      tabBarOptions={tabBarOPtions}
     >
       <BottomTab.Screen
         name={RouteNames.Apostas}
@@ -76,27 +55,19 @@ export function BottomTabNavigator() {
   )
 }
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>["name"]
-  color: string
-}) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
-}
-
 const ApostaStack = createStackNavigator<ApostasParamList>()
 function ApostasNavigator() {
-  const theme = useTheme()
   return (
     <ApostaStack.Navigator screenOptions={{ headerShown: true }}>
       <ApostaStack.Screen
         name={RouteNames.ApostasScreen}
         component={ApostasScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <ApostaStack.Screen
         name={RouteNames.ResultadosScreen}
         component={ResultadosScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <ApostaStack.Screen
         name={RouteNames.GameOverScreen}
@@ -109,13 +80,12 @@ function ApostasNavigator() {
 
 const TabelaStack = createStackNavigator<TabelaParamList>()
 function TabelaNavigator() {
-  const theme = useTheme()
   return (
     <TabelaStack.Navigator screenOptions={{ headerShown: false }}>
       <TabelaStack.Screen
         name={RouteNames.TabelaScreen}
         component={TabelaScreen}
-        // options={headerOptions("", theme)}
+        // options={headerOptions("")}
       />
     </TabelaStack.Navigator>
   )
@@ -123,14 +93,20 @@ function TabelaNavigator() {
 
 const StatsStack = createStackNavigator<StatsParamList>()
 function StatsNavigator() {
-  const theme = useTheme()
   return (
     <StatsStack.Navigator screenOptions={{ headerShown: false }}>
       <StatsStack.Screen
         name={RouteNames.StatsScreen}
         component={StatsScreen}
-        // options={headerOptions("", theme)}
+        // options={headerOptions("")}
       />
     </StatsStack.Navigator>
   )
+}
+
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof Ionicons>["name"]
+  color: string
+}) {
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
 }

@@ -19,6 +19,7 @@ export default {
           [RouteNames.SelectPlayersScreen]: "jogadores/:mesa",
           [RouteNames.SelectGameScreen]: "match/type/:id",
           [RouteNames.OrderPlayersScreen]: "order",
+          [RouteNames.SobreScreen]: "sobre",
         },
       },
 
@@ -49,7 +50,7 @@ export default {
         screens: {
           [RouteNames.Apostas]: {
             screens: {
-              [RouteNames.ApostasScreen]: "13-game/game/apostas",
+              [RouteNames.ApostasScreen]: "13-game/game/apostas/type/:type",
               [RouteNames.ResultadosScreen]: "13-game/game/resultados",
               [RouteNames.GameOverScreen]: "13-game/game/gameOver",
             },

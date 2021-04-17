@@ -2,7 +2,6 @@ import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import Text from "@components/Text"
 import { ActionButton } from "@components/Buttons"
-import Logo from "@assets/icons/logo"
 import Cards from "@assets/icons/cards"
 import { useTheme } from "react-native-paper"
 import { LinearGradient } from "expo-linear-gradient"
@@ -18,10 +17,9 @@ type MenuItem = {
 
 const menu: MenuItem[] = [
   { label: "✨ Novo jogo", redirect: RouteNames.SelectTableScreen },
-  /* { label: "💡 Continuar", redirect: "Root" },
-  { label: "🪑 Mesas", redirect: "TabTwo" },
-  { label: "👪 Jogadores", redirect: "TabTwo" },
-  { label: "📊 Estatísticas", redirect: "TabTwo" }, */
+  { label: "📚 Sobre", redirect: RouteNames.SobreScreen },
+  /* { label: "⌛ Continuar", redirect: RouteNames.SelectTableScreen },
+  { label: "📊 Estatísticas", redirect: RouteNames.StatsScreen }, */
 ]
 
 export default function StartScreen({ navigation }: Props) {
@@ -37,7 +35,14 @@ export default function StartScreen({ navigation }: Props) {
         colors={[theme.colors.primary, theme.colors.background]}
         style={themedStyle.background}
       />
-      <View style={{ width: "100%", maxWidth: 600, alignItems: "center" }}>
+      <View
+        style={{
+          width: "100%",
+          maxWidth: 600,
+          alignItems: "center",
+          padding: theme.spacings.padding * 2,
+        }}
+      >
         <View
           style={{
             maxWidth: 400,

@@ -6,25 +6,29 @@ import { GradientView, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
-import { ApostasParamList } from "@navigation/navTypes"
+import { ApostasParamList, ApostasScreenParam } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { RoundedScrollView } from "@components/Themed"
 import MyBarChart from "@components/Charts/MyBarChart"
 import { CurrentState } from "@store/models/current"
+import { useNavigation } from "@react-navigation/native"
 
 type Props = BottomTabScreenProps<ApostasParamList, RouteNames.GameOverScreen>
 
-const GameOverScreen = ({ navigation }: Props) => {
+const GameOverScreen = ({}: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { placar, players } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
+  const navigation = useNavigation()
 
   const goToMenu = () => navigation.navigate(RouteNames.StartScreen)
   const startNew = () => {
     dispatch.current.initPlacar()
-    navigation.navigate(RouteNames.ApostasScreen)
+    navigation.navigate(RouteNames.ApostasScreen, {
+      type: ApostasScreenParam.RESTART,
+    })
   }
 
   const data = Object.values(placar).map((p) => p.final)

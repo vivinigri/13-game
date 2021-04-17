@@ -51,14 +51,14 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     const nPlayers = numPlayers()
     dispatch.current.initPlacar()
     dispatch.current.setType(checked)
-    dispatch.current.setRounds(2)
-    dispatch.current.setHands([1, 2])
-    /* dispatch.current.setRounds(
+    /* dispatch.current.setRounds(2)
+    dispatch.current.setHands([1, 2]) */
+    dispatch.current.setRounds(
       checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
     )
     dispatch.current.setHands(
       checked === GameType.NOVO ? handsNovo(max, nPlayers) : handsNormal(max)
-    ) */
+    )
     navigation.navigate(RouteNames.OrderPlayersScreen)
   }
 

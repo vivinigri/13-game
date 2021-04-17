@@ -1,6 +1,7 @@
 export enum RouteNames {
   // stack
   NotFoundScreen = "NotFoundScreen",
+  SobreScreen = "SobreScreen",
   StartScreen = "StartScreen",
   SelectTableScreen = "SelectTableScreen",
   SelectPlayersScreen = "SelectPlayersScreen",

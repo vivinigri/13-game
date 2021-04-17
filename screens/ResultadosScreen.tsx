@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useLayoutEffect } from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
+import { DrawerScreenProps } from "@react-navigation/drawer"
 import { Text, GradientView, TopView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
@@ -10,13 +10,11 @@ import { useFocusEffect } from "@react-navigation/native"
 import { ResultadoCard } from "@components/Cards"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
-import { ApostasParamList } from "@navigation/navTypes"
+import { ApostasParamList, ApostasScreenParam } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
+import { HeaderMenuButton } from "@components/Buttons"
 
-type Props = BottomTabScreenProps<ApostasParamList, RouteNames.ResultadosScreen>
-
-// TODO header resetar rodada. Deu algo errado e tem que recomecar as apostas
-// voltar para apostas e limpar elas do current
+type Props = DrawerScreenProps<ApostasParamList, RouteNames.ResultadosScreen>
 
 const ResultadosScreen = ({ navigation }: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
@@ -34,6 +32,14 @@ const ResultadosScreen = ({ navigation }: Props) => {
       setError("")
     }, [currentRound])
   )
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderMenuButton onPress={() => navigation.toggleDrawer()} />
+      ),
+    })
+  }, [navigation])
 
   const confirmResultado = (index: number, levou: number) => {
     const newResultados = [...resultados]
@@ -59,7 +65,9 @@ const ResultadosScreen = ({ navigation }: Props) => {
       navigation.navigate(RouteNames.GameOverScreen)
     } else {
       dispatch.current.nextRound()
-      navigation.navigate(RouteNames.ApostasScreen)
+      navigation.navigate(RouteNames.ApostasScreen, {
+        type: ApostasScreenParam.NORMAL,
+      })
     }
   }
 

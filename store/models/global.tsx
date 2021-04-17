@@ -1,11 +1,5 @@
 import { Dispatch, RootState } from ".."
 import { Player, Table, Game, Placar } from "@types"
-import {
-  getData,
-  storeData,
-  removeData,
-  getMockedData,
-} from "@core/services/asyncStorage"
 import { generateQuickGuid } from "@core/helpers/generateRandomString"
 
 export type GlobalState = {
@@ -25,10 +19,13 @@ export type GlobalModel = {
   effects: (
     dispatch: Dispatch
   ) => {
+    createNewPlayer: (payload: string, rootState?: any) => string
+    createNewTable: (
+      payload: { mesa: string; players: string[] },
+      rootState?: any
+    ) => string
     /* getPlayers: (rootState: RootState) => Player[]
     getTables: (rootState: RootState) => Table[] */
-    createNewPlayer: (payload: string, rootState?: any) => string
-    createNewTable: (payload: any, rootState?: any) => string
     // fetchPlayers: (payload?: any, rootState?: any) => void
   }
 }

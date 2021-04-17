@@ -27,7 +27,9 @@ const Button = ({
   const themedStyle = styles(theme)
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
       style={[
         themedStyle.button,
         {
@@ -37,17 +39,15 @@ const Button = ({
         props.style || {},
       ]}
     >
-      <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <Text
-          type="title"
-          family="bold"
-          align="center"
-          variant={secondary ? "warning" : "dark"}
-        >
-          {label}
-        </Text>
-      </TouchableOpacity>
-    </View>
+      <Text
+        type="title"
+        family="bold"
+        align="center"
+        variant={secondary ? "warning" : "dark"}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
   )
 }
 

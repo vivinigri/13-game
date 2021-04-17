@@ -1,29 +1,27 @@
 import React, { useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
-import { StackScreenProps } from "@react-navigation/stack"
 import { Player } from "@types"
 import { GradientView, Text, TopView } from "@components"
 import BottomMenu from "@components/Footers/BottomMenu"
 import { RoundedScrollView } from "@components/Themed"
 import PlayerOrder from "@components/Cards/PlayerOrder"
 import { CurrentState } from "@store/models/current"
-import { GlobalState } from "@store/models/global"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
-import { RootStackParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
+import { useNavigation } from "@react-navigation/native"
 
-type Props = StackScreenProps<RootStackParamList, RouteNames.OrderPlayersScreen>
-
-const OrderPlayersScreen = ({ navigation }: Props) => {
-  const global: GlobalState = useSelector(({ global }: RootState) => global)
+// type Props = StackScreenProps<RootStackParamList, RouteNames.OrderPlayersScreen>
+// { navigation }: Props
+const OrderPlayersScreen = () => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { players } = current
 
   const theme = useTheme()
   const themedStyle = styles(theme)
 
+  const navigation = useNavigation()
   const [playerOrder, setPlayerOrder] = useState<Player[]>(players)
 
   const insertAndShift = (arr: Player[], to: number, from: number) => {
@@ -51,7 +49,6 @@ const OrderPlayersScreen = ({ navigation }: Props) => {
 
   const goToNext = () => {
     dispatch.current.setPlayers(playerOrder)
-    // navigation.navigate(RouteNames.Tabs)
     navigation.navigate(RouteNames.Drawer)
   }
 

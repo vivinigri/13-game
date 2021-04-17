@@ -1,26 +1,28 @@
-import React, { useCallback, useState } from "react"
-import { StyleSheet, View, ScrollView } from "react-native"
+import React, { useCallback, useState, useLayoutEffect } from "react"
+import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { DrawerScreenProps } from "@react-navigation/drawer"
 import { Naipes } from "@types"
-import { Text, GradientView, TopView } from "@components"
+import { GradientView, TopView } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
 import { useFocusEffect } from "@react-navigation/native"
 import { TrunfoCard, ApostaCard, PlayerBubble } from "@components/Cards"
 import BottomMenu from "@components/Footers/BottomMenu"
-import { ApostasParamList } from "@navigation/navTypes"
+import { ApostasParamList, ApostasScreenParam } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { RoundedScrollView } from "@components/Themed"
+import { HeaderMenuButton } from "@components/Buttons"
 
 type Props = DrawerScreenProps<ApostasParamList, RouteNames.ApostasScreen>
 
-// TODO header undo all button (so limpar as apostas useState)
-const ApostasScreen = ({ navigation }: Props) => {
+const ApostasScreen = ({ navigation, route }: Props) => {
   const current: CurrentState = useSelector(({ current }: RootState) => current)
   const { currentRound, players, hands } = current
+  const type: ApostasScreenParam = route.params
+    ? route.params.type
+    : ApostasScreenParam.NORMAL
 
   const theme = useTheme()
   const themedStyle = styles(theme)
@@ -34,8 +36,23 @@ const ApostasScreen = ({ navigation }: Props) => {
       setTrunfo(Naipes.UNDEFINED)
       setAposta([])
       setIndex(0)
-    }, [currentRound])
+
+      if (type === ApostasScreenParam.RESET) {
+        dispatch.current.setApostas(aposta)
+      } else if (type === ApostasScreenParam.RESTART) {
+        dispatch.current.initPlacar()
+        dispatch.current.setCurrentRound(0)
+      }
+    }, [currentRound, type])
   )
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderMenuButton onPress={() => navigation.toggleDrawer()} />
+      ),
+    })
+  }, [navigation])
 
   const confirmAposta = (id: string, value: number) => {
     const newApostas = [...aposta]
@@ -44,7 +61,6 @@ const ApostasScreen = ({ navigation }: Props) => {
     if (index < players.length - 1) {
       setIndex(index + 1)
     }
-    navigation.toggleDrawer()
   }
 
   const cancelAposta = () => {

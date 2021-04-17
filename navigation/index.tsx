@@ -1,18 +1,19 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
+import { MainStackParamList, RootStackParamList } from "@navigation/navTypes"
+import { DrawerNavigator } from "@navigation/DrawerNavigator"
+import LinkingConfiguration from "@navigation/LinkingConfiguration"
+import { RouteNames } from "@navigation/RouteNames"
+import { headerOptions } from "@core/config"
+//screens
 import NotFoundScreen from "@screens/NotFoundScreen"
 import StartScreen from "@screens/StartScreen"
 import SelectTableScreen from "@screens/SelectTableScreen"
 import SelectPlayersScreen from "@screens/SelectPlayersScreen"
 import SelectGameScreen from "@screens/SelectGameScreen"
 import OrderPlayersScreen from "@screens/OrderPlayersScreen"
-import { MainStackParamList, RootStackParamList } from "@navigation/navTypes"
-import { DrawerNavigator } from "@navigation/BottomTabNavigator"
-import LinkingConfiguration from "@navigation/LinkingConfiguration"
-import { RouteNames } from "@navigation/RouteNames"
-import { headerOptions } from "@core/config"
-import { useTheme } from "react-native-paper"
+import SobreScreen from "@screens/SobreScreen"
 
 export default function Navigation() {
   return (
@@ -24,23 +25,22 @@ export default function Navigation() {
 
 const MainStack = createStackNavigator<MainStackParamList>()
 function MainNavigator() {
-  const theme = useTheme()
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen
         name={RouteNames.Root}
         component={RootNavigator}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <MainStack.Screen
         name={RouteNames.Drawer}
         component={DrawerNavigator}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <MainStack.Screen
         name={RouteNames.NotFoundScreen}
         component={NotFoundScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
     </MainStack.Navigator>
   )
@@ -48,7 +48,6 @@ function MainNavigator() {
 
 const RootStack = createStackNavigator<RootStackParamList>()
 function RootNavigator() {
-  const theme = useTheme()
   return (
     <RootStack.Navigator screenOptions={{ headerShown: true }}>
       <RootStack.Screen
@@ -58,33 +57,31 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <RootStack.Screen
+        name={RouteNames.SobreScreen}
+        component={SobreScreen}
+        // options={headerOptions("", theme)}
+        options={headerOptions("")}
+      />
+      <RootStack.Screen
         name={RouteNames.SelectTableScreen}
         component={SelectTableScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <RootStack.Screen
         name={RouteNames.SelectGameScreen}
         component={SelectGameScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <RootStack.Screen
         name={RouteNames.OrderPlayersScreen}
         component={OrderPlayersScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
       <RootStack.Screen
         name={RouteNames.SelectPlayersScreen}
         component={SelectPlayersScreen}
-        options={headerOptions("", theme)}
+        options={headerOptions("")}
       />
     </RootStack.Navigator>
   )
-}
-
-{
-  /* <MainStack.Screen
-        name={RouteNames.Tabs}
-        component={BottomTabNavigator}
-        options={headerOptions("", theme)}
-      /> */
 }

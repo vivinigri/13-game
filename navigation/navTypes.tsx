@@ -11,6 +11,7 @@ export type RootStackParamList = {
     id: string
   }
   [RouteNames.OrderPlayersScreen]: undefined
+  [RouteNames.SobreScreen]: undefined
 }
 
 export type MainStackParamList = {
@@ -31,7 +32,9 @@ export type BottomTabParamList = {
 }
 
 export type ApostasParamList = {
-  [RouteNames.ApostasScreen]: undefined
+  [RouteNames.ApostasScreen]: {
+    type: ApostasScreenParam
+  }
   [RouteNames.ResultadosScreen]: undefined
   [RouteNames.GameOverScreen]: undefined
 }
@@ -48,4 +51,11 @@ export type NaviagtorParamList = {
   [NavigationNames.Tabs]: NavigatorScreenParams<BottomTabParamList>
   [NavigationNames.Root]: NavigatorScreenParams<RootStackParamList>
   [NavigationNames.Drawer]: NavigatorScreenParams<DrawerParamList>
+}
+
+export enum ApostasScreenParam {
+  NEW = "new",
+  RESET = "reset",
+  RESTART = "restart",
+  NORMAL = "normal",
 }

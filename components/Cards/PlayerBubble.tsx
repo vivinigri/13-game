@@ -38,7 +38,6 @@ const PlayerBubble = ({
             variant="light"
             align="center"
             style={{
-              marginBottom: theme.spacings.padding,
               color: color ? color : theme.colors.textLight,
             }}
           >
