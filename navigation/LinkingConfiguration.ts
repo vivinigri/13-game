@@ -21,7 +21,8 @@ export default {
           [RouteNames.OrderPlayersScreen]: "order",
         },
       },
-      [NavigationNames.Tabs]: {
+
+      /* [NavigationNames.Tabs]: {
         path: "13-game/game",
         screens: {
           [RouteNames.Apostas]: {
@@ -39,6 +40,28 @@ export default {
           [RouteNames.Stats]: {
             screens: {
               [RouteNames.StatsScreen]: "stats",
+            },
+          },
+        },
+      }, */
+      [NavigationNames.Drawer]: {
+        path: "",
+        screens: {
+          [RouteNames.Apostas]: {
+            screens: {
+              [RouteNames.ApostasScreen]: "13-game/game/apostas",
+              [RouteNames.ResultadosScreen]: "13-game/game/resultados",
+              [RouteNames.GameOverScreen]: "13-game/game/gameOver",
+            },
+          },
+          [RouteNames.Tabela]: {
+            screens: {
+              [RouteNames.TabelaScreen]: "13-game/game/tabela",
+            },
+          },
+          [RouteNames.Stats]: {
+            screens: {
+              [RouteNames.StatsScreen]: "13-game/game/stats",
             },
           },
         },
