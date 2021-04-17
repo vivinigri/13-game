@@ -113,7 +113,7 @@ export default function InGameGeralStats({ naipes, totais, placar }: Props) {
         family="bold"
         style={{ marginTop: theme.spacings.padding * 2 }}
       >
-        Desempenho
+        Acertos por rodada
       </Text>
       <MyLineChart height={200} data={desempenho} />
     </View>

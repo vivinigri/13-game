@@ -19,9 +19,11 @@ export enum RouteNames {
   //navigation
   Root = "Root",
   Tabs = "Tabs",
+  Drawer = "Drawer",
 }
 
 export enum NavigationNames {
   Root = "Root",
   Tabs = "Tabs",
+  Drawer = "Drawer",
 }

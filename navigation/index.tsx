@@ -1,7 +1,6 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
-
 import NotFoundScreen from "@screens/NotFoundScreen"
 import StartScreen from "@screens/StartScreen"
 import SelectTableScreen from "@screens/SelectTableScreen"
@@ -9,7 +8,7 @@ import SelectPlayersScreen from "@screens/SelectPlayersScreen"
 import SelectGameScreen from "@screens/SelectGameScreen"
 import OrderPlayersScreen from "@screens/OrderPlayersScreen"
 import { MainStackParamList, RootStackParamList } from "@navigation/navTypes"
-import BottomTabNavigator from "@navigation/BottomTabNavigator"
+import { DrawerNavigator } from "@navigation/BottomTabNavigator"
 import LinkingConfiguration from "@navigation/LinkingConfiguration"
 import { RouteNames } from "@navigation/RouteNames"
 import { headerOptions } from "@core/config"
@@ -34,8 +33,8 @@ function MainNavigator() {
         options={headerOptions("", theme)}
       />
       <MainStack.Screen
-        name={RouteNames.Tabs}
-        component={BottomTabNavigator}
+        name={RouteNames.Drawer}
+        component={DrawerNavigator}
         options={headerOptions("", theme)}
       />
       <MainStack.Screen
@@ -51,11 +50,12 @@ const RootStack = createStackNavigator<RootStackParamList>()
 function RootNavigator() {
   const theme = useTheme()
   return (
-    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+    <RootStack.Navigator screenOptions={{ headerShown: true }}>
       <RootStack.Screen
         name={RouteNames.StartScreen}
         component={StartScreen}
-        options={headerOptions("", theme)}
+        // options={headerOptions("", theme)}
+        options={{ headerShown: false }}
       />
       <RootStack.Screen
         name={RouteNames.SelectTableScreen}
@@ -79,4 +79,12 @@ function RootNavigator() {
       />
     </RootStack.Navigator>
   )
+}
+
+{
+  /* <MainStack.Screen
+        name={RouteNames.Tabs}
+        component={BottomTabNavigator}
+        options={headerOptions("", theme)}
+      /> */
 }

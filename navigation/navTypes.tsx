@@ -16,7 +16,12 @@ export type RootStackParamList = {
 export type MainStackParamList = {
   [RouteNames.Root]: undefined
   [RouteNames.Tabs]: undefined
+  [RouteNames.Drawer]: undefined
   [RouteNames.NotFoundScreen]: undefined
+}
+
+export type DrawerParamList = {
+  [RouteNames.Drawer]: undefined
 }
 
 export type BottomTabParamList = {
@@ -42,4 +47,5 @@ export type StatsParamList = {
 export type NaviagtorParamList = {
   [NavigationNames.Tabs]: NavigatorScreenParams<BottomTabParamList>
   [NavigationNames.Root]: NavigatorScreenParams<RootStackParamList>
+  [NavigationNames.Drawer]: NavigatorScreenParams<DrawerParamList>
 }

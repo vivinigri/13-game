@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
 import { useTheme } from "react-native-paper"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
+import { DrawerScreenProps } from "@react-navigation/drawer"
 import { Naipes } from "@types"
 import { Text, GradientView, TopView } from "@components"
 import { CurrentState } from "@store/models/current"
@@ -14,7 +15,7 @@ import { ApostasParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { RoundedScrollView } from "@components/Themed"
 
-type Props = BottomTabScreenProps<ApostasParamList, RouteNames.ApostasScreen>
+type Props = DrawerScreenProps<ApostasParamList, RouteNames.ApostasScreen>
 
 // TODO header undo all button (so limpar as apostas useState)
 const ApostasScreen = ({ navigation }: Props) => {
@@ -43,6 +44,7 @@ const ApostasScreen = ({ navigation }: Props) => {
     if (index < players.length - 1) {
       setIndex(index + 1)
     }
+    navigation.toggleDrawer()
   }
 
   const cancelAposta = () => {

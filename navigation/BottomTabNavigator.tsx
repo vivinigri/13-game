@@ -1,10 +1,8 @@
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import {
-  createStackNavigator,
-  StackNavigationOptions,
-} from "@react-navigation/stack"
+import { createStackNavigator } from "@react-navigation/stack"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 import TabelaScreen from "@screens/TabelaScreen"
 import StatsScreen from "@screens/StatsScreen"
 import ApostasScreen from "@screens/ApostasScreen"
@@ -15,14 +13,27 @@ import {
   ApostasParamList,
   TabelaParamList,
   StatsParamList,
+  DrawerParamList,
 } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { useTheme } from "react-native-paper"
 import { headerOptions } from "@core/config"
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>()
+const Drawer = createDrawerNavigator<DrawerParamList>()
+export function DrawerNavigator() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen
+        name={RouteNames.Drawer}
+        component={BottomTabNavigator}
+        options={{ drawerLabel: "Profile" }}
+      />
+    </Drawer.Navigator>
+  )
+}
 
-export default function BottomTabNavigator() {
+const BottomTab = createBottomTabNavigator<BottomTabParamList>()
+export function BottomTabNavigator() {
   const theme = useTheme()
 
   return (
@@ -76,7 +87,7 @@ const ApostaStack = createStackNavigator<ApostasParamList>()
 function ApostasNavigator() {
   const theme = useTheme()
   return (
-    <ApostaStack.Navigator screenOptions={{ headerShown: false }}>
+    <ApostaStack.Navigator screenOptions={{ headerShown: true }}>
       <ApostaStack.Screen
         name={RouteNames.ApostasScreen}
         component={ApostasScreen}
@@ -90,7 +101,7 @@ function ApostasNavigator() {
       <ApostaStack.Screen
         name={RouteNames.GameOverScreen}
         component={GameOverScreen}
-        // options={headerOptions("", theme)}
+        options={{ headerShown: false }}
       />
     </ApostaStack.Navigator>
   )
