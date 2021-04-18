@@ -44,25 +44,11 @@ export default memo(SobreScreen)
 
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
-    mainContainer: {
-      justifyContent: "flex-start",
-      width: "100%",
-      maxWidth: 600,
-    },
     cardsContainer: {
       justifyContent: "flex-start",
       width: "100%",
       maxWidth: 600,
       alignItems: "center",
       padding: spacings.padding * 2,
-    },
-    input: {
-      height: 50,
-      color: colors.white,
-      borderColor: colors.yellow,
-      backgroundColor: colors.backdrop,
-      padding: spacings.padding,
-      borderRadius: 50,
-      marginHorizontal: spacings.padding,
     },
   })

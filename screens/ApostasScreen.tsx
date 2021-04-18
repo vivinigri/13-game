@@ -1,9 +1,9 @@
-import React, { useCallback, useState, useLayoutEffect } from "react"
+import React, { useCallback, useState, useLayoutEffect, useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { DrawerScreenProps } from "@react-navigation/drawer"
 import { Naipes } from "@types"
-import { GradientView, TopView } from "@components"
+import { GradientView, TopView, Text } from "@components"
 import { CurrentState } from "@store/models/current"
 import { RootState, dispatch } from "@store"
 import { useSelector } from "react-redux"
@@ -76,6 +76,11 @@ const ApostasScreen = ({ navigation, route }: Props) => {
     navigation.navigate(RouteNames.ResultadosScreen)
   }
 
+  const showErrorMessage = useMemo(
+    () => aposta.length === players.length && trunfo === Naipes.UNDEFINED,
+    [trunfo, players.length, aposta.length]
+  )
+
   return (
     <GradientView>
       <TopView
@@ -118,6 +123,17 @@ const ApostasScreen = ({ navigation, route }: Props) => {
             ))}
           </View>
         </View>
+        {showErrorMessage ? (
+          <Text
+            type="title"
+            align="center"
+            variant="error"
+            family="bold"
+            style={{ marginTop: theme.spacings.padding * 2 }}
+          >
+            Selecione o trunfo da rodada.
+          </Text>
+        ) : null}
         <BottomMenu
           onConfirm={closeApostas}
           confirmLabel="Confirmar"

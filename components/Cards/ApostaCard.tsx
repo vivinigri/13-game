@@ -67,33 +67,7 @@ const ApostaCard = ({
         <Text type="title" variant="white" align="center">
           {name}
         </Text>
-        <View style={{ minWidth: 70 }}></View>
-        {/* <View
-          style={{
-            minWidth: 70,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
-          {index !== 0 ? (
-            <CircleButton
-              size={theme.spacings.padding * 2}
-              label="✗"
-              color={theme.colors.textPrimary}
-              onPress={() => cancel()}
-              style={{ marginRight: theme.spacings.padding * 0.5 }}
-            />
-          ) : null}
-          <CircleButton
-            size={theme.spacings.padding * 2}
-            label="🗸"
-            color={theme.colors.green}
-            onPress={() => confirm(id, aposta || 0)}
-            disabled={aposta === null}
-          />
-        </View> */}
       </View>
-
       <Divider />
       <View
         style={{
@@ -110,7 +84,6 @@ const ApostaCard = ({
                 size={theme.spacings.padding * 3}
                 label={i.toString()}
                 color={color(i)}
-                // onPress={() => setAposta(i)}
                 onPress={() => {
                   setAposta(i)
                   confirm(id, i)
