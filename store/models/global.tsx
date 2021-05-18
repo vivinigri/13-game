@@ -15,6 +15,7 @@ export type GlobalModel = {
     setPlayers: (state: GlobalState, players: Player[]) => GlobalState
     setTables: (state: GlobalState, tables: Table[]) => GlobalState
     setError: (state: GlobalState, error: string) => GlobalState
+    addGame: (state: GlobalState, game: Game) => GlobalState
   }
   effects: (
     dispatch: Dispatch
@@ -24,9 +25,7 @@ export type GlobalModel = {
       payload: { mesa: string; players: string[] },
       rootState?: any
     ) => string
-    /* getPlayers: (rootState: RootState) => Player[]
-    getTables: (rootState: RootState) => Table[] */
-    // fetchPlayers: (payload?: any, rootState?: any) => void
+    saveCurrentGame: (payload?: any, rootState?: any) => void
   }
 }
 
@@ -56,14 +55,41 @@ export const global: GlobalModel = {
         error,
       }
     },
+    addGame: (state: GlobalState, game: Game) => {
+      return {
+        ...state,
+        games: [...state.games, game],
+      }
+    },
   },
   effects: (dispatch: Dispatch) => ({
-    /* getPlayers(rootState: RootState) {
-      return rootState.global.players
+    async saveCurrentGame(payload?: any, rootState?: any) {
+      const { players } = rootState.global
+      const { table, type, naipes, placar } = rootState.current
+      try {
+        const newId: string = generateQuickGuid("game")
+        const newGame: Game = {
+          id: newId,
+          table: table.id,
+          type,
+          naipes,
+          placar,
+        }
+        dispatch.global.addGame(newGame)
+
+        const allPlayers = [...players]
+        const curPlayers = Object.keys(placar)
+        allPlayers.map((a) => {
+          if (curPlayers.some((c) => c === a.id)) {
+            a.games.push(newId)
+          }
+        })
+        dispatch.global.setPlayers(allPlayers)
+      } catch (error) {
+        dispatch.global.setError(error.message)
+        return "error"
+      }
     },
-    getTables(rootState: RootState) {
-      return rootState.global.tables
-    }, */
     async createNewPlayer(payload: string, rootState?: any) {
       const { players } = rootState.global
       try {

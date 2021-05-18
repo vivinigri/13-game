@@ -68,7 +68,7 @@ const GameCard = ({
               marginBottom: theme.spacings.padding,
             }}
           >
-            🗸
+            ✔️
           </Text>
         </View>
       </View>

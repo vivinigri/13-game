@@ -12,6 +12,7 @@ export type RootStackParamList = {
   }
   [RouteNames.OrderPlayersScreen]: undefined
   [RouteNames.SobreScreen]: undefined
+  [RouteNames.SettingsScreen]: undefined
 }
 
 export type MainStackParamList = {

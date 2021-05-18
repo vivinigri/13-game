@@ -17,6 +17,7 @@ type MenuItem = {
 
 const menu: MenuItem[] = [
   { label: "✨ Novo jogo", redirect: RouteNames.SelectTableScreen },
+  { label: "⚙️ Ajustes", redirect: RouteNames.SettingsScreen },
   { label: "📚 Sobre", redirect: RouteNames.SobreScreen },
   /* { label: "⌛ Continuar", redirect: RouteNames.SelectTableScreen },
   { label: "📊 Estatísticas", redirect: RouteNames.StatsScreen }, */

@@ -132,7 +132,7 @@ const TabelaScreen = ({ navigation }: Props) => {
                               right: 2,
                             }}
                           >
-                            🗸
+                            ✔️
                           </Text>
                         ) : (
                           cell.won !== null && (
@@ -147,7 +147,7 @@ const TabelaScreen = ({ navigation }: Props) => {
                                 right: 2,
                               }}
                             >
-                              ✗
+                              ❌
                             </Text>
                           )
                         )}

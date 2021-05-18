@@ -14,6 +14,7 @@ import SelectPlayersScreen from "@screens/SelectPlayersScreen"
 import SelectGameScreen from "@screens/SelectGameScreen"
 import OrderPlayersScreen from "@screens/OrderPlayersScreen"
 import SobreScreen from "@screens/SobreScreen"
+import SettingsScreen from "@screens/SettingsScreen"
 
 export default function Navigation() {
   return (
@@ -80,6 +81,11 @@ function RootNavigator() {
       <RootStack.Screen
         name={RouteNames.SelectPlayersScreen}
         component={SelectPlayersScreen}
+        options={headerOptions("")}
+      />
+      <RootStack.Screen
+        name={RouteNames.SettingsScreen}
+        component={SettingsScreen}
         options={headerOptions("")}
       />
     </RootStack.Navigator>

@@ -50,7 +50,7 @@ const ResultadoCard = ({
         >
           <CircleButton
             size={theme.spacings.padding * 3}
-            label="✗"
+            label="❌"
             color={theme.colors.textPrimary}
             onPress={() => setAcertou(false)}
             style={{
@@ -60,7 +60,7 @@ const ResultadoCard = ({
           />
           <CircleButton
             size={theme.spacings.padding * 3}
-            label="🗸"
+            label="✔️"
             color={theme.colors.green}
             onPress={() => {
               setLevou(null)

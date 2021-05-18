@@ -44,12 +44,12 @@ export type Table = {
 export type Player = {
   id: string
   name: string
-  games: Game[]
+  games: string[] //Game id
 }
 
 export type Game = {
-  table: Table
-  rounds: number[]
+  id: string
+  table: string //table id
   type: GameType
   naipes: Naipes[]
   placar: Placar

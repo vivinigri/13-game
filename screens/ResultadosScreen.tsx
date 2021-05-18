@@ -62,6 +62,7 @@ const ResultadosScreen = ({ navigation }: Props) => {
   const saveResults = () => {
     dispatch.current.setResultados(resultados)
     if (currentRound >= hands.length - 1) {
+      dispatch.global.saveCurrentGame()
       navigation.navigate(RouteNames.GameOverScreen)
     } else {
       dispatch.current.nextRound()

@@ -109,7 +109,13 @@ const ApostasScreen = ({ navigation, route }: Props) => {
             confirm={confirmAposta}
             cancel={cancelAposta}
             totalPlayers={players.length}
-            totalApostas={aposta.length ? aposta.reduce((a, b) => a + b) : 0}
+            totalApostas={
+              aposta.length
+                ? aposta
+                    .filter((a, i) => i !== players.length - 1)
+                    .reduce((a, b) => a + b)
+                : 0
+            }
           />
           <View style={themedStyle.bubblesContainer}>
             {aposta.map((a: number, i: number) => (

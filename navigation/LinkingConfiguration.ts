@@ -20,6 +20,7 @@ export default {
           [RouteNames.SelectGameScreen]: "match/type/:id",
           [RouteNames.OrderPlayersScreen]: "order",
           [RouteNames.SobreScreen]: "sobre",
+          [RouteNames.SettingsScreen]: "ajustes",
         },
       },
 
