@@ -1,17 +1,20 @@
 import React from "react"
 import Text from "@components/Text"
 import { View, TouchableOpacity, GestureResponderEvent } from "react-native"
+import { Ionicons } from "@expo/vector-icons"
 
 type CircleButtonProps = {
   onPress?: (event: GestureResponderEvent) => void | undefined
   disabled?: boolean
   size: number
-  label: string
+  label?: string
+  icon?: string
   color: string
 } & View["props"]
 
 const CircleButton = ({
   label,
+  icon,
   size,
   color = "white",
   disabled = false,
@@ -34,13 +37,17 @@ const CircleButton = ({
           props.style || {},
         ]}
       >
-        <Text
-          type="mainheading"
-          align="center"
-          style={{ color: color, fontSize: size * 0.5 }}
-        >
-          {label}
-        </Text>
+        {label ? (
+          <Text
+            type="mainheading"
+            align="center"
+            style={{ color: color, fontSize: size * 0.5 }}
+          >
+            {label}
+          </Text>
+        ) : (
+          <Ionicons size={30} name={icon} color={color} />
+        )}
       </View>
     </TouchableOpacity>
   )

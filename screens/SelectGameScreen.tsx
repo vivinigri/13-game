@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "react-native-paper"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -46,6 +46,35 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     return ida.concat(repete)
   }, [])
 
+  const handsShort = useCallback((max: number, players: number) => {
+    const ida = Array.from({ length: max }, (_, i) => i + 1)
+    return ida
+  }, [])
+
+  const numRounds = useMemo(() => {
+    const max = maxCards()
+    const nPlayers = numPlayers()
+    if (checked === GameType.NORMAL) {
+      return 2 * max - 1
+    } else if (checked === GameType.NOVO) {
+      return max - 1 + nPlayers
+    } else {
+      return max
+    }
+  }, [checked])
+
+  const hands = useMemo(() => {
+    const max = maxCards()
+    const nPlayers = numPlayers()
+    if (checked === GameType.NORMAL) {
+      return handsNormal(max)
+    } else if (checked === GameType.NOVO) {
+      return handsNovo(max, nPlayers)
+    } else {
+      return handsShort(max, nPlayers)
+    }
+  }, [checked])
+
   const goToNext = () => {
     const max = maxCards()
     const nPlayers = numPlayers()
@@ -53,12 +82,9 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
     dispatch.current.setType(checked)
     /* dispatch.current.setRounds(2)
     dispatch.current.setHands([1, 2]) */
-    dispatch.current.setRounds(
-      checked === GameType.NORMAL ? 2 * max - 1 : max - 1 + nPlayers
-    )
-    dispatch.current.setHands(
-      checked === GameType.NOVO ? handsNovo(max, nPlayers) : handsNormal(max)
-    )
+    dispatch.current.setRounds(numRounds)
+    dispatch.current.setHands(hands)
+
     navigation.navigate(RouteNames.OrderPlayersScreen)
   }
 
@@ -83,6 +109,13 @@ const SelectGameScreen = ({ navigation, route }: Props) => {
             description={`Vai ao máximo e repete ${numPlayers()}X`}
             setChecked={setChecked}
             checked={checked === GameType.NOVO}
+          />
+          <GameCard
+            type={GameType.SHORT}
+            title="Sobe e Para"
+            description={`Vai ao máximo e para`}
+            setChecked={setChecked}
+            checked={checked === GameType.SHORT}
           />
         </View>
         <BottomMenu

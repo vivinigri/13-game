@@ -115,7 +115,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
                 textAlign="center"
               />
               <BallButton
-                label="+"
+                icon="ios-add"
                 onPress={(values: any) => handleSubmit(values)}
               />
             </View>
@@ -127,7 +127,7 @@ const SelectPlayersScreen = ({ navigation, route }: Props) => {
                 <PlayerBubble
                   key={j}
                   id={j}
-                  label="✗"
+                  icon="ios-close"
                   name={
                     players.filter((p) => p.id === j)[0]?.name || "Undefined"
                   }

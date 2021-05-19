@@ -24,7 +24,7 @@ const PlayerOrder = ({
     <CardView>
       <CircleButton
         onPress={() => playerUp(index)}
-        label="🡡"
+        icon="ios-arrow-up"
         size={theme.spacings.padding * 3}
         color={theme.colors.hover}
         disabled={index === 0}
@@ -41,7 +41,7 @@ const PlayerOrder = ({
       </Text>
       <CircleButton
         onPress={() => playerDown(index)}
-        label="🡣"
+        icon="ios-arrow-down"
         size={theme.spacings.padding * 3}
         color={theme.colors.hover}
         disabled={index >= len - 1}

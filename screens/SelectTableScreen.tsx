@@ -100,7 +100,7 @@ const SelectTableScreen = ({ navigation }: Props) => {
                 textAlign="center"
               />
               <BallButton
-                label="+"
+                icon="ios-add"
                 onPress={(values: any) => handleSubmit(values)}
               />
             </View>

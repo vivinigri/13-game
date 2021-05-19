@@ -3,6 +3,7 @@ import Text from "@components/Text"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { useTheme } from "react-native-paper"
 import { GameType } from "@types"
+import { Ionicons } from "@expo/vector-icons"
 
 type GameCardProps = {
   checked: boolean
@@ -60,16 +61,11 @@ const GameCard = ({
             checked && { borderColor: theme.colors.green },
           ]}
         >
-          <Text
-            type="mainheading"
-            variant={checked ? "green" : "light"}
-            align="center"
-            style={{
-              marginBottom: theme.spacings.padding,
-            }}
-          >
-            ✔️
-          </Text>
+          <Ionicons
+            size={30}
+            name="ios-checkmark"
+            color={checked ? theme.colors.green : theme.colors.textLight}
+          />
         </View>
       </View>
     </TouchableOpacity>

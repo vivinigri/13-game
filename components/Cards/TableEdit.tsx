@@ -6,29 +6,25 @@ import { Table } from "@types"
 import { Ionicons } from "@expo/vector-icons"
 
 type TableCardProps = {
-  checked: boolean
-  setChecked: (id: string) => void
   table: Table
 }
 
-const TableCard = ({ table, setChecked, checked }: TableCardProps) => {
+const TableEdit = ({ table }: TableCardProps) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
 
   return (
-    <TouchableOpacity
-      onPress={() => setChecked(table.id)}
-      style={{ width: "100%", alignItems: "center" }}
-    >
-      <View
-        style={[
-          themedStyle.tableCard,
-          checked && { borderColor: theme.colors.green, width: "90%" },
-        ]}
+    <View style={[themedStyle.tableCard, { width: "90%" }]}>
+      <TouchableOpacity
+        style={[themedStyle.checked, { borderColor: theme.colors.red }]}
+        onPress={() => {}}
       >
+        <Ionicons size={30} name="ios-close" color={theme.colors.red} />
+      </TouchableOpacity>
+      <View style={{ width: "70%" }}>
         <Text
           type="header"
-          variant={checked ? "green" : "white"}
+          variant={"white"}
           align="center"
           style={{
             marginBottom: theme.spacings.padding,
@@ -58,44 +54,40 @@ const TableCard = ({ table, setChecked, checked }: TableCardProps) => {
             {table.players.toString()}
           </Text>
         </View>
-        <View
-          style={[
-            themedStyle.checked,
-            checked && { borderColor: theme.colors.green },
-          ]}
-        >
-          <Ionicons
-            size={30}
-            name="ios-checkmark"
-            color={checked ? theme.colors.green : theme.colors.textLight}
-          />
-        </View>
       </View>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={[themedStyle.checked, { borderColor: theme.colors.green }]}
+        onPress={() => {}}
+      >
+        <Ionicons size={20} name="ios-brush" color={theme.colors.green} />
+      </TouchableOpacity>
+    </View>
   )
 }
 
-export default TableCard
+export default TableEdit
 
 const styles = ({ colors, spacings }: ReactNativePaper.Theme) =>
   StyleSheet.create({
     tableCard: {
       backgroundColor: colors.primary,
       width: "85%",
-      marginBottom: spacings.padding,
+      marginVertical: spacings.padding,
       padding: spacings.padding,
       borderRadius: 20,
       borderWidth: 2,
       borderColor: colors.primary,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
     },
     checked: {
       width: 40,
       height: 40,
       borderRadius: 40,
-      position: "absolute",
-      right: 10,
-      top: 25,
       borderWidth: 2,
       borderColor: colors.textLight,
+      justifyContent: "center",
+      alignItems: "center",
     },
   })

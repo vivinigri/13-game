@@ -4,6 +4,7 @@ import { TabelaParamList } from "@navigation/navTypes"
 import { RouteNames } from "@navigation/RouteNames"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { GradientView, TopView, Text } from "@components"
+import TableEdit from "@components/Cards/TableEdit"
 import { RoundedScrollView } from "@components/Themed"
 import { useTheme } from "react-native-paper"
 import { GlobalState } from "@store/models/global"
@@ -55,9 +56,7 @@ export default function SettingsScreen({ navigation }: Props) {
           <View>
             {selectedTab.id === "mesas" &&
               Object.values(tables).map((el: Table) => (
-                <Text type="header" key={el.id}>
-                  {el.name}
-                </Text>
+                <TableEdit table={el} key={el.id} />
               ))}
           </View>
         </View>

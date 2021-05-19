@@ -57,8 +57,8 @@ const ApostaCard = ({
           }}
         >
           <CircleButton
-            size={theme.spacings.padding * 2}
-            label="<"
+            size={theme.spacings.padding * 3}
+            icon="ios-arrow-back"
             color={theme.colors.white}
             onPress={() => cancel()}
             style={{ marginRight: theme.spacings.padding * 0.5 }}

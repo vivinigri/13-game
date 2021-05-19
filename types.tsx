@@ -31,6 +31,7 @@ export enum Naipes {
 export enum GameType {
   NORMAL = "normal",
   NOVO = "novo",
+  SHORT = "short",
   UNDEFINED = "",
 }
 
