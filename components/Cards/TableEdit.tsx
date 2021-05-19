@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useCallback } from "react"
 import Text from "@components/Text"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { useTheme } from "react-native-paper"
 import { Table } from "@types"
 import { Ionicons } from "@expo/vector-icons"
+import { RootState, dispatch } from "@store"
 
 type TableCardProps = {
   table: Table
@@ -13,11 +14,20 @@ const TableEdit = ({ table }: TableCardProps) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
 
+  const confirmDeleteTable = useCallback(() => {
+    dispatch.toasts.show({
+      variant: "error",
+      content: `Deseja deletar a mesa ${table.name}?`,
+      label: "Sim",
+      tryAgain: dispatch.global.deleteTable({ id: table.id }),
+    })
+  }, [table])
+
   return (
     <View style={[themedStyle.tableCard, { width: "90%" }]}>
       <TouchableOpacity
         style={[themedStyle.checked, { borderColor: theme.colors.red }]}
-        onPress={() => {}}
+        onPress={confirmDeleteTable}
       >
         <Ionicons size={30} name="ios-close" color={theme.colors.red} />
       </TouchableOpacity>

@@ -17,15 +17,14 @@ export type GlobalModel = {
     setError: (state: GlobalState, error: string) => GlobalState
     addGame: (state: GlobalState, game: Game) => GlobalState
   }
-  effects: (
-    dispatch: Dispatch
-  ) => {
+  effects: (dispatch: Dispatch) => {
     createNewPlayer: (payload: string, rootState?: any) => string
     createNewTable: (
       payload: { mesa: string; players: string[] },
       rootState?: any
     ) => string
     saveCurrentGame: (payload?: any, rootState?: any) => void
+    deleteTable: (payload: { id: string }, rootState?: any) => void
   }
 }
 
@@ -120,6 +119,16 @@ export const global: GlobalModel = {
         const newTables = [...tables, newTable]
         dispatch.global.setTables(newTables)
         return newId
+      } catch (error) {
+        dispatch.global.setError(error.message)
+        return "error"
+      }
+    },
+    async deleteTable(payload: any, rootState?: any) {
+      const { tables } = rootState.global
+      const { id } = payload
+      try {
+        dispatch.global.setTables(tables.filter((t: Table) => t.id !== id))
       } catch (error) {
         dispatch.global.setError(error.message)
         return "error"
