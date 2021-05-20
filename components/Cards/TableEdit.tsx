@@ -4,7 +4,9 @@ import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { useTheme } from "react-native-paper"
 import { Table } from "@types"
 import { Ionicons } from "@expo/vector-icons"
-import { RootState, dispatch } from "@store"
+import { dispatch } from "@store"
+import { useNavigation } from "@react-navigation/native"
+import { RouteNames } from "@navigation/RouteNames"
 
 type TableCardProps = {
   table: Table
@@ -13,6 +15,7 @@ type TableCardProps = {
 const TableEdit = ({ table }: TableCardProps) => {
   const theme = useTheme()
   const themedStyle = styles(theme)
+  const navigation = useNavigation()
 
   const confirmDeleteTable = useCallback(() => {
     dispatch.toasts.show({
@@ -22,6 +25,11 @@ const TableEdit = ({ table }: TableCardProps) => {
       tryAgain: dispatch.global.deleteTable({ id: table.id }),
     })
   }, [table])
+
+  const editTable = useCallback(
+    () => navigation.navigate(RouteNames.TableEditScreen, { id: table.id }),
+    [table]
+  )
 
   return (
     <View style={[themedStyle.tableCard, { width: "90%" }]}>
@@ -67,9 +75,9 @@ const TableEdit = ({ table }: TableCardProps) => {
       </View>
       <TouchableOpacity
         style={[themedStyle.checked, { borderColor: theme.colors.green }]}
-        onPress={() => {}}
+        onPress={editTable}
       >
-        <Ionicons size={20} name="ios-brush" color={theme.colors.green} />
+        <Ionicons size={20} name="ios-create" color={theme.colors.green} />
       </TouchableOpacity>
     </View>
   )

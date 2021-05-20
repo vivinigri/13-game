@@ -21,6 +21,7 @@ export default {
           [RouteNames.OrderPlayersScreen]: "order",
           [RouteNames.SobreScreen]: "sobre",
           [RouteNames.SettingsScreen]: "ajustes",
+          [RouteNames.TableEditScreen]: "table/edit/:id",
         },
       },
 

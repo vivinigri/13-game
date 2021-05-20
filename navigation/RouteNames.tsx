@@ -8,6 +8,7 @@ export enum RouteNames {
   SelectGameScreen = "SelectGameScreen",
   OrderPlayersScreen = "OrderPlayersScreen",
   SettingsScreen = "SettingsScreen",
+  TableEditScreen = "TableEditScreen",
   // bottom
   ApostasScreen = "ApostasScreen",
   ResultadosScreen = "ResultadosScreen",

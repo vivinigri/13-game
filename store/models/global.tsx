@@ -25,6 +25,10 @@ export type GlobalModel = {
     ) => string
     saveCurrentGame: (payload?: any, rootState?: any) => void
     deleteTable: (payload: { id: string }, rootState?: any) => void
+    updateTable: (
+      payload: { id: string; name: string; players: string[] },
+      rootState?: any
+    ) => void
   }
 }
 
@@ -129,6 +133,24 @@ export const global: GlobalModel = {
       const { id } = payload
       try {
         dispatch.global.setTables(tables.filter((t: Table) => t.id !== id))
+      } catch (error) {
+        dispatch.global.setError(error.message)
+        return "error"
+      }
+    },
+    async updateTable(payload: any, rootState?: any) {
+      const { tables } = rootState.global
+      const { id, name, players } = payload
+
+      try {
+        const newTables = tables.map((t: Table) => {
+          if (t.id === id) {
+            return { ...t, name, players }
+          }
+          return t
+        })
+        console.log("newTables", newTables)
+        dispatch.global.setTables(newTables)
       } catch (error) {
         dispatch.global.setError(error.message)
         return "error"
