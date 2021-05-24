@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/13-game/static/js/app.da1bfcfd.chunk.js",
-    "app.js.map": "/13-game/static/js/app.da1bfcfd.chunk.js.map",
+    "app.js": "/13-game/static/js/app.100074aa.chunk.js",
+    "app.js.map": "/13-game/static/js/app.100074aa.chunk.js.map",
     "runtime~app.js": "/13-game/static/js/runtime~app.54ae677d.js",
     "runtime~app.js.map": "/13-game/static/js/runtime~app.54ae677d.js.map",
-    "static/js/2.553914de.chunk.js": "/13-game/static/js/2.553914de.chunk.js",
-    "static/js/2.553914de.chunk.js.map": "/13-game/static/js/2.553914de.chunk.js.map",
+    "static/js/2.29fc713c.chunk.js": "/13-game/static/js/2.29fc713c.chunk.js",
+    "static/js/2.29fc713c.chunk.js.map": "/13-game/static/js/2.29fc713c.chunk.js.map",
     "fonts/AntDesign.ttf": "/13-game/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/13-game/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/13-game/./fonts/Feather.ttf",
@@ -27,12 +27,12 @@
     "favicon.ico": "/13-game/favicon.ico",
     "index.html": "/13-game/index.html",
     "serve.json": "/13-game/serve.json",
-    "static/js/2.553914de.chunk.js.LICENSE.txt": "/13-game/static/js/2.553914de.chunk.js.LICENSE.txt",
+    "static/js/2.29fc713c.chunk.js.LICENSE.txt": "/13-game/static/js/2.29fc713c.chunk.js.LICENSE.txt",
     "static/media/dilma.jpg": "/13-game/static/media/dilma.e9546fa4.jpg"
   },
   "entrypoints": [
     "static/js/runtime~app.54ae677d.js",
-    "static/js/2.553914de.chunk.js",
-    "static/js/app.da1bfcfd.chunk.js"
+    "static/js/2.29fc713c.chunk.js",
+    "static/js/app.100074aa.chunk.js"
   ]
 }
